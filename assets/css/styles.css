@@ -134,4 +134,91 @@ button{
     text-align: center;     
     background-color: #683aa4;
     color: white;
+    margin-top: auto;
+    
     }
+
+
+    /* Projects Section */
+.projects--margin-top{
+    margin-top: 50px;
+    padding: 25px;
+}
+
+.proj-card{
+    background-color: rgba(104, 58, 164, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 14rem;
+    height: 17rem;
+    border-radius: 0.3rem;
+    margin: 2rem;
+    padding: 1rem;
+    position: relative;
+    transition: all 0.4s;
+    cursor: pointer;
+    color: black;
+}
+
+.proj-card:hover{
+    transform: translateY(-5px);
+    background-color: rgb(104, 58, 164);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+a.proj-link{
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}
+
+.img-holder{
+    position: absolute;
+    width: 8rem;
+    height: 8rem;
+    display: flex;
+    justify-content: center;
+}
+
+.proj-img{
+    max-width:100%;
+    max-height: 100%;
+    border-radius: 0.3rem;
+}
+
+.proj-card-text{
+    position: absolute;
+    margin-top: 9rem;
+    line-height: normal;
+    text-align: center;
+}
+
+.proj-card-text h2{
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.proj-card-text p{
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    font-weight: 400;
+}
+
+.projects--container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 78vh;
+}
+
+.multi-line {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }

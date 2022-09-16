@@ -140,10 +140,6 @@ button{
 
 
     /* Projects Section */
-.projects--margin-top{
-    margin-top: 50px;
-    padding: 25px;
-}
 
 .proj-card{
     background-color: rgba(104, 58, 164, 0.2);

@@ -154,7 +154,6 @@ button{
     position: relative;
     transition: all 0.4s;
     cursor: pointer;
-    color: black;
 }
 
 .proj-card:hover{
@@ -196,6 +195,12 @@ a.proj-link{
     font-size: 1.2rem;
     text-transform: uppercase;
     font-weight: 600;
+    color: purple;
+}
+
+.proj-card:hover .proj-card-text h2 {
+    color: white;
+    transition: all 0.4s;
 }
 
 .proj-card-text p{

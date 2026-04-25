@@ -2,259 +2,162 @@
 <html lang="en">
 
 <head>
-    <title>Nitish Singh - Personal Webpage</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-    <script src="https://kit.fontawesome.com/b645930f20.js" crossorigin="anonymous"></script>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="assets/css/styles.css" />
-    <link rel="shortcut icon" href="assets/images/SiteLogo.png">
-    <style>
-        /* html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif} */
-    </style>
+  <meta charset="UTF-8">
+  <title>Publications — Nitish Singh</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Peer-reviewed publications by Nitish Singh on simulation, AGV scheduling, and reinforcement learning in manufacturing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/b645930f20.js" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="shortcut icon" href="assets/images/SiteLogo.png">
 </head>
 
-<body class="bg-custom">
+<body>
+  <!-- NAVBAR -->
+  <nav class="site-nav navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="./index.html">Nitish Singh</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="./index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./resume.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="./publications.html">Publications</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./projects.html">Projects</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-    <!-- NAVBAR -->
-    <nav class="py-3 navbar navbar-expand-lg fixed-top auto-hiding-navbar navbar-dark bg-custom">
-        <div class="container">
-            <a class="navbar-brand" href="#">Nitish Singh | Publications</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a title="Home" class="nav-link" aria-current="page" href="./index.html"><i
-                                class="fa-solid fa-house fa-2x"></i></a>
-                    </li>
+  <main class="container" style="padding-top: 2.5rem;">
+    <div class="section-eyebrow">Peer-reviewed work</div>
+    <h2 class="mb-4" style="font-size: 1.85rem;">Publications</h2>
 
-                    <li class="nav-item">
-                        <a title="About Me" class="nav-link" href="./resume.html"><i
-                                class="fa-solid fa-file fa-2x"></i></a>
-                    </li>
+    <!-- Publication 1 -->
+    <article class="pub-card">
+      <h3 class="pub-title">A Digital Platform for Heterogeneous Fleet Management in Manufacturing Intralogistics</h3>
+      <div class="pub-venue">
+        <i class="fa-regular fa-bookmark"></i>
+        Handbook on Digital Business Ecosystems in Manufacturing · 2024
+      </div>
+      <div class="pub-authors">N. Singh, A. Akcay, Q.-V. Dang, I. Adan, E. A. Thijssen</div>
+      <p class="pub-abstract">A digital platform for serving multiple tenants of Brainport Industries Campus sharing a fleet of heterogeneous automated guided vehicles. The platform combines an order-input UI, an order database, and a central cloud server housing the dispatching intelligence.</p>
+      <a href="https://www.elgaronline.com/edcollchap/book/9781035301003/book-part-9781035301003-30.xml"
+         class="btn-pub" target="_blank" rel="noopener">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> View publication
+      </a>
+    </article>
 
-                    <li class="nav-item">
-                        <a title="Publications" class="nav-link active" href="./publications.html"><i
-                                class="fa-solid fa-newspaper fa-2x"></i></a>
-                    </li>
+    <!-- Publication 2 -->
+    <article class="pub-card">
+      <h3 class="pub-title">Dispatching AGVs with Battery Constraints using Deep Reinforcement Learning</h3>
+      <div class="pub-venue">
+        <i class="fa-regular fa-bookmark"></i>
+        Computers &amp; Industrial Engineering · 2024
+      </div>
+      <div class="pub-authors">N. Singh, A. Akcay, Q.-V. Dang, T. Martagan, I. Adan</div>
+      <p class="pub-abstract">Real-time dispatching of an AGV fleet with battery constraints, formulated as a Markov Decision Process and solved with deep reinforcement learning. AGVs must be assigned to randomly arriving transport requests under stochastic demand.</p>
+      <a href="https://doi.org/10.1016/j.cie.2023.109678" class="btn-pub" target="_blank" rel="noopener">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> View publication
+      </a>
+    </article>
 
-                    <li class="nav-item">
-                        <a title="My Works" class="nav-link" href="./projects.html"><i
-                                class="fa-solid fa-briefcase fa-2x"></i></a>
-                    </li>
+    <!-- Publication 3 -->
+    <article class="pub-card">
+      <h3 class="pub-title">A Matheuristic for AGV Scheduling with Battery Constraints
+        <span class="pub-tag" style="background:#fef3c7;color:#92400e;">Best Paper 2025</span>
+      </h3>
+      <div class="pub-venue">
+        <i class="fa-regular fa-bookmark"></i>
+        European Journal of Operational Research · 2022
+      </div>
+      <div class="pub-authors">N. Singh, Q.-V. Dang, A. Akcay, I. Adan, T. Martagan</div>
+      <p class="pub-abstract">Scheduling automated guided vehicles with battery constraints, where each transport request involves a soft time window and the AGV fleet is heterogeneous in capabilities and travel costs.</p>
+      <a href="https://www.sciencedirect.com/science/article/pii/S0377221721006755?via%3Dihub"
+         class="btn-pub" target="_blank" rel="noopener">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> View publication
+      </a>
+    </article>
 
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- NAVBAR END -->
+    <!-- Publication 4 -->
+    <article class="pub-card">
+      <h3 class="pub-title">Simulation-based AGV Management with a Linear Dispatching Rule</h3>
+      <div class="pub-venue">
+        <i class="fa-regular fa-bookmark"></i>
+        Winter Simulation Conference (WSC) · 2023
+      </div>
+      <div class="pub-authors">N. Singh, J. B. H. C. Didden, A. Akcay, T. G. Martagan, I. J. B. F. Adan</div>
+      <p class="pub-abstract">Real-time dispatching of a heterogeneous AGV fleet with battery constraints. An AGV-specific linear dispatching rule is learned to assign vehicles to randomly arriving transport requests, minimising a weighted sum of tardiness and travel costs. Validated on real-world data from an industry partner.</p>
+      <a href="https://dl.acm.org/doi/abs/10.5555/3643142.3643304" class="btn-pub" target="_blank" rel="noopener">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> View publication
+      </a>
+    </article>
 
-    <main class="container mt-5 pt-110">
-        <!-- <h1 class="mb-4 text-white">Publications</h1> -->
-        <!-- Publication Entry -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h4 class="card-title w3-text-purple">A Digital Platform for Heterogeneous Fleet
-                    Management in Manufacturing Intralogistics
-                </h4>
-                <!-- <h6 class="w3-opacity">Publisher Details</h6> -->
-                <h6 class="w3-text-purple"><i class="fa fa-calendar fa-fw w3-margin-right"></i>In: Handbook on Digital
-                    Business Ecosystems in Manufacturing</h6>
+    <!-- Publication 5 -->
+    <article class="pub-card">
+      <h3 class="pub-title">Scheduling Heterogeneous Multi-load AGVs with Battery Constraints</h3>
+      <div class="pub-venue">
+        <i class="fa-regular fa-bookmark"></i>
+        Computers &amp; Operations Research · 2021
+      </div>
+      <div class="pub-authors">Q.-V. Dang, N. Singh, I. Adan, T. Martagan, D. van de Sande</div>
+      <p class="pub-abstract">Scheduling transport requests on multi-load and multi-ability AGVs with battery management — addressing the increasing complexity of modern intralogistics fleets and their limited battery capacity.</p>
+      <a href="https://www.sciencedirect.com/science/article/pii/S0305054821002586?via%3Dihub"
+         class="btn-pub" target="_blank" rel="noopener">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> View publication
+      </a>
+    </article>
 
-                <p class="card-text"><i>Nitish Singh, Alp Akcay, Quang-Vinh Dang, Ivo Adan, E.A. Thijssen</i>
-                </p>
-                <p class="card-text"><small class="text-muted">Brainport Industries Campus (BIC) is a unique initiative
-                        taken by the
-                        high-tech suppliers of the Eindhoven region to come together and work
-                        towards collaborative consumption of shared resources such as production
-                        machines, automated guided vehicles, clean rooms, and storage spaces
-                        in order to jointly meet their customers’ demands, reduce cost of ownership,
-                        and better manage risks during uncertain demand and supply cycles.
-                        However, the matching-demand-with-supply process in a sharing economy
-                        requires novel perspectives and tools. In this chapter, we propose a digital
-                        platform for serving multiple tenants of BIC, sharing a fleet of heterogeneous
-                        automated guided vehicles (AGVs). The proposed platform
-                        includes a user interface as an order input system, an order database, and
-                        a central cloud server that houses the necessary intelligence for communicating
-                        with all the aforementioned modules. This platform that serves
-                        multiple tenants sharing a heterogeneous AGV fleet is the first of its kind.</small></p>
-                <a href="https://www.elgaronline.com/edcollchap/book/9781035301003/book-part-9781035301003-30.xml"
-                    class="btn btn-primary" aria-disabled="false" target="_blank"><i
-                        class="fa-solid fa-link me-2"></i><b>Published</b></a>
-            </div>
-        </div>
-        <!-- Repeat for other publications -->
+    <!-- Publication 6 -->
+    <article class="pub-card">
+      <h3 class="pub-title">Simulation-based Performance Evaluation of a Manufacturing Facility with Vertical AS/RS</h3>
+      <div class="pub-venue">
+        <i class="fa-regular fa-bookmark"></i>
+        Winter Simulation Conference (WSC) · 2019
+      </div>
+      <div class="pub-authors">N. Singh, K. Herps, T. G. Martagan, I. J. B. F. Adan</div>
+      <p class="pub-abstract">Hybrid simulation modelling of KMWE's Tool Service Center to assess the impact of input uncertainties (operator productivity, vertical storage height) on throughput. The outcomes drove an investment decision on AS/RS equipment acquisition.</p>
+      <a href="https://ieeexplore.ieee.org/document/9004715" class="btn-pub" target="_blank" rel="noopener">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> View publication
+      </a>
+    </article>
 
-        <!-- Publication Entry -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h4 class="card-title w3-text-purple">Dispatching AGVs with Battery Constraints using Deep Reinforcement
-                    Learning
-                </h4>
-                <!-- <h6 class="w3-opacity">Publisher Details</h6> -->
-                <h6 class="w3-text-purple"><i class="fa fa-calendar fa-fw w3-margin-right"></i>In: Computers &
-                    Industrial Engineering</h6>
+    <p class="text-center mt-4 mb-5" style="color: var(--text-muted); font-size: 0.9rem;">
+      For an up-to-date list, see <a href="https://scholar.google.com/citations?user=" target="_blank" rel="noopener">Google Scholar</a>.
+    </p>
+  </main>
 
-                <p class="card-text"><i>Nitish Singh, Alp Akcay, Quang-Vinh Dang,Tugce Martagan, Ivo Adan</i></p>
-                <p class="card-text"><small class="text-muted">This paper considers the problem of real-time dispatching
-                        of a fleet of automated guided
-                        vehicles (AGVs) with battery constraints. AGVs must be immediately assigned to transport
-                        requests, which arrive randomly. We formulate this online decision-making problem as a Markov
-                        decision process and propose a solution approach based on deep reinforcement learning.</small>
-                </p>
-                <a href="https://doi.org/10.1016/j.cie.2023.109678" class="btn btn-primary" aria-disabled="false"
-                    target="_blank"><i class="fa-solid fa-link me-2"></i><b>Published</b></a>
-            </div>
-        </div>
-        <!-- Repeat for other publications -->
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="social">
+        <a href="https://www.linkedin.com/in/nitish-singh/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://github.com/nitman118" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="mailto:singhnitish.work@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+      </div>
+      <div class="copyright">© <span id="year"></span> Nitish Singh</div>
+    </div>
+  </footer>
 
-
-        <!-- Publication Entry -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h4 class="card-title w3-text-purple">A Matheuristic for AGV Scheduling with Battery Constraints</h4>
-                <!-- <h6 class="w3-opacity">Publisher Details</h6> -->
-                <h6 class="w3-text-purple"><i class="fa fa-calendar fa-fw w3-margin-right"></i>In: European Journal of
-                    Operational Research</h6>
-
-                <p class="card-text"><i>Nitish Singh, Quang-Vinh Dang, Alp Akcay, Ivo Adan, Tugce Martagan</i></p>
-                <p class="card-text"><small class="text-muted">This paper considers the problem of scheduling automated
-                        guided vehicles (AGVs) with battery constraints. Each transport
-                        request involves a soft time window, and the AGV fleet used to service those requests is
-                        heterogeneous with a diverse
-                        set of capabilities and travel costs.</small></p>
-                <a href="https://www.sciencedirect.com/science/article/pii/S0377221721006755?via%3Dihub"
-                    class="btn btn-primary" aria-disabled="false" target="_blank"><i
-                        class="fa-solid fa-link me-2"></i><b>Published</b></a>
-            </div>
-        </div>
-        <!-- Repeat for other publications -->
-
-        <!-- Publication Entry -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h4 class="card-title w3-text-purple">Simulation-based AGV management with a linear dispatching rule
-                </h4>
-                <!-- <h6 class="w3-opacity">Publisher Details</h6> -->
-                <h6 class="w3-text-purple"><i class="fa fa-calendar fa-fw w3-margin-right"></i>In: WSC 2023 - Winter
-                    Simulation Conference</h6>
-
-                <p class="card-text"><i>Nitish Singh, Jeroen B.H.C. Didden, Alp Akcay, Tugce G. Martagan, Ivo J.B.F.
-                        Adan</i></p>
-                <p class="card-text"><small class="text-muted">This paper considers the problem of real-time dispatching
-                        of a fleet of heterogeneous automated guided vehicles (AGVs) with battery constraints. The AGV
-                        fleet is heterogeneous in terms of material handling capabilities; some can tow loads, some can
-                        lift loads while others manipulate loads with the assistance of a robotic arm. Transport
-                        requests arrive in real-time and include a soft time window, with late delivery incurring
-                        tardiness costs. Transport requests need to be assigned to a capable AGV based on required
-                        material handling capabilities with the objective to minimize a weighted sum of tardiness costs
-                        of transport requests and travel costs of AGVs. In this paper, an AGV-specific linear
-                        dispatching rule (LDR) learning approach is proposed to assign AGVs to randomly arriving
-                        transport requests in real time over a finite horizon. The proposed approach is compared with a
-                        heuristic policy from practice by using real-world data provided by our industry
-                        partner.</small></p>
-                <a href="https://dl.acm.org/doi/abs/10.5555/3643142.3643304" class="btn btn-primary"
-                    aria-disabled="false" target="_blank"><i class="fa-solid fa-link me-2"></i><b>Published</b></a>
-            </div>
-        </div>
-        <!-- Repeat for other publications -->
-
-        <!-- Publication Entry -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h4 class="card-title w3-text-purple">Simulation-based performance evaluation of a manufacturing
-                    facility with vertical as/rs</h4>
-                <!-- <h6 class="w3-opacity">Publisher Details</h6> -->
-                <h6 class="w3-text-purple"><i class="fa fa-calendar fa-fw w3-margin-right"></i>In: WSC 2019 - Winter
-                    Simulation Conference</h6>
-
-                <p class="card-text"><i>Nitish Singh, Koen Herps, Tugce G. Martagan, Ivo J.B.F. Adan</i></p>
-                <p class="card-text"><small class="text-muted">Klein Mechanisch Werkplaats Eindhoven (KMWE) is a
-                        precision manufacturing company situated in the Netherlands and
-                        recently relocated to a new location known as the ‘Brainport Industries Campus’ (BIC). This move
-                        allowed KMWE to improve
-                        the performance of its manufacturing facility known as the ‘Tool
-                        Service Center’ (TSC) by investing in vertical automated storage and retrieval systems (AS/RSs).
-                        However, these
-                        decisions needed to be made under input uncertainties since the move to BIC and modernization of
-                        existing equipment
-                        would cause changes in operating parameters inside the facility, over which little information
-                        was known in advance. In
-                        this study, we show how hybrid simulation modelling was used to assess the impact of input
-                        uncertainties (such as
-                        operator productivity, vertical storage height) on the throughput performance of TSC.
-                        Ultimately, the outcomes of this
-                        research project were used by KMWE to make an investment decision on new equipment acquisition
-                        quantity.</small></p>
-                <a href="https://ieeexplore.ieee.org/document/9004715" class="btn btn-primary" aria-disabled="false"
-                    target="_blank"><i class="fa-solid fa-link me-2"></i><b>Published</b></a>
-            </div>
-        </div>
-        <!-- Repeat for other publications -->
-
-        <!-- Publication Entry -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h4 class="card-title w3-text-purple">Scheduling heterogeneous multi-load AGVs with battery constraints
-                </h4>
-                <!-- <h6 class="w3-opacity">Publisher Details</h6> -->
-                <h6 class="w3-text-purple"><i class="fa fa-calendar fa-fw w3-margin-right"></i>In: Computers &
-                    Operations Research</h6>
-
-                <p class="card-text"><i>Quang-Vinh Dang, Nitish Singh, Ivo Adan, Tugce Martagan,
-                        Dirk van de Sande</i></p>
-                <p class="card-text"><small class="text-muted">Recent trends towards larger and more complex systems
-                        necessitate the use of heterogeneous and flexible automated guided
-                        vehicles (AGVs) to fulfill the transport demand within a factory. To operate the fleet of AGVs
-                        efficiently, it is also
-                        important to consider their limited battery capacity. In this context, we tackle the problem of
-                        scheduling transport
-                        requests on multi-load and multi-ability AGVs with battery management.</small></p>
-                <a href="https://www.sciencedirect.com/science/article/pii/S0305054821002586?via%3Dihub"
-                    class="btn btn-primary" aria-disabled="false" target="_blank"><i
-                        class="fa-solid fa-link me-2    "></i><b>Published</b></a>
-            </div>
-        </div>
-        <!-- Repeat for other publications -->
-
-
-
-
-    </main>
-
-    <!-- Footer. This section contains an ad for W3Schools Spaces. You can leave it to support us. -->
-    <section id="social">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col social">
-                    <a href="https://www.facebook.com/nitman118" target="_blank"><i
-                            class="item fa-brands fa-facebook"></i></a>
-                    <a href="https://www.linkedin.com/in/nitish-singh/" target="_blank"><i
-                            class="item fa-brands fa-linkedin"></i></a>
-                    <a href="https://github.com/nitman118" target="_blank"><i
-                            class="item fa-brands fa-github"></i></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End of contact section -->
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 
 </html>

@@ -1,63 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
 
-<head>
-  <meta charset="UTF-8">
-  <title>About — Nitish Singh</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Experience, education and skills of Nitish Singh.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/b645930f20.js" crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link rel="stylesheet" href="assets/css/styles.css" />
-  <link rel="shortcut icon" href="assets/images/SiteLogo.png">
-</head>
-
-<body>
-  <!-- NAVBAR -->
-  <nav class="site-nav navbar navbar-expand-lg fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="./index.html">Nitish Singh</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="./index.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="./resume.html">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./publications.html">Publications</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./projects.html">Projects</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
+<BaseLayout
+  title="About — Nitish Singh"
+  description="Experience, education, and skills of Nitish Singh — Data Scientist at KMWE and part-time Assistant Professor at TU/e."
+>
   <main class="container" style="padding-top: 2.5rem;">
     <div class="row g-4">
-
       <!-- LEFT: profile sidebar -->
       <div class="col-lg-4">
         <div class="profile-card">
           <h3>Contact</h3>
           <div class="meta-line"><i class="fa-solid fa-briefcase"></i> Data Scientist · Asst. Professor</div>
           <div class="meta-line"><i class="fa-solid fa-location-dot"></i> Eindhoven, Netherlands</div>
-          <div class="meta-line"><i class="fa-solid fa-envelope"></i><a href="mailto:singhnitish.work@gmail.com">singhnitish.work@gmail.com</a></div>
-          <div class="meta-line"><i class="fa-solid fa-globe"></i><a href="https://www.nitishsingh.com" target="_blank" rel="noopener">www.nitishsingh.com</a></div>
+          <div class="meta-line">
+            <i class="fa-solid fa-envelope"></i>
+            <a href="mailto:singhnitish.work@gmail.com">singhnitish.work@gmail.com</a>
+          </div>
+          <div class="meta-line">
+            <i class="fa-solid fa-globe"></i>
+            <a href="https://www.nitishsingh.com" target="_blank" rel="noopener">www.nitishsingh.com</a>
+          </div>
 
-          <hr>
-
+          <hr />
           <h3>Research interests</h3>
           <div class="tag-list">
             <span class="tag">Simulation modelling</span>
@@ -69,8 +35,7 @@
             <span class="tag">Agentic AI</span>
           </div>
 
-          <hr>
-
+          <hr />
           <h3>Tools</h3>
           <div class="tag-list">
             <span class="tag tag-muted">Python</span>
@@ -85,25 +50,31 @@
             <span class="tag tag-muted">Power BI</span>
           </div>
 
-          <hr>
-
+          <hr />
           <h3>Certifications</h3>
           <div class="tag-list">
             <span class="tag tag-muted">Lean Six Sigma · Black Belt</span>
           </div>
 
-          <hr>
-
+          <hr />
           <h3>Languages</h3>
-          <div class="meta-line">English <span class="ms-auto" style="color:var(--text-muted); font-size:0.85rem;">Fluent</span></div>
-          <div class="meta-line">Dutch <span class="ms-auto" style="color:var(--text-muted); font-size:0.85rem;">Conversational</span></div>
-          <div class="meta-line">Hindi <span class="ms-auto" style="color:var(--text-muted); font-size:0.85rem;">Native</span></div>
+          <div class="meta-line">
+            English
+            <span class="ms-auto" style="color:var(--text-muted); font-size:0.85rem;">Fluent</span>
+          </div>
+          <div class="meta-line">
+            Dutch
+            <span class="ms-auto" style="color:var(--text-muted); font-size:0.85rem;">Conversational</span>
+          </div>
+          <div class="meta-line">
+            Hindi
+            <span class="ms-auto" style="color:var(--text-muted); font-size:0.85rem;">Native</span>
+          </div>
         </div>
       </div>
 
       <!-- RIGHT: experience + education -->
       <div class="col-lg-8">
-
         <!-- Experience -->
         <div class="timeline-card">
           <h2><i class="fa-solid fa-suitcase"></i> Experience</h2>
@@ -116,7 +87,11 @@
               <span><i class="fa-solid fa-location-dot"></i>Eindhoven, NL</span>
               <span class="badge-current">Current</span>
             </div>
-            <p>Research on intelligent and interoperable shopfloors: semantic interoperability through Unified Namespace architectures and agentic AI for adaptive production. Affiliated with the AI-Enabled Manufacturing & Maintenance group at the Eindhoven AI Systems Institute.</p>
+            <p>
+              Research on intelligent and interoperable shopfloors: semantic interoperability through
+              Unified Namespace architectures and agentic AI for adaptive production. Affiliated with
+              the AI-Enabled Manufacturing & Maintenance group at the Eindhoven AI Systems Institute.
+            </p>
           </div>
 
           <div class="exp-item">
@@ -127,7 +102,12 @@
               <span><i class="fa-solid fa-location-dot"></i>Eindhoven, NL</span>
               <span class="badge-current">Current</span>
             </div>
-            <p>Designing and developing digital platforms, AI agents, and Power BI dashboards for production; integrating data across ERP, MES, and shopfloor systems. Collaborating with production, CAM, and IT stakeholders to drive Industry 4.0 adoption — including next-generation equipment selection, layout, and process planning.</p>
+            <p>
+              Designing and developing digital platforms, AI agents, and Power BI dashboards for
+              production; integrating data across ERP, MES, and shopfloor systems. Collaborating with
+              production, CAM, and IT stakeholders to drive Industry 4.0 adoption — including
+              next-generation equipment selection, layout, and process planning.
+            </p>
           </div>
 
           <div class="exp-item">
@@ -147,7 +127,12 @@
               <span><i class="fa-regular fa-calendar"></i>Sep 2019 – May 2025</span>
               <span><i class="fa-solid fa-location-dot"></i>Eindhoven, NL</span>
             </div>
-            <p>New manufacturing layout evaluation using AnyLogic discrete-event simulation. Development of dispatching algorithms for self-guided vehicles using metaheuristics and reinforcement learning in Python. Led data-analytics projects with VDL Group, Schenker Logistics, Rockwool, and Van der Wal.</p>
+            <p>
+              New manufacturing layout evaluation using AnyLogic discrete-event simulation.
+              Development of dispatching algorithms for self-guided vehicles using metaheuristics
+              and reinforcement learning in Python. Led data-analytics projects with VDL Group,
+              Schenker Logistics, Rockwool, and Van der Wal.
+            </p>
           </div>
 
           <div class="exp-item">
@@ -157,7 +142,11 @@
               <span><i class="fa-regular fa-calendar"></i>Nov 2017 – Aug 2019</span>
               <span><i class="fa-solid fa-location-dot"></i>Eindhoven, NL</span>
             </div>
-            <p>Created digital twins and simulation models for facility redesign at KMWE during the relocation to Brainport Industries Campus. Developed customised AGV fleet-control algorithms at Ijssel Technologies.</p>
+            <p>
+              Created digital twins and simulation models for facility redesign at KMWE during the
+              relocation to Brainport Industries Campus. Developed customised AGV fleet-control
+              algorithms at Ijssel Technologies.
+            </p>
           </div>
 
           <div class="exp-item">
@@ -167,7 +156,11 @@
               <span><i class="fa-regular fa-calendar"></i>Jul 2014 – Aug 2017</span>
               <span><i class="fa-solid fa-location-dot"></i>Bangalore, India</span>
             </div>
-            <p>Managed Agile SAP GRC (governance, risk, compliance) implementation projects on-site in Brazil and China. Automated manual data uploads in SAP ECC and supported segregation-of-duties and fraud-management initiatives.</p>
+            <p>
+              Managed Agile SAP GRC (governance, risk, compliance) implementation projects on-site
+              in Brazil and China. Automated manual data uploads in SAP ECC and supported
+              segregation-of-duties and fraud-management initiatives.
+            </p>
           </div>
         </div>
 
@@ -182,7 +175,11 @@
               <span><i class="fa-regular fa-calendar"></i>Sep 2019 – May 2025</span>
               <span><i class="fa-solid fa-location-dot"></i>Eindhoven, NL</span>
             </div>
-            <p>Part of the Advanced Manufacturing Logistics program at Brainport Industries Campus. Thesis on simulation- and AI-based dispatching and scheduling of heterogeneous AGV fleets in high-mix, low-volume manufacturing.</p>
+            <p>
+              Part of the Advanced Manufacturing Logistics program at Brainport Industries Campus.
+              Thesis on simulation- and AI-based dispatching and scheduling of heterogeneous AGV
+              fleets in high-mix, low-volume manufacturing.
+            </p>
           </div>
 
           <div class="exp-item">
@@ -192,7 +189,10 @@
               <span><i class="fa-regular fa-calendar"></i>Sep 2017 – Aug 2019</span>
               <span><i class="fa-solid fa-location-dot"></i>Eindhoven, NL</span>
             </div>
-            <p>Manufacturing Systems Engineering — a programme on the interface of machine technology and industrial processes.</p>
+            <p>
+              Manufacturing Systems Engineering — a programme on the interface of machine technology
+              and industrial processes.
+            </p>
             <span class="badge-honor"><i class="fa-solid fa-award me-1"></i>Graduated Cum Laude</span>
           </div>
 
@@ -203,7 +203,10 @@
               <span><i class="fa-regular fa-calendar"></i>Jul 2010 – May 2014</span>
               <span><i class="fa-solid fa-location-dot"></i>Vellore, India</span>
             </div>
-            <p>Head of Design, Team Jaabaz International Baja team — design, analysis and construction of an all-terrain vehicle.</p>
+            <p>
+              Head of Design, Team Jaabaz International Baja team — design, analysis and construction
+              of an all-terrain vehicle.
+            </p>
             <span class="badge-honor"><i class="fa-solid fa-award me-1"></i>Special Student Achiever</span>
           </div>
         </div>
@@ -228,27 +231,7 @@
             </li>
           </ul>
         </div>
-
       </div>
     </div>
   </main>
-
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="social">
-        <a href="https://www.linkedin.com/in/nitish-singh/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="https://github.com/nitman118" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-        <a href="mailto:singhnitish.work@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
-      </div>
-      <div class="copyright">© <span id="year"></span> Nitish Singh</div>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-    crossorigin="anonymous"></script>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
-</body>
-
-</html>
+</BaseLayout>

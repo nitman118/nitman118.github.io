@@ -1,0 +1,64 @@
+---
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Notes' },
+  { href: '/publications', label: 'Publications' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/talks', label: 'Talks' },
+  { href: '/now', label: 'Now' },
+];
+
+const isActive = (href: string) => {
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(href + '/');
+};
+---
+
+<nav class="site-nav navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <span class="brand-mark">NS</span>
+      <span class="brand-name">Nitish Singh</span>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      aria-controls="primaryNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      data-nav-toggle
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="primaryNav" data-nav-collapse>
+      <ul class="navbar-nav ms-auto">
+        {links.map((link) => (
+          <li class="nav-item">
+            <a
+              class={`nav-link${isActive(link.href) ? ' active' : ''}`}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+              href={link.href}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const collapse = document.querySelector('[data-nav-collapse]');
+  if (toggle && collapse) {
+    toggle.addEventListener('click', () => {
+      collapse.classList.toggle('show');
+      const expanded = collapse.classList.contains('show');
+      toggle.setAttribute('aria-expanded', String(expanded));
+    });
+  }
+</script>

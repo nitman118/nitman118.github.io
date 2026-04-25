@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<BaseLayout
+  title="Notes — Nitish Singh"
+  description="Monthly field notes from the intersection of operations research and the manufacturing shopfloor."
+>
+  <main class="container">
+    <div class="page-header">
+      <div class="page-eyebrow">Writing</div>
+      <h1>Notes</h1>
+      <p class="page-lead">
+        Monthly essays from the intersection of academic research and a real manufacturing
+        shopfloor — written for leaders who want signal over hype.
+      </p>
+    </div>
+
+    {posts.length === 0 ? (
+      <div class="empty-state">
+        <i class="fa-regular fa-pen-to-square"></i>
+        <h3>The first note is on its way.</h3>
+        <p>
+          Subscribe via <a href="/rss.xml">RSS</a> or follow on
+          <a href="https://www.linkedin.com/in/nitish-singh/" target="_blank" rel="noopener">LinkedIn</a> to be notified.
+        </p>
+      </div>
+    ) : (
+      <ul class="post-list">
+        {posts.map((post) => (
+          <li>
+            <a class="post-link" href={`/blog/${post.id}/`}>
+              <div class="post-meta">
+                <time datetime={post.data.publishedAt.toISOString()}>
+                  {formatDate(post.data.publishedAt)}
+                </time>
+                {post.data.readingTime && <span>· {post.data.readingTime} min read</span>}
+                {post.data.tags.length > 0 && (
+                  <span>· {post.data.tags.join(', ')}</span>
+                )}
+              </div>
+              <h2 class="post-title">{post.data.title}</h2>
+              <p class="post-summary">{post.data.summary}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <div class="cta-card">
+      <h3>Get new notes by RSS</h3>
+      <p>
+        A proper email newsletter is in the works. For now, the <a href="/rss.xml">RSS feed</a>
+        is the simplest way to subscribe — or follow on
+        <a href="https://www.linkedin.com/in/nitish-singh/" target="_blank" rel="noopener">LinkedIn</a>
+        for cross-posts.
+      </p>
+    </div>
+  </main>
+</BaseLayout>

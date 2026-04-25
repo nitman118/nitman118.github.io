@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Talk {
+  title: string;
+  venue: string;
+  year: number;
+  date?: string;
+  type: 'conference' | 'invited' | 'podcast' | 'workshop';
+  url?: string;
+  slidesUrl?: string;
+  recordingUrl?: string;
+  description?: string;
+}
+
+const talks: Talk[] = [
+  {
+    title: 'Simulation-based AGV Management with a Linear Dispatching Rule',
+    venue: 'Winter Simulation Conference 2023',
+    year: 2023,
+    type: 'conference',
+    url: 'https://dl.acm.org/doi/abs/10.5555/3643142.3643304',
+  },
+  {
+    title: 'Simulation-based Performance Evaluation of a Manufacturing Facility with Vertical AS/RS',
+    venue: 'Winter Simulation Conference 2019',
+    year: 2019,
+    type: 'conference',
+    url: 'https://ieeexplore.ieee.org/document/9004715',
+  },
+];
+
+const sorted = [...talks].sort((a, b) => b.year - a.year);
+
+const typeLabel: Record<Talk['type'], string> = {
+  conference: 'Conference',
+  invited: 'Invited talk',
+  podcast: 'Podcast',
+  workshop: 'Workshop',
+};
+---
+
+<BaseLayout
+  title="Talks — Nitish Singh"
+  description="Conference talks, invited talks, and podcast appearances by Nitish Singh."
+>
+  <main class="container" style="max-width: 880px;">
+    <div class="page-header">
+      <div class="page-eyebrow">Speaking</div>
+      <h1>Talks</h1>
+      <p class="page-lead">
+        Conference presentations, invited talks, and podcast appearances. Open to keynotes,
+        panels, podcasts, and workshops on simulation, AI for manufacturing, and Industry 4.0
+        deployment.
+      </p>
+    </div>
+
+    <ul class="post-list">
+      {sorted.map((talk) => (
+        <li>
+          <div class="post-meta">
+            <time>{talk.year}</time>
+            <span>· {typeLabel[talk.type]}</span>
+          </div>
+          <h3 class="post-title" style="font-size: 1.15rem;">{talk.title}</h3>
+          <p class="post-summary">
+            <strong>{talk.venue}</strong>
+            {talk.description && <> — {talk.description}</>}
+          </p>
+          <div class="mt-2" style="display:flex; gap:0.6rem; flex-wrap: wrap;">
+            {talk.url && (
+              <a href={talk.url} target="_blank" rel="noopener" class="btn-secondary-clean" style="padding:0.35rem 0.75rem; font-size:0.85rem;">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Paper
+              </a>
+            )}
+            {talk.slidesUrl && (
+              <a href={talk.slidesUrl} target="_blank" rel="noopener" class="btn-secondary-clean" style="padding:0.35rem 0.75rem; font-size:0.85rem;">
+                <i class="fa-solid fa-file-powerpoint"></i> Slides
+              </a>
+            )}
+            {talk.recordingUrl && (
+              <a href={talk.recordingUrl} target="_blank" rel="noopener" class="btn-secondary-clean" style="padding:0.35rem 0.75rem; font-size:0.85rem;">
+                <i class="fa-solid fa-play"></i> Recording
+              </a>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <div class="cta-card">
+      <h3>Speaking inquiries</h3>
+      <p>
+        I speak about simulation in manufacturing, AGV dispatching with reinforcement learning,
+        Unified Namespaces, and the realities of deploying AI on a real shopfloor. If you're
+        organising a conference, podcast, or workshop, get in touch.
+      </p>
+      <a href="mailto:singhnitish.work@gmail.com?subject=Speaking%20inquiry" class="btn-primary-clean">
+        <i class="fa-solid fa-envelope"></i> Email me
+      </a>
+    </div>
+  </main>
+</BaseLayout>

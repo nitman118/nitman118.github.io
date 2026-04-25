@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Pub {
+  title: string;
+  venue: string;
+  year: number;
+  authors: string;
+  abstract: string;
+  url: string;
+  award?: string;
+}
+
+const publications: Pub[] = [
+  {
+    title: 'A Digital Platform for Heterogeneous Fleet Management in Manufacturing Intralogistics',
+    venue: 'Handbook on Digital Business Ecosystems in Manufacturing',
+    year: 2024,
+    authors: 'N. Singh, A. Akcay, Q.-V. Dang, I. Adan, E. A. Thijssen',
+    abstract:
+      'A digital platform for serving multiple tenants of Brainport Industries Campus sharing a fleet of heterogeneous automated guided vehicles. The platform combines an order-input UI, an order database, and a central cloud server housing the dispatching intelligence.',
+    url: 'https://www.elgaronline.com/edcollchap/book/9781035301003/book-part-9781035301003-30.xml',
+  },
+  {
+    title: 'Dispatching AGVs with Battery Constraints using Deep Reinforcement Learning',
+    venue: 'Computers & Industrial Engineering',
+    year: 2024,
+    authors: 'N. Singh, A. Akcay, Q.-V. Dang, T. Martagan, I. Adan',
+    abstract:
+      'Real-time dispatching of an AGV fleet with battery constraints, formulated as a Markov Decision Process and solved with deep reinforcement learning. AGVs must be assigned to randomly arriving transport requests under stochastic demand.',
+    url: 'https://doi.org/10.1016/j.cie.2023.109678',
+  },
+  {
+    title: 'A Matheuristic for AGV Scheduling with Battery Constraints',
+    venue: 'European Journal of Operational Research',
+    year: 2022,
+    authors: 'N. Singh, Q.-V. Dang, A. Akcay, I. Adan, T. Martagan',
+    abstract:
+      'Scheduling automated guided vehicles with battery constraints, where each transport request involves a soft time window and the AGV fleet is heterogeneous in capabilities and travel costs.',
+    url: 'https://www.sciencedirect.com/science/article/pii/S0377221721006755?via%3Dihub',
+    award: 'Best Paper 2025',
+  },
+  {
+    title: 'Simulation-based AGV Management with a Linear Dispatching Rule',
+    venue: 'Winter Simulation Conference (WSC)',
+    year: 2023,
+    authors: 'N. Singh, J. B. H. C. Didden, A. Akcay, T. G. Martagan, I. J. B. F. Adan',
+    abstract:
+      'Real-time dispatching of a heterogeneous AGV fleet with battery constraints. An AGV-specific linear dispatching rule is learned to assign vehicles to randomly arriving transport requests, minimising a weighted sum of tardiness and travel costs. Validated on real-world data from an industry partner.',
+    url: 'https://dl.acm.org/doi/abs/10.5555/3643142.3643304',
+  },
+  {
+    title: 'Scheduling Heterogeneous Multi-load AGVs with Battery Constraints',
+    venue: 'Computers & Operations Research',
+    year: 2021,
+    authors: 'Q.-V. Dang, N. Singh, I. Adan, T. Martagan, D. van de Sande',
+    abstract:
+      'Scheduling transport requests on multi-load and multi-ability AGVs with battery management — addressing the increasing complexity of modern intralogistics fleets and their limited battery capacity.',
+    url: 'https://www.sciencedirect.com/science/article/pii/S0305054821002586?via%3Dihub',
+  },
+  {
+    title: 'Simulation-based Performance Evaluation of a Manufacturing Facility with Vertical AS/RS',
+    venue: 'Winter Simulation Conference (WSC)',
+    year: 2019,
+    authors: 'N. Singh, K. Herps, T. G. Martagan, I. J. B. F. Adan',
+    abstract:
+      "Hybrid simulation modelling of KMWE's Tool Service Center to assess the impact of input uncertainties (operator productivity, vertical storage height) on throughput. The outcomes drove an investment decision on AS/RS equipment acquisition.",
+    url: 'https://ieeexplore.ieee.org/document/9004715',
+  },
+];
+---
+
+<BaseLayout
+  title="Publications — Nitish Singh"
+  description="Peer-reviewed publications on simulation, AGV scheduling, and reinforcement learning in manufacturing."
+>
+  <main class="container" style="padding-top: 2.5rem;">
+    <div class="page-header" style="padding: 1rem 0 2rem;">
+      <div class="page-eyebrow">Peer-reviewed work</div>
+      <h1>Publications</h1>
+      <p class="page-lead">
+        Selected publications on AGV scheduling, dispatching, simulation-based decision-making, and
+        digital platforms for manufacturing intralogistics.
+      </p>
+    </div>
+
+    {publications.map((pub) => (
+      <article class="pub-card">
+        <h3 class="pub-title">
+          {pub.title}
+          {pub.award && (
+            <span class="pub-tag" style="background:#fef3c7;color:#92400e;">{pub.award}</span>
+          )}
+        </h3>
+        <div class="pub-venue">
+          <i class="fa-regular fa-bookmark"></i>
+          {pub.venue} · {pub.year}
+        </div>
+        <div class="pub-authors">{pub.authors}</div>
+        <p class="pub-abstract">{pub.abstract}</p>
+        <a href={pub.url} class="btn-pub" target="_blank" rel="noopener">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> View publication
+        </a>
+      </article>
+    ))}
+
+    <p class="text-center mt-4 mb-5" style="color: var(--text-muted); font-size: 0.9rem;">
+      For an up-to-date list, see Google Scholar (link to be added).
+    </p>
+  </main>
+</BaseLayout>

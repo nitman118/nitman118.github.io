@@ -1,0 +1,20 @@
+{
+  "name": "nitishsingh-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal site of Nitish Singh — Data Scientist at KMWE, Asst. Professor at TU/e.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.0.0",
+    "@astrojs/rss": "^4.0.0",
+    "@astrojs/sitemap": "^3.2.0",
+    "astro": "^5.0.0"
+  }
+}

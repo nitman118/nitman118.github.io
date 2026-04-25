@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Projects — Nitish Singh"
+  description="Side projects, courses, and small web apps by Nitish Singh."
+>
+  <main class="container" style="padding-top: 2.5rem;">
+    <div class="page-header" style="padding: 1rem 0 2rem;">
+      <div class="page-eyebrow">Things I've built</div>
+      <h1>Projects</h1>
+      <p class="page-lead">
+        Courses, demos, and small web apps. The teaching work is what I'm proudest of right now —
+        the rest are weekend experiments.
+      </p>
+    </div>
+
+    <!-- Teaching / courses -->
+    <div class="section-eyebrow">Teaching</div>
+    <h2 class="mb-4" style="font-size: 1.6rem;">Courses</h2>
+    <div class="projects-grid mb-5">
+      <a
+        href="https://www.udemy.com/course/learn-simpy/"
+        target="_blank"
+        rel="noopener"
+        class="proj-card"
+      >
+        <div class="proj-icon"><i class="fa-brands fa-python"></i></div>
+        <h3>Learn SimPy: Build Python Simulations</h3>
+        <p>
+          Co-created Udemy course on building discrete-event simulations in Python with SimPy —
+          covering processes, resources, monitoring and case studies.
+        </p>
+        <span class="proj-link">View on Udemy <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+    </div>
+
+    <!-- Side projects -->
+    <div class="section-eyebrow">Side projects</div>
+    <h2 class="mb-4" style="font-size: 1.6rem;">Web apps</h2>
+    <div class="projects-grid">
+      <a href="https://simaas.netlify.app/" target="_blank" rel="noopener" class="proj-card">
+        <div class="proj-icon"><img src="/assets/images/simaas.png" alt="" /></div>
+        <h3>Sim-as-a-Service</h3>
+        <p>
+          A web app that runs a basic simulation using SimPy based on user input — exploring how
+          simulations can be served on demand.
+        </p>
+        <span class="proj-link">Visit <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a href="https://eoq.netlify.app/" target="_blank" rel="noopener" class="proj-card">
+        <div class="proj-icon"><img src="/assets/images/eoq.png" alt="" /></div>
+        <h3>EOQ Calculator</h3>
+        <p>
+          A small calculator for the classic Economic Order Quantity model, with clean inputs and
+          live updates.
+        </p>
+        <span class="proj-link">Visit <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a href="https://adwiseapp.netlify.app" target="_blank" rel="noopener" class="proj-card">
+        <div class="proj-icon"><i class="fa-solid fa-lightbulb"></i></div>
+        <h3>Adwise</h3>
+        <p>
+          A small app that pulls random advice from an open API. You can also filter by subject.
+          Built to play with React.
+        </p>
+        <span class="proj-link">Visit <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a href="https://memerator.netlify.app" target="_blank" rel="noopener" class="proj-card">
+        <div class="proj-icon"><img src="/assets/images/Trollface.svg" alt="" /></div>
+        <h3>Memerator</h3>
+        <p>
+          An app that generates random memes using an updated set of trending memes. A fun React
+          experiment.
+        </p>
+        <span class="proj-link">Visit <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+    </div>
+  </main>
+</BaseLayout>

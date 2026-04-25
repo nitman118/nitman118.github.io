@@ -1,28 +1,26 @@
-<!-- Reference - https://www.youtube.com/watch?v=eux3gKwNai8 -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <title>Nitish Singh - Personal Webpage</title>
+  <meta charset="UTF-8">
+  <title>Projects — Nitish Singh</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+  <meta name="description" content="Side projects, courses, and small web apps by Nitish Singh.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/b645930f20.js" crossorigin="anonymous"></script>
-  <!-- CSS only -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-    crossorigin="anonymous"></script>
   <link rel="stylesheet" href="assets/css/styles.css" />
   <link rel="shortcut icon" href="assets/images/SiteLogo.png">
 </head>
 
 <body>
   <!-- NAVBAR -->
-  <nav class="py-3 navbar navbar-expand-lg fixed-top auto-hiding-navbar navbar-dark bg-custom nav-shadow">
+  <nav class="site-nav navbar navbar-expand-lg fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Nitish Singh | Projects</a>
+      <a class="navbar-brand" href="./index.html">Nitish Singh</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -30,100 +28,89 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a title="Home" class="nav-link" aria-current="page" href="./index.html"><i
-                class="fa-solid fa-house fa-2x"></i></a>
+            <a class="nav-link" href="./index.html">Home</a>
           </li>
-
           <li class="nav-item">
-            <a title="About Me" class="nav-link" href="./resume.html"><i class="fa-solid fa-file fa-2x"></i></a>
+            <a class="nav-link" href="./resume.html">About</a>
           </li>
-
           <li class="nav-item">
-            <a title="Publications" class="nav-link" href="./publications.html"><i
-                class="fa-solid fa-newspaper fa-2x"></i></a>
+            <a class="nav-link" href="./publications.html">Publications</a>
           </li>
-
           <li class="nav-item">
-            <a title="My Works" class="nav-link active" href="./projects.html"><i
-                class="fa-solid fa-briefcase fa-2x"></i></a>
+            <a class="nav-link active" aria-current="page" href="./projects.html">Projects</a>
           </li>
-
         </ul>
       </div>
     </div>
   </nav>
-  <!-- NAVBAR END -->
 
-  <!-- Projects section -->
-  <div class="container projects--container">
+  <main class="container" style="padding-top: 2.5rem;">
 
-    <div onclick="location.href='https://adwiseapp.netlify.app';" class="proj-card">
-      <div class="img-holder">
-        <img class="proj-img" src="./assets/images/vite.svg" alt="">
-      </div>
-      <div class="proj-card-text">
-        <h2>Adwise</h2>
-        <p class="multi-line ">An app to seek random advice from an opens sourced API. You may also filter on a subject.
-        </p>
-      </div>
+    <!-- Teaching / courses -->
+    <div class="section-eyebrow">Teaching</div>
+    <h2 class="mb-4" style="font-size: 1.85rem;">Courses</h2>
+    <div class="projects-grid mb-5">
+      <a href="https://www.udemy.com/course/learn-simpy/" target="_blank" rel="noopener" class="proj-card">
+        <div class="proj-icon"><i class="fa-brands fa-python"></i></div>
+        <h3>Learn SimPy: Build Python Simulations</h3>
+        <p>Co-created Udemy course on building discrete-event simulations in Python with SimPy — covering processes, resources, monitoring and case studies.</p>
+        <span class="proj-link">View on Udemy <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
     </div>
 
-    <div onclick="location.href='https://memerator.netlify.app';" class="proj-card">
-      <div class="img-holder">
-        <img class="proj-img" src="./assets/images/Trollface.svg" alt="">
-      </div>
-      <div class="proj-card-text">
-        <h2>Memerator</h2>
-        <p class="multi-line ">An app to generate random memes based on updated set of trending memes.</p>
-      </div>
+    <!-- Side projects -->
+    <div class="section-eyebrow">Side projects</div>
+    <h2 class="mb-4" style="font-size: 1.85rem;">Web apps</h2>
+    <div class="projects-grid">
+
+      <a href="https://simaas.netlify.app/" target="_blank" rel="noopener" class="proj-card">
+        <div class="proj-icon"><img src="./assets/images/simaas.png" alt=""></div>
+        <h3>Sim-as-a-Service</h3>
+        <p>A web app that runs a basic simulation using SimPy based on user input — exploring how simulations can be served on demand.</p>
+        <span class="proj-link">Visit <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a href="https://eoq.netlify.app/" target="_blank" rel="noopener" class="proj-card">
+        <div class="proj-icon"><img src="./assets/images/eoq.png" alt=""></div>
+        <h3>EOQ Calculator</h3>
+        <p>A small calculator for the classic Economic Order Quantity model, with clean inputs and live updates.</p>
+        <span class="proj-link">Visit <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a href="https://adwiseapp.netlify.app" target="_blank" rel="noopener" class="proj-card">
+        <div class="proj-icon"><i class="fa-solid fa-lightbulb"></i></div>
+        <h3>Adwise</h3>
+        <p>A small app that pulls random advice from an open API. You can also filter by subject. Built to play with React.</p>
+        <span class="proj-link">Visit <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a href="https://memerator.netlify.app" target="_blank" rel="noopener" class="proj-card">
+        <div class="proj-icon"><img src="./assets/images/Trollface.svg" alt=""></div>
+        <h3>Memerator</h3>
+        <p>An app that generates random memes using an updated set of trending memes. A fun React experiment.</p>
+        <span class="proj-link">Visit <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
     </div>
 
-    <div onclick="location.href='https://eoq.netlify.app/';" class="proj-card">
-      <div class="img-holder">
-        <img class="proj-img" src="./assets/images/eoq.png" alt="">
-      </div>
-      <div class="proj-card-text">
-        <h2>EOQ Calculator</h2>
-        <p class="multi-line ">An app to calculate economic order quantity.</p>
-      </div>
-    </div>
+  </main>
 
-
-    <div onclick="location.href='https://simaas.netlify.app/';" class="proj-card">
-      <div class="img-holder">
-        <img class="proj-img" src="./assets/images/simaas.png" alt="">
-      </div>
-      <div class="proj-card-text">
-        <h2>Sim-as-a-Service</h2>
-        <p class="multi-line ">A webapp that runs a basic simulation using simpy based on user input.</p>
-      </div>
-    </div>
-
-
-
-
-
-
-
-  </div>
-  <!-- End of Projects Section -->
-
-
-
-  <!-- Contact Section -->
-  <section id="social">
+  <!-- FOOTER -->
+  <footer class="site-footer">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col social">
-          <a href="https://www.facebook.com/nitman118" target="_blank"><i class="item fa-brands fa-facebook"></i></a>
-          <a href="https://www.linkedin.com/in/nitish-singh/" target="_blank"><i
-              class="item fa-brands fa-linkedin"></i></a>
-          <a href="https://github.com/nitman118" target="_blank"><i class="item fa-brands fa-github"></i></i></a>
-        </div>
+      <div class="social">
+        <a href="https://www.linkedin.com/in/nitish-singh/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://github.com/nitman118" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="mailto:singhnitish.work@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
       </div>
+      <div class="copyright">© <span id="year"></span> Nitish Singh</div>
     </div>
-  </section>
-  <!-- End of contact section -->
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 
 </html>

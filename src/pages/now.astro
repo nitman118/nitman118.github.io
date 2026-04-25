@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lastUpdated = new Date('2026-04-26');
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout
+  title="Now — Nitish Singh"
+  description="What I'm focused on right now."
+>
+  <main class="container" style="max-width: 720px;">
+    <div class="page-header">
+      <div class="page-eyebrow">Now</div>
+      <h1>What I'm focused on right now</h1>
+      <p class="page-lead">
+        Inspired by Derek Sivers' <a href="https://nownownow.com/about" target="_blank" rel="noopener">/now page movement</a>
+        — a single page that says what's currently on my plate. Updated whenever something changes.
+      </p>
+    </div>
+
+    <div class="now-card">
+      <p class="now-line">
+        <strong>Eindhoven, NL</strong> — splitting the week between <strong>KMWE</strong>
+        (Data Scientist) and <strong>TU/e</strong> (Assistant Professor, AIMM/EAISI).
+      </p>
+
+      <h3 style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin: 1.5rem 0 0.75rem;">At KMWE</h3>
+      <ul>
+        <li>Building AI agents and Power BI dashboards for production teams.</li>
+        <li>Integrating data across ERP, MES, and shopfloor systems toward a Unified Namespace.</li>
+        <li>Supporting next-generation equipment selection and process planning.</li>
+      </ul>
+
+      <h3 style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin: 1.5rem 0 0.75rem;">At TU/e</h3>
+      <ul>
+        <li>Research on intelligent and interoperable shopfloors.</li>
+        <li>Agentic AI for adaptive production.</li>
+        <li>Open to MSc thesis collaborations on simulation, RL, and digital-twin topics.</li>
+      </ul>
+
+      <h3 style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin: 1.5rem 0 0.75rem;">On the side</h3>
+      <ul>
+        <li>Writing one essay a month — see <a href="/blog">notes</a>.</li>
+        <li>Maintaining the <a href="https://www.udemy.com/course/learn-simpy/" target="_blank" rel="noopener">Learn SimPy</a> Udemy course with my co-creator.</li>
+      </ul>
+
+      <p style="margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem;">
+        Last updated {formatDate(lastUpdated)}.
+      </p>
+    </div>
+  </main>
+</BaseLayout>

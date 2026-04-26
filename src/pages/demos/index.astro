@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+interface Demo {
+  title: string;
+  href: string;
+  description: string;
+  status: 'live' | 'wip';
+  icon: string;
+}
+
+const demos: Demo[] = [
+  {
+    title: 'Unified Namespace generator',
+    href: '/demos/uns-generator/',
+    description:
+      'Describe a factory in plain English, get a candidate UNS topic hierarchy back. Editable, exportable as MQTT topics or JSON.',
+    status: 'wip',
+    icon: 'fa-sitemap',
+  },
+];
+---
+
+<BaseLayout
+  title="Demos — Nitish Singh"
+  description="Interactive demos at the intersection of operations research, simulation, and AI for manufacturing."
+>
+  <main class="container" style="padding-top: 2.5rem;">
+    <div class="page-header" style="padding: 1rem 0 2rem;">
+      <div class="page-eyebrow">Live experiments</div>
+      <h1>Demos</h1>
+      <p class="page-lead">
+        Small, interactive things you can play with — built to make ideas from research and
+        the shopfloor concrete.
+      </p>
+    </div>
+
+    <div class="projects-grid">
+      {demos.map((demo) => (
+        <a href={demo.href} class="proj-card">
+          <div class="proj-icon"><i class={`fa-solid ${demo.icon}`}></i></div>
+          <h3>
+            {demo.title}
+            {demo.status === 'wip' && (
+              <span style="margin-left:0.5rem; font-size:0.7rem; padding:0.15rem 0.5rem; background:#fef3c7; color:#92400e; border-radius:999px; vertical-align:middle; text-transform:uppercase; letter-spacing:0.05em;">
+                In progress
+              </span>
+            )}
+          </h3>
+          <p>{demo.description}</p>
+          <span class="proj-link">Open demo <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+      ))}
+    </div>
+  </main>
+</BaseLayout>

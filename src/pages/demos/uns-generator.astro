@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import App from '../../demos/uns-generator/App.tsx';
+---
+
+<BaseLayout
+  title="UNS Generator — Nitish Singh"
+  description="Describe a factory in plain English and generate a candidate Unified Namespace topic hierarchy. A demo of LLM-assisted Industry 4.0 modelling."
+>
+  <main class="container" style="padding-top: 2.5rem; padding-bottom: 4rem;">
+    <div class="page-header" style="padding: 1rem 0 1.5rem;">
+      <div class="page-eyebrow">Demo</div>
+      <h1>Unified Namespace generator</h1>
+      <p class="page-lead">
+        Describe a factory in plain English and get a candidate Unified Namespace topic
+        hierarchy back — editable, exportable as MQTT topics or JSON. A small experiment in
+        making UNS concrete instead of abstract.
+      </p>
+      <p class="page-lead" style="font-size: 0.9rem; color: var(--text-muted);">
+        <i class="fa-solid fa-flask" style="margin-right: 0.4rem;"></i>
+        Currently using a local mock generator. Real LLM (Groq + Llama 3.3 70B) coming next.
+      </p>
+    </div>
+
+    <App client:only="react" />
+
+    <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; max-width: 720px;">
+      <p>
+        <strong>What is a Unified Namespace?</strong> A single, consistent topic hierarchy
+        (often hosted on an MQTT broker) that exposes the live state of every machine, line,
+        and process in a factory. It's a key Industry 4.0 pattern but published examples are
+        scarce — this generator gives a starting point you can edit and adapt.
+      </p>
+    </div>
+  </main>
+</BaseLayout>

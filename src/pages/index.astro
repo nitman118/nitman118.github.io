@@ -1,14 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('blog'))
-  .filter((p) => !p.data.draft)
-  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
-  .slice(0, 3);
-
-const formatDate = (d: Date) =>
-  d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
 
 <BaseLayout
@@ -49,8 +40,8 @@ const formatDate = (d: Date) =>
             <a href="/about" class="btn-primary-clean">
               <i class="fa-solid fa-user"></i> About me
             </a>
-            <a href="/blog" class="btn-secondary-clean">
-              <i class="fa-solid fa-pen-nib"></i> Read the notes
+            <a href="/publications" class="btn-secondary-clean">
+              <i class="fa-solid fa-book-open"></i> Publications
             </a>
           </div>
         </div>
@@ -122,39 +113,6 @@ const formatDate = (d: Date) =>
       </div>
     </div>
   </section>
-
-  <!-- LATEST NOTES -->
-  {posts.length > 0 && (
-    <section id="latest-notes">
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2">
-          <div>
-            <div class="section-eyebrow">Latest notes</div>
-            <h2 class="mb-0">Writing</h2>
-          </div>
-          <a href="/blog" class="btn-secondary-clean">
-            All notes <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-        <ul class="post-list">
-          {posts.map((post) => (
-            <li>
-              <a class="post-link" href={`/blog/${post.id}/`}>
-                <div class="post-meta">
-                  <time datetime={post.data.publishedAt.toISOString()}>
-                    {formatDate(post.data.publishedAt)}
-                  </time>
-                  {post.data.readingTime && <span>· {post.data.readingTime} min read</span>}
-                </div>
-                <h3 class="post-title">{post.data.title}</h3>
-                <p class="post-summary">{post.data.summary}</p>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )}
 
   <!-- RESEARCH INTERESTS -->
   <section id="interests">

@@ -5,11 +5,12 @@ import '../../slides/shared/deck.css';
 import '../../slides/data-platform/dip.css';
 import qrRaw from '../../slides/shared/qr-site.svg?raw';
 
-const title = 'Data Intelligence Platform for Manufacturing — interactive deck';
+const title = 'From machine signals to better decisions: a data intelligence platform for the shopfloor — Nitish Singh';
+const headline = 'From machine signals to better decisions: a data intelligence platform for the shopfloor';
 const description =
-  'An interactive talk on building a data intelligence platform for a high-mix, low-volume factory: machine and ERP data, a live medallion pipeline, data contracts, lineage and ask-your-data.';
+  'Why dashboards and AI pilots stall in high-mix manufacturing, how machine and ERP data finally meet, and live demos you can break and question in your browser. Article and presentable slide deck.';
 const canonical = new URL('/slides/data-platform/', Astro.site);
-const ogImage = new URL('/assets/images/me-prof-sq.jpeg', Astro.site);
+const ogImage = new URL('/assets/images/og/data-platform.png', Astro.site);
 const qr = qrRaw
   .replace(/<\?xml[^>]*\?>/, '')
   .replace(/width="[^"]*"\s+height="[^"]*"/, 'width="100%" height="100%"');
@@ -38,7 +39,7 @@ version: 1.3`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="article">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -46,16 +47,53 @@ version: 1.3`;
     <meta name="description" content={description} />
     <meta name="author" content="Nitish Singh" />
     <link rel="canonical" href={canonical} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="article" />
+    <meta property="article:author" content="Nitish Singh" />
+    <meta property="article:published_time" content="2026-11-15" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={headline} />
+    <meta name="twitter:description" content={description} />
     <link rel="shortcut icon" href="/assets/images/SiteLogo.png" />
     <meta name="theme-color" content="#0b1120" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline,
+      description,
+      datePublished: '2026-11-15',
+      author: { '@type': 'Person', name: 'Nitish Singh', url: 'https://nitishsingh.com' },
+      image: ogImage.toString(),
+      mainEntityOfPage: canonical.toString(),
+    })} />
   </head>
   <body>
+    <header class="site-bar">
+      <a class="brand" href="/"><b>NS</b><span>Nitish Singh</span></a>
+      <a href="/projects/">Projects</a>
+      <a href="/publications/">Publications</a>
+      <button type="button" data-deck="theme" aria-label="Toggle light or dark theme">◐</button>
+    </header>
+
+    <main class="article-wrap">
+      <div class="art-head">
+        <div class="art-kicker">Article + live slides</div>
+        <h1>{headline}</h1>
+        <p class="art-dek">
+          Why dashboards and AI pilots stall in high-mix manufacturing, how machine and ERP data
+          finally meet, and live demos you can break and question in your browser.
+        </p>
+        <div class="byline"><b>Nitish Singh</b><span>November 2026</span><span>9 min read</span></div>
+      </div>
+
+      <div class="viewer">
+      <div class="deck-shell" id="deck-shell" tabindex="0" aria-label="Slides: Data Intelligence Platform for Manufacturing">
     <div class="stage" id="stage" data-footer="Data Intelligence Platform for Manufacturing">
       <!-- 1 · Title -->
       <section class="slide" id="d-title" data-title="Title">
@@ -411,7 +449,7 @@ version: 1.3`;
             <p class="lead">Try the demos yourself, and get in touch:</p>
             <ul class="contact">
               <li><span>Web</span><b>nitishsingh.com</b></li>
-              <li><span>This deck</span><b>nitishsingh.com/slides/data-platform</b></li>
+              <li><span>This talk</span><b>nitishsingh.com/slides/data-platform</b></li>
               <li><span>UNS deck</span><b>nitishsingh.com/slides/uns</b></li>
               <li><span>LinkedIn</span><b>linkedin.com/in/nitish-singh</b></li>
             </ul>
@@ -453,12 +491,229 @@ version: 1.3`;
           <tr><td><kbd>O</kbd></td><td>All slides</td></tr>
           <tr><td><kbd>N</kbd></td><td>Speaker notes</td></tr>
           <tr><td><kbd>T</kbd></td><td>Light / dark theme</td></tr>
-          <tr><td><kbd>Esc</kbd></td><td>Leave a text field / close overlays</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Leave a text field / close overlays / stop presenting</td></tr>
         </table>
       </div>
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="viewer-bar" aria-label="Slide controls">
+        <button type="button" data-deck="prev" aria-label="Previous slide">←</button>
+        <span class="count" data-deck="count">1 / 14</span>
+        <button type="button" data-deck="next" aria-label="Next slide">→</button>
+        <button type="button" data-deck="overview">All slides</button>
+        <button type="button" class="present" data-deck="present">⛶ Present</button>
+        <span class="hint">Click the slides, then use ← → · F for full screen</span>
+      </div>
+      </div>
+
+      <article class="prose">
+        <p class="lede">
+          Your machines know which NC program they are running. Your ERP knows which customer
+          order that work belongs to. In most factories, nobody knows both at the same moment —
+          and that is exactly where the most valuable questions live.
+        </p>
+        <p>
+          This is the written companion to a talk I give on building a <strong>data intelligence
+          platform</strong> for a high-mix, low-volume factory. It picks up where my article on the
+          <a href="/slides/uns/">Unified Namespace</a> ends: the UNS gets live data flowing; this
+          is about turning that data, together with ERP data, into something people and AI can
+          trust. The slides above are live — a simulated plant, ERP and data pipeline run in your
+          browser. Click into them, or press <strong>Present</strong> to go full screen.
+        </p>
+
+        <h2>Why dashboards and AI pilots stall</h2>
+        <p>The symptoms are remarkably consistent from one factory to the next:</p>
+        <ul>
+          <li><strong>Every report has its own OEE.</strong> Three teams, three definitions, and a meeting to argue about which number is right.</li>
+          <li><strong>Nobody trusts the numbers</strong>, so the real decisions are made in a private spreadsheet — again.</li>
+          <li><strong>Every use case starts from zero.</strong> An AI pilot spends its first months finding, cleaning and joining data.</li>
+          <li><strong>Machine and business data never meet.</strong> The machine knows its program; the ERP knows the order.</li>
+        </ul>
+        <p>None of these is a tooling problem. They are symptoms of data without structure, ownership or trust.</p>
+
+        <h2>What I mean by a data intelligence platform</h2>
+        <p>
+          A data intelligence platform is a lakehouse plus the meaning and governance that let
+          people and AI use its data safely. Data arrives from machines (via the UNS), ERP, MES,
+          quality systems and documents. It is ingested as streams and batches, stored on open
+          table formats, refined in layers, and exposed through a <strong>semantic layer</strong>
+          of governed metrics. Governance — catalog, lineage, access and quality — runs alongside
+          every layer rather than being bolted on at the end.
+        </p>
+        <p>
+          I deliberately keep this vendor-neutral. Databricks, Microsoft Fabric, Snowflake or an
+          open-source stack can all implement this shape; the architecture matters more than the
+          logo.
+        </p>
+
+        <h2>Same work, described twice</h2>
+        <p>
+          On <a href="#4" data-slide="4">slide 4</a> you can see the same piece of work from both
+          sides. A modern 5-axis machining centre publishes JSON over MQTT:
+        </p>
+        <pre><code>{jsonExample}</code></pre>
+        <p>An older lathe behind an edge gateway sends a line of CSV:</p>
+        <pre><code>{csvExample}</code></pre>
+        <p>
+          Meanwhile the ERP holds the production order, the planned routing (setup and run time
+          per operation) and the hours the operator booked. Put them side by side and the problems
+          stack up: UTC versus local time, <code>ACTIVE</code> versus <code>RUN</code>, °C versus
+          °F, a running part counter instead of parts per order, a work centre that is a group of
+          machines rather than one, bookings that arrive late — and, most importantly,
+          <strong>no order number on the machine at all</strong>. Each issue is harmless alone.
+          Together they make the simplest question hard to answer.
+        </p>
+
+        <h2>The question that needs both</h2>
+        <blockquote>
+          For this order, operation 20: how long did setup and machining really take compared with
+          what we quoted — and why?
+        </blockquote>
+        <p>
+          Answering it takes three joins: the NC program maps to an item and operation through
+          the routing, the machine maps to its work centre, and the time window lines up with the
+          operator's booking. In the example on <a href="#5" data-slide="5">slide 5</a>, ten parts
+          were planned at 470 minutes and took 552: <strong>17% over quote</strong>.
+        </p>
+        <p>
+          In a high-mix, low-volume shop that number matters. Lots are small and many parts are
+          new, so quoting accuracy drives margin. If a whole family of parts consistently runs
+          over, the quoting norms are wrong — and only the combination of machine and ERP data
+          can tell you.
+        </p>
+
+        <h2>Bronze, silver, gold — live</h2>
+        <p>
+          The usual way to structure this is the medallion architecture. <strong>Bronze</strong>
+          keeps records exactly as received. <strong>Silver</strong> cleans and types them: UTC
+          timestamps, one state vocabulary, consistent units, deduplication, and an order number
+          resolved for every event. <strong>Gold</strong> holds the business-ready tables, such as
+          planned versus actual hours per order.
+        </p>
+        <p class="try">
+          Watch it run on <a href="#6" data-slide="6">slide 6</a>. Then switch off “Convert units”:
+          the lathe's Fahrenheit values fail the data contract and land in quarantine. Switch off
+          “Enforce contract” as well, and watch an impossible temperature reach the gold table.
+        </p>
+
+        <h2>Engineering trust: contracts, quarantine and lineage</h2>
+        <p>
+          Trust isn't a feeling; it's engineered. A <strong>data contract</strong> states what a
+          dataset promises — schema, units, valid ranges, freshness — and the pipeline checks it
+          on every row. Rows that fail go to quarantine instead of polluting gold, and
+          <strong>lineage</strong> shows exactly which reports a problem could reach.
+        </p>
+        <p class="try">
+          Break the data yourself on <a href="#7" data-slide="7">slide 7</a>: a gateway update
+          that silently drops the °F unit, an operator running a program without a name, hours
+          booked at the end of the week, a gateway re-sending old messages. Then turn contract
+          enforcement off and fire the same faults again.
+        </p>
+        <p>
+          The demo also shows the trade-off honestly. Quarantine protects the report, but the
+          quarantined hours are missing until someone fixes the source. A late booking is
+          different: it isn't blocked, it's flagged, so affected orders show “awaiting booking”
+          instead of a wrong number. Choosing between blocking and flagging is a business
+          decision, not a technical one.
+        </p>
+
+        <h2>One definition of truth</h2>
+        <p>
+          The semantic layer is where a metric gets one formula, one owner and a version. Defined
+          once, the same definition serves BI reports, notebooks, ask-your-data and agents:
+        </p>
+        <pre><code>{metricExample}</code></pre>
+        <p>
+          Without it, every tool re-implements the formula, and within a year they disagree. With
+          it, “machining time variance” means the same thing in the board report and in the
+          estimator's spreadsheet.
+        </p>
+
+        <h2>Ask your data — and let it say no</h2>
+        <p>
+          On <a href="#9" data-slide="9">slide 9</a> you can ask questions such as “Which items
+          exceed quoted machining time by more than 20%?” Each answer shows how the question was
+          understood, the SQL it ran against gold tables, the result, a chart, and where the data
+          came from. In the simulated data the answer points straight at the titanium and Invar
+          parts.
+        </p>
+        <p>
+          To be transparent: the demo is scripted and deterministic, so it works offline and can't
+          invent answers on stage. A production version puts a language model in front of the
+          same semantic layer. Try asking something outside the defined metrics — a governed
+          assistant should refuse rather than guess. That refusal is a feature.
+        </p>
+
+        <h2>Governance that enables, not blocks</h2>
+        <ul>
+          <li><strong>Catalog:</strong> what data exists, what it means and who owns it, searchable by anyone.</li>
+          <li><strong>Lineage:</strong> from any KPI back to the sensor and the ERP field — impact analysis before a change, not after.</li>
+          <li><strong>Access:</strong> role- and row-level rules so each customer programme sees only its own data. In precision manufacturing, customer confidentiality is non-negotiable, and this is what lets every customer share one platform.</li>
+          <li><strong>Quality as a contract:</strong> violations alert the owner, not the CEO.</li>
+        </ul>
+
+        <h2>Where agents fit</h2>
+        <p>
+          An agent is only as good as the data it can trust. A realistic first agent for a
+          high-mix, low-volume shop is a <strong>quoting assistant</strong>: a new RFQ arrives
+          for a part similar to an Invar frame; the agent queries the semantic layer and finds
+          that similar items ran well over quote; it proposes adjusted hours with the evidence and
+          lineage; the estimator approves or edits; and the actuals flow back to make the next
+          quote better.
+        </p>
+        <p>
+          Agents call governed metrics, never raw bronze tables. Live operational context comes
+          from the <a href="/slides/uns/">Unified Namespace</a>; history comes from the platform.
+          This matches the
+          <a href="https://doi.org/10.5281/zenodo.24160166" target="_blank" rel="noopener">AIMM
+          Framework for Manufacturing Intelligence</a> I co-authored with Ivo Adan and Shane
+          Ó Seasnáin: human and agentic operators with clear roles, authorisation and oversight.
+        </p>
+
+        <h2>What goes wrong</h2>
+        <ul>
+          <li><strong>Tool before question.</strong> Buying a platform without a decision it should improve.</li>
+          <li><strong>Master data is the bottleneck.</strong> Outdated routings make every variance meaningless.</li>
+          <li><strong>Lift-and-shift reports.</strong> Rebuilding hundreds of old reports instead of the ten that matter.</li>
+          <li><strong>Gold-table sprawl.</strong> “final_v2” tables with no owners.</li>
+          <li><strong>Governance last.</strong> Retro-fitting access rules and lineage costs far more.</li>
+          <li><strong>No loop to the floor.</strong> Insights that never reach planners, estimators or operators.</li>
+        </ul>
+        <p>
+          The master-data point surprises people most. Before machine data can tell you anything
+          about quoting, the routings have to reflect how parts are really made.
+        </p>
+
+        <h2>Three things to remember</h2>
+        <ol>
+          <li><strong>Start from a decision</strong>, not a dataset.</li>
+          <li><strong>Engineer trust</strong>: contracts, quarantine and lineage.</li>
+          <li><strong>One semantic layer</strong> feeds BI, people and agents.</li>
+        </ol>
+        <p>
+          If you're building something like this, I'd like to hear which of these problems you
+          hit first. You can find me on
+          <a href="https://www.linkedin.com/in/nitish-singh/" target="_blank" rel="noopener">LinkedIn</a>.
+        </p>
+
+        <p class="note">
+          About the demo: AIMM Precision is a fictional company. Its machines, orders and results
+          are simulated in your browser and modelled on common high-mix, low-volume patterns;
+          the numbers are illustrative. Nothing is sent anywhere, and the deck keeps working
+          offline once the page has loaded.
+        </p>
+      </article>
+    </main>
+
+    <footer class="site-foot">
+      <a href="/">nitishsingh.com</a>
+      <a href="/projects/">More projects</a>
+      <a href="/slides/uns/">Companion article: the Unified Namespace</a>
+    </footer>
+
 
     <script>
       import '../../slides/shared/deck.js';

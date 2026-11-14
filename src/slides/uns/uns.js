@@ -3,7 +3,7 @@
 // by exception, and the interactive widgets used on the slides.
 // Everything runs locally — no network, so the demo works on any venue Wi-Fi.
 
-import { toast, currentSlideId } from './deck.js';
+import { toast, currentSlideId } from '../shared/deck.js';
 
 /* =========================================================================
    Helpers

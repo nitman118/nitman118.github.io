@@ -1,0 +1,468 @@
+---
+// Interactive talk deck: a data intelligence platform for manufacturing.
+// Standalone page (no CDN), sharing the slide engine with the UNS deck.
+import '../../slides/shared/deck.css';
+import '../../slides/data-platform/dip.css';
+import qrRaw from '../../slides/shared/qr-site.svg?raw';
+
+const title = 'Data Intelligence Platform for Manufacturing — interactive deck';
+const description =
+  'An interactive talk on building a data intelligence platform for a high-mix, low-volume factory: machine and ERP data, a live medallion pipeline, data contracts, lineage and ask-your-data.';
+const canonical = new URL('/slides/data-platform/', Astro.site);
+const ogImage = new URL('/assets/images/me-prof-sq.jpeg', Astro.site);
+const qr = qrRaw
+  .replace(/<\?xml[^>]*\?>/, '')
+  .replace(/width="[^"]*"\s+height="[^"]*"/, 'width="100%" height="100%"');
+
+const jsonExample = `{
+  "ts": "2026-11-13T06:42:10Z",
+  "ExecutionState": "ACTIVE",
+  "ProgramName": "O4711_HSG_OP20",
+  "SpindleLoad": 38.5,
+  "PartCounter": 1187,
+  "TempC": 45.9
+}`;
+
+const csvExample = `2026-11-13 07:42:10;MCH-07;RUN;O5120;cnt=412;temp_F=114.6`;
+
+const metricExample = `metric: machining_time_variance
+description: Actual vs quoted machining time
+expression: >
+  (actual_setup_min + actual_run_min)
+  / (planned_setup_min + planned_run_min * qty) - 1
+grain: [order, operation]
+dimensions: [item, material, machine, customer, week]
+source: gold.order_actuals
+owner: manufacturing-engineering
+version: 1.3`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Nitish Singh" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="shortcut icon" href="/assets/images/SiteLogo.png" />
+    <meta name="theme-color" content="#0b1120" />
+  </head>
+  <body>
+    <div class="stage" id="stage" data-footer="Data Intelligence Platform for Manufacturing">
+      <!-- 1 · Title -->
+      <section class="slide" id="d-title" data-title="Title">
+        <div class="row grow" style="align-items: center; gap: 72px;">
+          <div style="flex: 1.3;">
+            <div class="kicker">Talk · interactive deck</div>
+            <h1>From machine signals to better decisions</h1>
+            <p class="lead">
+              Building a data intelligence platform for a high-mix, low-volume factory — with
+              live data you can break, fix and question.
+            </p>
+            <div class="presenter">
+              <b>Nitish Singh</b>
+              <span>Data Scientist, KMWE · Assistant Professor (part-time), TU/e — OPAC · AIMM</span>
+            </div>
+          </div>
+          <div style="flex: 0.8;">
+            <div class="card t-card">
+              <div class="t-head"><span class="live-dot"></span> AIMM Precision · pipeline right now</div>
+              <div class="t-clock mono" id="t-clock">—</div>
+              <div class="t-grid">
+                <div class="t-tier bronze"><b id="t-bronze">0</b><span>bronze records</span></div>
+                <div class="t-tier silver"><b id="t-silver">0</b><span>silver rows</span></div>
+                <div class="t-tier quar"><b id="t-quar">0</b><span>quarantined</span></div>
+                <div class="t-tier gold"><b id="t-gold">0</b><span>orders in gold</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>AIMM Precision is fictional, but its data is modelled on a real high-mix, low-volume machining shop: small lots, long routings, demanding customers.</p>
+          <p>The counters are live — a simulated factory and ERP are feeding the pipeline in this browser tab right now.</p>
+        </aside>
+      </section>
+
+      <!-- 2 · Problem -->
+      <section class="slide" id="d-problem" data-title="Why data projects stall">
+        <div class="kicker">The problem</div>
+        <h2>Why dashboards and AI pilots stall</h2>
+        <div class="grid-2 grow" style="align-content: center; gap: 28px;">
+          <div class="card sym"><span class="sym-n">1</span><div><h3>Every report has its own OEE</h3><p>Three teams, three definitions — and a meeting to argue about which number is right.</p></div></div>
+          <div class="card sym"><span class="sym-n">2</span><div><h3>Nobody trusts the numbers</h3><p>So the real decisions are made in a private Excel file, again.</p></div></div>
+          <div class="card sym"><span class="sym-n">3</span><div><h3>Every use case starts from zero</h3><p>The AI pilot spends its first months finding, cleaning and joining data.</p></div></div>
+          <div class="card sym"><span class="sym-n">4</span><div><h3>Machine and business data never meet</h3><p>The machine knows its program; the ERP knows the order. Nobody knows both.</p></div></div>
+        </div>
+        <aside class="notes">
+          <p>Ask the room which of these four they recognise. Usually all of them.</p>
+          <p>The fourth one is the subject of this talk: the most valuable questions need both machine and business data.</p>
+        </aside>
+      </section>
+
+      <!-- 3 · Architecture -->
+      <section class="slide" id="d-arch" data-title="What is a data intelligence platform?">
+        <div class="kicker">The idea</div>
+        <h2>What is a data intelligence platform?</h2>
+        <div class="arch grow">
+          <div class="arch-col">
+            <span class="arch-title">Sources</span>
+            <div class="arch-box">Machines <small>via UNS / MQTT</small></div>
+            <div class="arch-box">ERP <small>orders, routings, hours</small></div>
+            <div class="arch-box">MES &amp; quality <small>CMM, NCRs</small></div>
+            <div class="arch-box">Documents <small>drawings, instructions</small></div>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-core">
+            <div class="arch-layers">
+              <div class="arch-layer"><b>Ingest</b><span>streaming + batch</span></div>
+              <div class="arch-layer"><b>Store</b><span>lakehouse on open table formats</span></div>
+              <div class="arch-layer med"><b>Transform</b><span><i class="tier-b">bronze</i> → <i class="tier-s">silver</i> → <i class="tier-g">gold</i></span></div>
+              <div class="arch-layer sem"><b>Semantic layer</b><span>governed metrics: OEE, scrap, variance</span></div>
+            </div>
+            <div class="arch-gov"><b>Governance</b><span>catalog · lineage · access · quality</span></div>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-col">
+            <span class="arch-title">Use</span>
+            <div class="arch-box">BI dashboards</div>
+            <div class="arch-box">Data science &amp; ML</div>
+            <div class="arch-box">Ask your data</div>
+            <div class="arch-box">AI agents</div>
+          </div>
+        </div>
+        <p class="muted" style="font-size: 21px; margin: 18px 0 0;">
+          Vendor-neutral: Databricks, Microsoft Fabric, Snowflake or an open-source stack can all implement this shape.
+        </p>
+        <aside class="notes">
+          <p>“Data intelligence” = a lakehouse plus the semantic understanding and governance that let people and AI use the data safely.</p>
+          <p>Governance runs alongside every layer — it is not a final step.</p>
+        </aside>
+      </section>
+
+      <!-- 4 · Examples -->
+      <section class="slide" id="d-examples" data-title="Machine data vs ERP data">
+        <div class="kicker">Two sources, two languages</div>
+        <h2>Same work, described twice</h2>
+        <div class="ex grow">
+          <div class="ex-col">
+            <h3>Machine data <small>(shopfloor, via the UNS)</small></h3>
+            <div class="ex-label">5-axis machining centre · modern controller → MQTT</div>
+            <pre class="code-block ex-code">{jsonExample}</pre>
+            <div class="ex-label">Legacy lathe · edge gateway polls → CSV</div>
+            <pre class="code-block ex-code">{csvExample}</pre>
+          </div>
+          <div class="ex-col">
+            <h3>ERP data <small>(planning &amp; finance)</small></h3>
+            <div class="ex-label">Production order</div>
+            <table class="dt">
+              <tr><th>Order</th><th>Item</th><th>Description</th><th>Qty</th><th>Customer</th><th>Due</th></tr>
+              <tr><td>PO-2611-0457</td><td>30-1142-07 C</td><td>Housing, vacuum chamber</td><td>12</td><td>Semicon OEM</td><td>21-11</td></tr>
+            </table>
+            <div class="ex-label">Routing (planned)</div>
+            <table class="dt">
+              <tr><th>Op</th><th>Work centre</th><th>Operation</th><th>Setup</th><th>Run / pc</th></tr>
+              <tr><td>10</td><td>WC-SAW</td><td>Saw blank</td><td>15 min</td><td>4 min</td></tr>
+              <tr class="hl"><td>20</td><td>WC-5AX</td><td>5-axis milling</td><td>90 min</td><td>38 min</td></tr>
+              <tr><td>30</td><td>WC-DEB</td><td>Deburr</td><td>0 min</td><td>12 min</td></tr>
+              <tr><td>40</td><td>WC-CMM</td><td>CMM inspection</td><td>20 min</td><td>15 min</td></tr>
+            </table>
+            <div class="ex-label">Hours booked by the operator</div>
+            <table class="dt">
+              <tr><th>Order</th><th>Op</th><th>Operator</th><th>Start</th><th>End</th><th>Good</th><th>Scrap</th></tr>
+              <tr><td>PO-2611-0457</td><td>20</td><td>OP-114</td><td>13-11 07:05</td><td>13-11 15:10</td><td>9</td><td>1</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="issues">
+          <span>UTC vs local time</span><span>ACTIVE vs RUN</span><span>°C vs °F</span><span>Running counter, not parts per order</span><span>No order number on the machine</span><span>Work centre ≠ machine</span><span>Hours booked late</span>
+        </div>
+        <aside class="notes">
+          <p>Walk through the red chips. Each is harmless alone; together they make the simplest question hard to answer.</p>
+          <p>Most important: the machine never knows the customer order — only the NC program.</p>
+        </aside>
+      </section>
+
+      <!-- 5 · The join -->
+      <section class="slide" id="d-join" data-title="The question that needs both">
+        <div class="kicker">Where the value is</div>
+        <h2>The question that needs both sources</h2>
+        <p class="lead quote">“For order PO-2611-0457, operation 20: how long did setup and machining <b>really</b> take compared with what we quoted — and why?”</p>
+        <div class="join grow">
+          <div class="join-box"><span class="join-k">Machine</span><b class="mono">mc-02</b><span class="mono">O4711_HSG_OP20</span><span class="mono">06:05 → 14:10 UTC</span></div>
+          <div class="join-link"><span>program → item + op</span><span>machine → work centre</span></div>
+          <div class="join-box master"><span class="join-k">Master data</span><b class="mono">30-1142-07 · op 20</b><span class="mono">WC-5AX = {'{'}mc-01, mc-02{'}'}</span><span class="mono">setup 90 · run 38 min/pc</span></div>
+          <div class="join-link"><span>order + op</span><span>time window</span></div>
+          <div class="join-box"><span class="join-k">ERP</span><b class="mono">PO-2611-0457 · op 20</b><span class="mono">OP-114 · 07:05–15:10 local</span><span class="mono">9 good · 1 scrap</span></div>
+        </div>
+        <div class="join-result">
+          <span class="join-k">gold.order_actuals</span>
+          <div><small>Planned for 10 parts</small><b>90 + 10 × 38 = 470 min</b></div>
+          <div><small>Actual (machine data)</small><b>112 + 10 × 44 = 552 min</b></div>
+          <div class="bad"><small>Variance</small><b>+17%</b></div>
+        </div>
+        <aside class="notes">
+          <p>Three keys make the join: NC program to item and operation via the routing, machine to work centre, and the time window to the operator's booking.</p>
+          <p>In a high-mix, low-volume shop this feeds straight back into quoting: if every Invar frame runs 30% over, the quote norms are wrong.</p>
+        </aside>
+      </section>
+
+      <!-- 6 · Live pipeline -->
+      <section class="slide demo" id="d-pipeline" data-title="Live demo: medallion pipeline">
+        <div class="kicker">Live demo · 1</div>
+        <h2>Bronze → silver → gold, live</h2>
+        <div class="row" style="gap: 16px; align-items: center; margin-bottom: 14px;">
+          <span class="ctl-label" style="margin: 0;">Transformation rules</span>
+          <div id="p-rules" class="chips"></div>
+          <span style="flex: 1;"></span>
+          <span class="mono muted" id="p-clock" style="font-size: 16px;"></span>
+        </div>
+        <div class="med grow">
+          <div class="med-col card">
+            <div class="med-head bronze"><b>Bronze</b><span>raw, as received</span><em id="p-n-bronze">0</em></div>
+            <div id="p-bronze" class="raw-list"></div>
+          </div>
+          <div class="med-col card">
+            <div class="med-head silver"><b>Silver</b><span>clean, typed, checked</span><em id="p-n-silver">0</em></div>
+            <div class="med-sub"><span>⛔ quarantined <b id="p-n-quar">0</b></span><span>dedup dropped <b id="p-n-dedup">0</b></span></div>
+            <table class="dt dt-live"><thead><tr><th>UTC</th><th>Machine</th><th>State</th><th>Order</th><th>Parts</th><th>Temp</th></tr></thead><tbody id="p-silver"></tbody></table>
+          </div>
+          <div class="med-col card">
+            <div class="med-head gold"><b>Gold</b><span>order_actuals</span></div>
+            <table class="dt dt-live"><thead><tr><th>PO</th><th>Item</th><th>Parts</th><th>Plan</th><th>Actual</th><th>Δ</th><th>Status</th></tr></thead><tbody id="p-gold"></tbody></table>
+            <div class="med-kpi"><span>gold.machine_health · MCH-07 avg temperature</span><b id="p-temp">—</b></div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Left: exactly what arrives — JSON from the 5-axis machines, CSV from the old lathe, JSON from ERP. Middle: one clean schema, UTC, one state vocabulary, °C, and an order number. Right: actual vs planned hours per order.</p>
+          <p>Turn off “Convert units” — the lathe’s °F values now fail the contract and are quarantined. Turn off “Enforce contract” too, and watch 115 °C reach the gold health table.</p>
+        </aside>
+      </section>
+
+      <!-- 7 · Break the data -->
+      <section class="slide demo" id="d-break" data-title="Live demo: break the data">
+        <div class="kicker">Live demo · 2</div>
+        <h2>Break the data — does the platform notice?</h2>
+        <div class="brk grow">
+          <div class="brk-faults">
+            <span class="ctl-label">Break something</span>
+            <button type="button" class="fault" data-fault="unit"><b>Gateway update drops the °F unit</b><small>MCH-07 now sends <span class="mono">temp=114.6</span></small><span class="f-state">off</span></button>
+            <button type="button" class="fault" data-fault="program"><b>Operator runs from MDI</b><small>mc-02 sends an empty program name</small><span class="f-state">off</span></button>
+            <button type="button" class="fault" data-fault="late"><b>Hours booked at end of week</b><small>ERP bookings arrive days late</small><span class="f-state">off</span></button>
+            <button type="button" class="fault once" data-fault="dupes"><b>Gateway reconnect</b><small>re-sends the last 15 messages</small><span class="f-state">fire</span></button>
+            <span class="ctl-label" style="margin-top: 6px;">Platform rules</span>
+            <div id="b-rules" class="chips"></div>
+            <button type="button" id="b-reset" class="btn small" style="align-self: flex-start;">Reset everything</button>
+          </div>
+          <div class="brk-checks card">
+            <span class="ctl-label">Data contract checks</span>
+            <div id="b-checks"></div>
+          </div>
+          <div class="brk-right">
+            <div class="card brk-lineage">
+              <span class="ctl-label">Lineage · impact</span>
+              <svg id="b-lineage" viewBox="0 0 785 470" class="lineage"></svg>
+            </div>
+            <div class="dash card">
+              <span class="ctl-label">What the business sees</span>
+              <div class="dash-row"><span>MCH-07 temperature on the health report</span><b id="b-dash-temp" class="dash-val">—</b></div>
+              <div class="dash-row"><span>Orders awaiting ERP booking</span><b id="b-dash-await" class="dash-val">0</b></div>
+              <div class="dash-row"><span>Hours on mc-02’s current order</span><b id="b-dash-mc02" class="dash-val">—</b></div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Trigger the unit change: the temperature check catches it, the rows go to quarantine, and lineage shows the problem stopped at silver. The report stays right.</p>
+          <p>Now switch off “Enforce contract” and fire it again: red flows through lineage to the OEE report, and the dashboard shows an impossible temperature. That's what most factories live with today.</p>
+          <p>Late bookings aren't blocked — they're flagged, and the affected orders show “awaiting booking” instead of a wrong number.</p>
+        </aside>
+      </section>
+
+      <!-- 8 · Semantic layer -->
+      <section class="slide" id="d-semantic" data-title="Semantic layer">
+        <div class="kicker">One definition of truth</div>
+        <h2>Define a metric once — use it everywhere</h2>
+        <div class="row grow" style="gap: 48px; align-items: center;">
+          <pre class="code-block sem-code" style="flex: 1.1;">{metricExample}</pre>
+          <div class="fan" style="flex: 1;">
+            <div class="fan-src">machining_time_variance <small>v1.3 · owner: manufacturing engineering</small></div>
+            <div class="fan-lines" aria-hidden="true"></div>
+            <div class="fan-targets">
+              <div>BI report</div>
+              <div>Notebook &amp; ML features</div>
+              <div>Ask your data</div>
+              <div>Quoting agent</div>
+            </div>
+            <p class="muted" style="font-size: 20px; margin: 18px 0 0;">Without it: every tool re-implements the formula — and they drift apart.</p>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>The semantic layer is where “OEE” or “variance” gets one formula, one owner and a version. BI, notebooks, people and agents all call the same definition.</p>
+          <p>It is also what makes ask-your-data safe — next slide.</p>
+        </aside>
+      </section>
+
+      <!-- 9 · Ask your data -->
+      <section class="slide demo" id="d-ask" data-title="Live demo: ask your data">
+        <div class="kicker">Live demo · 3</div>
+        <h2>Ask your data — answers you can trace</h2>
+        <div class="ask grow">
+          <div class="ask-left">
+            <form id="a-form" class="row" style="gap: 10px;" autocomplete="off">
+              <input id="a-q" class="ctl" placeholder="Ask a question about production…" spellcheck="false" />
+              <button class="btn primary" type="submit">Ask</button>
+            </form>
+            <div id="a-chips" class="a-chips"></div>
+            <div id="a-plan" class="a-plan"></div>
+          </div>
+          <div id="a-res" class="ask-right card">
+            <div class="a-empty muted">Pick a question, or type your own.</div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>This is deliberately scripted and deterministic, so it works offline and can't hallucinate on stage. A production version puts an LLM in front of the same semantic layer.</p>
+          <p>Show the refusal too: type something outside the metrics (e.g. “what will the weather be”) — a governed assistant says no instead of guessing.</p>
+        </aside>
+      </section>
+
+      <!-- 10 · Governance -->
+      <section class="slide" id="d-gov" data-title="Governance">
+        <div class="kicker">Governance</div>
+        <h2>Governance that enables, not blocks</h2>
+        <div class="grid-2 grow" style="align-content: center; gap: 24px;">
+          <div class="card"><h3>Catalog</h3><p>What data exists, what it means, who owns it — searchable by anyone.</p></div>
+          <div class="card"><h3>Lineage</h3><p>From any KPI back to the sensor and the ERP field. Impact analysis before a change, not after.</p></div>
+          <div class="card"><h3>Access</h3><p>Role- and row-level rules: each customer programme sees only its own data — essential for confidential or export-controlled work.</p></div>
+          <div class="card"><h3>Quality as a contract</h3><p>Producers and consumers agree on schema, units and freshness; violations alert the owner, not the CEO.</p></div>
+        </div>
+        <aside class="notes">
+          <p>In precision manufacturing, customer confidentiality is non-negotiable. Row-level security is what lets you put all customers on one platform.</p>
+        </aside>
+      </section>
+
+      <!-- 11 · Agents -->
+      <section class="slide" id="d-agents" data-title="AI agents on a governed foundation">
+        <div class="kicker">Agentic AI</div>
+        <h2>An agent is only as good as the data it can trust</h2>
+        <div class="agent-flow">
+          <div class="af-step"><span>1</span><b>New RFQ</b><small>Invar frame, similar to 30-0975-03</small></div>
+          <div class="af-arrow">→</div>
+          <div class="af-step"><span>2</span><b>Agent queries the semantic layer</b><small>similar items ran +34% over quote</small></div>
+          <div class="af-arrow">→</div>
+          <div class="af-step"><span>3</span><b>Proposes adjusted hours</b><small>with evidence and lineage</small></div>
+          <div class="af-arrow">→</div>
+          <div class="af-step human"><span>4</span><b>Estimator approves or edits</b><small>human stays accountable</small></div>
+          <div class="af-arrow">→</div>
+          <div class="af-step"><span>5</span><b>Actuals flow back</b><small>next quote is better</small></div>
+        </div>
+        <div class="grid-3" style="margin-top: 40px;">
+          <div class="card"><h3>Tools, not tables</h3><p>Agents call governed metrics — never raw bronze data.</p></div>
+          <div class="card"><h3>Context from the UNS</h3><p>Live machine state for operational agents; the platform for history.</p></div>
+          <div class="card"><h3>AIMM framework</h3><p>Human and agentic operators with clear roles, authorisation and oversight.</p></div>
+        </div>
+        <aside class="notes">
+          <p>A quoting assistant is a realistic first agent for a high-mix, low-volume shop: high value, a human approves every output, and it learns from actuals.</p>
+          <p>Companion deck on the Unified Namespace: nitishsingh.com/slides/uns.</p>
+        </aside>
+      </section>
+
+      <!-- 12 · Pitfalls -->
+      <section class="slide" id="d-pitfalls" data-title="Pitfalls">
+        <div class="kicker">Reality check</div>
+        <h2>What goes wrong</h2>
+        <div class="grid-3 grow" style="align-content: center;">
+          <div class="card"><h3>Tool before question</h3><p>Buying a platform without a decision it should improve.</p></div>
+          <div class="card"><h3>Master data is the bottleneck</h3><p>Outdated routings make every variance meaningless.</p></div>
+          <div class="card"><h3>Lift-and-shift reports</h3><p>Rebuilding 200 old reports instead of the 10 that matter.</p></div>
+          <div class="card"><h3>Gold-table sprawl</h3><p>Hundreds of “final_v2” tables and no owners.</p></div>
+          <div class="card"><h3>Governance last</h3><p>Retro-fitting access rules and lineage costs far more.</p></div>
+          <div class="card"><h3>No loop to the floor</h3><p>Insights that never reach planners, estimators or operators.</p></div>
+        </div>
+        <aside class="notes">
+          <p>The master-data point surprises people most: before machine data can tell you anything about quoting, the routings must reflect how parts are really made.</p>
+        </aside>
+      </section>
+
+      <!-- 13 · Takeaways -->
+      <section class="slide" id="d-takeaways" data-title="Takeaways">
+        <div class="kicker">Takeaways</div>
+        <h2>Three things to remember</h2>
+        <div class="takeaways grow">
+          <div class="tk"><span>1</span><p><b>Start from a decision</b>, not a dataset.</p></div>
+          <div class="tk"><span>2</span><p><b>Engineer trust</b>: contracts, quarantine and lineage.</p></div>
+          <div class="tk"><span>3</span><p><b>One semantic layer</b> feeds BI, people and agents.</p></div>
+        </div>
+        <aside class="notes"><p>Land this slide if time is short.</p></aside>
+      </section>
+
+      <!-- 14 · Thanks -->
+      <section class="slide" id="d-thanks" data-title="Thank you">
+        <div class="row grow" style="align-items: center; gap: 80px;">
+          <div style="flex: 1.3;">
+            <div class="kicker">Thank you</div>
+            <h1>Questions?</h1>
+            <p class="lead">Try the demos yourself, and get in touch:</p>
+            <ul class="contact">
+              <li><span>Web</span><b>nitishsingh.com</b></li>
+              <li><span>This deck</span><b>nitishsingh.com/slides/data-platform</b></li>
+              <li><span>UNS deck</span><b>nitishsingh.com/slides/uns</b></li>
+              <li><span>LinkedIn</span><b>linkedin.com/in/nitish-singh</b></li>
+            </ul>
+          </div>
+          <div class="qr-box" set:html={qr} aria-label="QR code linking to nitishsingh.com" />
+        </div>
+        <aside class="notes"><p>Leave this up during Q&amp;A.</p></aside>
+      </section>
+    </div>
+
+    <div class="progress"><div class="bar"></div></div>
+
+    <div class="hud" role="toolbar" aria-label="Presentation controls">
+      <button id="hud-prev" title="Previous (←)" aria-label="Previous slide">←</button>
+      <span class="count" id="hud-count">1 / 14</span>
+      <button id="hud-next" title="Next (→)" aria-label="Next slide">→</button>
+      <button id="hud-overview" title="All slides (O)">Slides</button>
+      <button id="hud-notes" title="Speaker notes (N)">Notes</button>
+      <button id="hud-theme" title="Light / dark (T)">Theme</button>
+      <button id="hud-full" title="Fullscreen (F)">Fullscreen</button>
+      <button id="hud-help" title="Shortcuts (?)" aria-label="Keyboard shortcuts">?</button>
+    </div>
+
+    <div class="notes-panel" id="notes" hidden></div>
+
+    <div class="overlay" id="overview" hidden>
+      <h2>All slides</h2>
+      <div class="ov-grid"></div>
+    </div>
+
+    <div class="overlay" id="help" hidden>
+      <div class="help-box">
+        <h2>Keyboard shortcuts</h2>
+        <table>
+          <tr><td><kbd>→</kbd><kbd>Space</kbd><kbd>PgDn</kbd></td><td>Next slide (clickers work too)</td></tr>
+          <tr><td><kbd>←</kbd><kbd>PgUp</kbd></td><td>Previous slide</td></tr>
+          <tr><td><kbd>Home</kbd><kbd>End</kbd></td><td>First / last slide</td></tr>
+          <tr><td><kbd>F</kbd></td><td>Fullscreen</td></tr>
+          <tr><td><kbd>O</kbd></td><td>All slides</td></tr>
+          <tr><td><kbd>N</kbd></td><td>Speaker notes</td></tr>
+          <tr><td><kbd>T</kbd></td><td>Light / dark theme</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Leave a text field / close overlays</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      import '../../slides/shared/deck.js';
+      import '../../slides/data-platform/dip.js';
+    </script>
+  </body>
+</html>

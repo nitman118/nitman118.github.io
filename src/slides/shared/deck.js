@@ -20,7 +20,8 @@ slides.forEach((s, i) => {
   if (i === 0 || i === slides.length - 1) return;
   const f = document.createElement('div');
   f.className = 'slide-footer';
-  f.innerHTML = '<span>Unified Namespace in Manufacturing</span><span></span>';
+  f.innerHTML = '<span></span><span></span>';
+  f.firstChild.textContent = stage.dataset.footer || '';
   f.lastChild.textContent = `nitishsingh.com · ${i + 1}`;
   s.appendChild(f);
 });

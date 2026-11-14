@@ -78,15 +78,18 @@ const publications: Pub[] = [
     url: 'https://ieeexplore.ieee.org/document/9004715',
   },
 ];
+
+// Newest first; entries from the same year keep their listed order.
+const sorted = [...publications].sort((a, b) => b.year - a.year);
 ---
 
 <BaseLayout
   title="Publications — Nitish Singh"
-  description="Peer-reviewed publications on simulation, AGV scheduling, and reinforcement learning in manufacturing."
+  description="Publications on simulation, AGV scheduling, and reinforcement learning in manufacturing."
 >
   <main class="container" style="padding-top: 2.5rem;">
     <div class="page-header" style="padding: 1rem 0 2rem;">
-      <div class="page-eyebrow">Peer-reviewed work</div>
+      <div class="page-eyebrow">Research</div>
       <h1>Publications</h1>
       <p class="page-lead">
         Selected publications on AGV scheduling, dispatching, simulation-based decision-making, and
@@ -94,7 +97,7 @@ const publications: Pub[] = [
       </p>
     </div>
 
-    {publications.map((pub) => (
+    {sorted.map((pub) => (
       <article class="pub-card">
         <h3 class="pub-title">
           {pub.title}
@@ -113,9 +116,5 @@ const publications: Pub[] = [
         </a>
       </article>
     ))}
-
-    <p class="text-center mt-4 mb-5" style="color: var(--text-muted); font-size: 0.9rem;">
-      For an up-to-date list, see Google Scholar (link to be added).
-    </p>
   </main>
 </BaseLayout>

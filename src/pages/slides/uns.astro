@@ -2,8 +2,9 @@
 // Interactive talk deck: Unified Namespace in manufacturing.
 // Deliberately standalone (no BaseLayout): no CDN fonts/icons/CSS, so once the
 // page has loaded it keeps working without internet at a venue.
-import '../../slides/uns/deck.css';
-import qrRaw from '../../slides/uns/qr-site.svg?raw';
+import '../../slides/shared/deck.css';
+import '../../slides/uns/uns.css';
+import qrRaw from '../../slides/shared/qr-site.svg?raw';
 
 const title = 'Unified Namespace in Manufacturing — interactive deck';
 const description =
@@ -46,7 +47,7 @@ const contractExample = `temperature:
     <meta name="theme-color" content="#0b1120" />
   </head>
   <body>
-    <div class="stage" id="stage">
+    <div class="stage" id="stage" data-footer="Unified Namespace in Manufacturing">
       <!-- 1 · Title -->
       <section class="slide" id="s-title" data-title="Title">
         <div class="row grow" style="align-items: center; gap: 72px;">
@@ -569,7 +570,7 @@ const contractExample = `temperature:
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
-      import '../../slides/uns/deck.js';
+      import '../../slides/shared/deck.js';
       import '../../slides/uns/uns.js';
     </script>
   </body>

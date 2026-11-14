@@ -1,0 +1,576 @@
+---
+// Interactive talk deck: Unified Namespace in manufacturing.
+// Deliberately standalone (no BaseLayout): no CDN fonts/icons/CSS, so once the
+// page has loaded it keeps working without internet at a venue.
+import '../../slides/uns/deck.css';
+import qrRaw from '../../slides/uns/qr-site.svg?raw';
+
+const title = 'Unified Namespace in Manufacturing — interactive deck';
+const description =
+  'An interactive talk on the Unified Namespace (UNS) for manufacturing, with a live in-browser MQTT demo and a namespace generator.';
+const canonical = new URL('/slides/uns/', Astro.site);
+const ogImage = new URL('/assets/images/me-prof-sq.jpeg', Astro.site);
+const qr = qrRaw
+  .replace(/<\?xml[^>]*\?>/, '')
+  .replace(/width="[^"]*"\s+height="[^"]*"/, 'width="100%" height="100%"');
+
+const payloadExample = `{
+  "value": 47.3,
+  "unit": "°C",
+  "ts": "2026-11-14T09:41:07.412Z"
+}`;
+
+const contractExample = `temperature:
+  value: number   # required
+  unit:  "°C"     # fixed per data point
+  ts:    ISO-8601 # source timestamp, UTC
+  quality: good | uncertain | bad`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Nitish Singh" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="shortcut icon" href="/assets/images/SiteLogo.png" />
+    <meta name="theme-color" content="#0b1120" />
+  </head>
+  <body>
+    <div class="stage" id="stage">
+      <!-- 1 · Title -->
+      <section class="slide" id="s-title" data-title="Title">
+        <div class="row grow" style="align-items: center; gap: 72px;">
+          <div style="flex: 1.25;">
+            <div class="kicker">Talk · interactive deck</div>
+            <h1>The Unified Namespace: one live picture of your factory</h1>
+            <p class="lead">
+              How an event-driven architecture turns shopfloor data into a shared, real-time
+              asset — with a live demo you can play with.
+            </p>
+            <div class="presenter">
+              <b>Nitish Singh</b>
+              <span>Data Scientist, KMWE · Assistant Professor (part-time), TU/e — OPAC · AIMM</span>
+            </div>
+          </div>
+          <div style="flex: 0.85;">
+            <div class="card title-live-card">
+              <div class="title-live-head"><span class="live-dot"></span> Live from AIMM Precision’s demo line</div>
+              <div id="title-live"></div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Open with the promise: by the end everyone can explain what a UNS is and has seen one work.</p>
+          <p>The card on the right is already live — it comes from the simulated factory we'll use in the demo. Everything runs in this browser tab; no internet needed.</p>
+        </aside>
+      </section>
+
+      <!-- 2 · The problem -->
+      <section class="slide" id="s-problem" data-title="Data is trapped in layers">
+        <div class="kicker">The problem</div>
+        <h2>Shopfloor data is trapped in layers</h2>
+        <div class="row grow" style="align-items: center; gap: 64px;">
+          <div class="pyramid" style="flex: 1;">
+            <div class="pyr" style="--w: 46%;"><b>L4 · Business</b><span>ERP</span></div>
+            <div class="pyr" style="--w: 60%;"><b>L3 · Operations</b><span>MES · QMS · CMMS</span></div>
+            <div class="pyr" style="--w: 74%;"><b>L2 · Supervisory</b><span>SCADA · HMI</span></div>
+            <div class="pyr" style="--w: 87%;"><b>L1 · Control</b><span>PLCs</span></div>
+            <div class="pyr" style="--w: 100%;"><b>L0 · Process</b><span>Machines · sensors</span></div>
+            <div class="pyr-caption">The ISA-95 automation pyramid</div>
+          </div>
+          <div style="flex: 1;">
+            <ul class="clean">
+              <li>Data climbs <b>one layer at a time</b>, through custom interfaces.</li>
+              <li>Every new question — a dashboard, an AI use case — becomes <b>a new integration project</b>.</li>
+              <li>Nobody has the <b>full, current</b> picture, so people walk to the machine or pick up the phone.</li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Most factories are organised along the ISA-95 pyramid. Each layer talks only to its neighbour.</p>
+          <p>Ask the room: how long does it take you to get a live machine value into a new dashboard? Usually weeks, and another interface to maintain.</p>
+        </aside>
+      </section>
+
+      <!-- 3 · Spaghetti math -->
+      <section class="slide" id="s-spaghetti" data-title="Point-to-point doesn't scale">
+        <div class="kicker">The problem, quantified</div>
+        <h2>Point-to-point integration doesn't scale</h2>
+        <div class="row grow" style="gap: 48px; align-items: stretch;">
+          <svg id="sp-svg" class="sp-svg no-swipe" viewBox="0 0 760 600" aria-label="Integration diagram"></svg>
+          <div class="col" style="flex: 1; justify-content: center;">
+            <div class="row" style="align-items: center; gap: 18px;">
+              <span class="ctl-label" style="margin: 0;">Systems</span>
+              <input id="sp-n" type="range" min="3" max="12" value="8" class="range" />
+              <b id="sp-n-out" class="sp-n-out">8</b>
+            </div>
+            <div class="seg-control" id="sp-mode" style="align-self: flex-start;">
+              <button class="on" data-mode="p2p">Point-to-point</button>
+              <button data-mode="hub">Unified Namespace</button>
+            </div>
+            <div class="sp-card" id="sp-card-p2p">
+              <span>Point-to-point · n(n−1)/2</span>
+              <b id="sp-p2p">28</b>
+              <small>interfaces to build, test and maintain</small>
+            </div>
+            <div class="sp-card good" id="sp-card-hub">
+              <span>Hub · n</span>
+              <b id="sp-hubn">8</b>
+              <small>connections — one per system</small>
+            </div>
+            <p class="muted" style="font-size: 20px; margin: 0;">
+              Adding one more system costs <b id="sp-next-p2p">8</b> new interfaces point-to-point — or exactly
+              one with a hub.
+            </p>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Drag the slider up to 12 systems: 66 interfaces. Then switch to the Unified Namespace view: 12.</p>
+          <p>The point isn't the exact number — it's that the cost of the next integration grows with everything you already have.</p>
+        </aside>
+      </section>
+
+      <!-- 4 · What is a UNS -->
+      <section class="slide" id="s-what" data-title="What is a Unified Namespace?">
+        <div class="kicker">The idea</div>
+        <h2>What is a Unified Namespace?</h2>
+        <p class="lead" style="margin-bottom: 40px;">
+          A single, real-time hub where every system <b>publishes what it knows</b> and
+          <b>subscribes to what it needs</b> — organised the way the business is organised.
+        </p>
+        <div class="grid-4">
+          <div class="card">
+            <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div>
+            <h3>Single source of current truth</h3>
+            <p>The latest value of everything, in one place.</p>
+          </div>
+          <div class="card">
+            <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
+            <h3>Event-driven</h3>
+            <p>Publish when something changes — not when someone polls.</p>
+          </div>
+          <div class="card">
+            <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4zM14 14h6v6h-6zM7 10v4a3 3 0 0 0 3 3h4"/></svg></div>
+            <h3>Structured like the business</h3>
+            <p>An ISA-95 hierarchy that humans and machines can both navigate.</p>
+          </div>
+          <div class="card">
+            <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 3 12l5 5M16 7l5 5-5 5"/></svg></div>
+            <h3>Open and lightweight</h3>
+            <p>MQTT and plain payloads — no single-vendor lock-in.</p>
+          </div>
+        </div>
+        <p class="muted" style="margin-top: 36px; font-size: 22px;">A UNS is an <b>architecture</b>, not a product you buy.</p>
+        <aside class="notes">
+          <p>Four properties. If one is missing, you have a message bus or a data lake — useful, but not a UNS.</p>
+          <p>Stress "current truth": the UNS holds the now. History lives elsewhere — we'll come back to that.</p>
+        </aside>
+      </section>
+
+      <!-- 5 · Topic structure -->
+      <section class="slide" id="s-structure" data-title="A topic is an address">
+        <div class="kicker">Structure</div>
+        <h2>A topic is an address in your business</h2>
+        <div class="grow center-v">
+        <div class="topic big-topic">
+          <span class="seg"><b class="lv0">aimm-precision</b><small class="tx0">Enterprise</small></span><span class="sep">/</span>
+          <span class="seg"><b class="lv1">eindhoven</b><small class="tx1">Site</small></span><span class="sep">/</span>
+          <span class="seg"><b class="lv2">machining</b><small class="tx2">Area</small></span><span class="sep">/</span>
+          <span class="seg"><b class="lv3">line-1</b><small class="tx3">Line</small></span><span class="sep">/</span>
+          <span class="seg"><b class="lv4">cnc-01</b><small class="tx4">Cell</small></span><span class="sep">/</span>
+          <span class="seg"><b class="lv5">temperature</b><small class="tx5">Data point</small></span>
+        </div>
+        <div class="row" style="gap: 32px; margin-top: 44px; align-items: flex-start;">
+          <div class="card" style="flex: 1;">
+            <h3>Readable by humans</h3>
+            <p>Anyone can guess where a value lives — no tag lists, no lookup tables.</p>
+          </div>
+          <div class="card" style="flex: 1;">
+            <h3>Navigable by machines</h3>
+            <p>Subscribe to a whole line, or one data point across every site, with a single wildcard.</p>
+          </div>
+          <div class="card" style="flex: 1.1;">
+            <h3>The message (payload)</h3>
+            <pre class="code-block">{payloadExample}</pre>
+          </div>
+        </div>
+        </div>
+        <aside class="notes">
+          <p>The path is the context. A value arriving on this topic already tells you which site, area, line and machine it belongs to.</p>
+          <p>The levels follow ISA-95: enterprise, site, area, line, cell (work unit). Agree on them once; it's the most important design decision.</p>
+        </aside>
+      </section>
+
+      <!-- 6 · MQTT plumbing -->
+      <section class="slide" id="s-mqtt" data-title="MQTT publish / subscribe">
+        <div class="kicker">How it moves</div>
+        <h2>The plumbing: MQTT publish / subscribe</h2>
+        <div class="grow center-v">
+        <div class="flow">
+          <div class="flow-col">
+            <div class="flow-box">PLC / edge gateway</div>
+            <div class="flow-box">MES</div>
+            <div class="flow-box">Quality app</div>
+            <small>Publishers</small>
+          </div>
+          <svg class="flow-arrows" viewBox="0 0 160 240" aria-hidden="true"><path d="M0 40 C 80 40, 80 120, 160 120 M0 120 H160 M0 200 C 80 200, 80 120, 160 120"/></svg>
+          <div class="flow-broker">
+            <b>Broker</b>
+            <span>routes by topic · keeps last value</span>
+          </div>
+          <svg class="flow-arrows" viewBox="0 0 160 240" aria-hidden="true"><path d="M0 120 C 80 120, 80 40, 160 40 M0 120 H160 M0 120 C 80 120, 80 200, 160 200"/></svg>
+          <div class="flow-col">
+            <div class="flow-box">Dashboards</div>
+            <div class="flow-box">Historian / lakehouse</div>
+            <div class="flow-box">AI agents</div>
+            <small>Subscribers</small>
+          </div>
+        </div>
+        <div class="grid-3" style="margin-top: 36px;">
+          <div class="card"><h3>Retained messages</h3><p>Late joiners instantly get the last known value — that is the “current state”.</p></div>
+          <div class="card"><h3>Report by exception</h3><p>Publish only on meaningful change. The demo shows the traffic saved, live.</p></div>
+          <div class="card"><h3>Payloads</h3><p>Plain JSON (simple, flexible) or Sparkplug B (typed, with birth/death certificates).</p></div>
+        </div>
+        </div>
+        <aside class="notes">
+          <p>Publishers and subscribers never know about each other — only about topics. That's the decoupling.</p>
+          <p>Sparkplug B adds a strict payload format and state management on top of MQTT; plain JSON is easier to start with. Pick per use case.</p>
+        </aside>
+      </section>
+
+      <!-- 7 · Generator tool -->
+      <section class="slide demo" id="s-generator" data-title="Tool: design your namespace">
+        <div class="kicker">Tool · try it</div>
+        <h2>Design your namespace — and watch it come alive</h2>
+        <div class="gen grow">
+          <form id="gen-form" class="gen-form card" autocomplete="off">
+            <div>
+              <label class="ctl-label" for="g-ent">Enterprise</label>
+              <input id="g-ent" class="ctl" value="AIMM Precision" />
+            </div>
+            <div>
+              <label class="ctl-label" for="g-sites">Sites <span class="muted">(comma-separated, max 3)</span></label>
+              <input id="g-sites" class="ctl" value="Eindhoven" />
+            </div>
+            <div>
+              <label class="ctl-label" for="g-areas">Areas <span class="muted">(max 5)</span></label>
+              <input id="g-areas" class="ctl" value="Machining, Assembly, Inspection" />
+            </div>
+            <div class="row" style="gap: 14px;">
+              <div style="flex: 1;">
+                <label class="ctl-label" for="g-lines">Lines / area</label>
+                <input id="g-lines" class="ctl" type="number" min="1" max="4" value="2" />
+              </div>
+              <div style="flex: 1;">
+                <label class="ctl-label" for="g-machines">Machines / line</label>
+                <input id="g-machines" class="ctl" type="number" min="1" max="6" value="3" />
+              </div>
+            </div>
+            <div>
+              <span class="ctl-label">Data points</span>
+              <div id="g-points" class="chips"></div>
+            </div>
+            <div>
+              <span class="ctl-label">Naming convention</span>
+              <div class="seg-control" id="g-naming">
+                <button type="button" class="on" data-style="kebab">kebab-case</button>
+                <button type="button" data-style="snake">snake_case</button>
+                <button type="button" data-style="camel">camelCase</button>
+              </div>
+            </div>
+            <button type="button" id="g-reset" class="btn small" style="align-self: flex-start;">Reset to defaults</button>
+          </form>
+
+          <div class="gen-main">
+            <div class="row" style="gap: 12px; align-items: stretch;">
+              <div class="stat"><b id="g-stat-topics">0</b><span>Topics</span></div>
+              <div class="stat"><b id="g-stat-rate">0</b><span>Messages / s</span></div>
+              <div class="stat"><b id="g-stat-rbe">0%</b><span>Saved vs polling</span></div>
+              <div class="gen-formula muted" id="g-formula"></div>
+            </div>
+            <div id="g-example" class="gen-example"></div>
+            <div class="gen-panes">
+              <div class="pane card">
+                <div class="pane-bar">
+                  <button type="button" id="g-live" class="btn small"><span class="live-dot"></span> Live</button>
+                  <button type="button" id="g-expand" class="btn small">Expand all</button>
+                  <button type="button" id="g-collapse" class="btn small">Collapse</button>
+                  <span style="flex: 1;"></span>
+                  <button type="button" id="g-copy" class="btn small">Copy topics</button>
+                  <button type="button" id="g-download" class="btn small">Download JSON</button>
+                </div>
+                <div id="g-tree" class="tree no-swipe"></div>
+              </div>
+              <div class="pane card insp">
+                <span class="ctl-label">Inspector</span>
+                <div id="g-insp-topic" class="insp-topic"></div>
+                <pre id="g-insp-json" class="code-block insp-json"></pre>
+                <small id="g-insp-hint" class="muted"></small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Let someone from the audience shout an area or a site name and type it in. The tree rebuilds and starts streaming values immediately.</p>
+          <p>Point out: the topic count multiplies fast; naming convention is a choice you make once; “kpi” branches appear because a service publishes derived data back into the namespace.</p>
+          <p>Click any value to show the full JSON payload. Download JSON exports the whole structure.</p>
+        </aside>
+      </section>
+
+      <!-- 8 · Wildcards -->
+      <section class="slide demo" id="s-wildcards" data-title="Live demo: wildcards">
+        <div class="kicker">Live demo · 1</div>
+        <h2>Subscribe to exactly what you need</h2>
+        <div class="row grow" style="gap: 32px;">
+          <div class="col" style="flex: 1; min-width: 0;">
+            <div>
+              <label class="ctl-label" for="w-filter">Topic filter</label>
+              <input id="w-filter" class="ctl mono w-input" spellcheck="false" />
+              <div id="w-error" class="w-error"></div>
+            </div>
+            <div id="w-viz" class="w-viz"></div>
+            <div id="w-chips" class="chips"></div>
+            <div class="grid-2" style="gap: 16px;">
+              <div class="card w-explain"><b class="mono">+</b><p>exactly <b>one</b> level</p></div>
+              <div class="card w-explain"><b class="mono">#</b><p><b>everything</b> below (last level only)</p></div>
+            </div>
+            <div class="row" style="gap: 12px;">
+              <div class="stat" style="flex: 1;"><b id="w-match">—</b><span>Matching topics</span></div>
+              <div class="stat" style="flex: 1;"><b id="w-rate">0</b><span>Messages / s</span></div>
+            </div>
+          </div>
+          <div class="card feed-card" style="flex: 1.15; min-width: 0;">
+            <div class="feed-head"><span class="live-dot"></span> Messages received by this subscription</div>
+            <div id="w-feed" class="feed"></div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Click through the presets: every machine's state; one whole area; one data point on line 1 across all areas; all alarms; only the KPIs.</p>
+          <p>Then type your own. Invalid filters (like # in the middle) are rejected exactly as a real broker would.</p>
+        </aside>
+      </section>
+
+      <!-- 9 · Consumers -->
+      <section class="slide demo" id="s-consumers" data-title="Live demo: one event, many consumers">
+        <div class="kicker">Live demo · 2</div>
+        <h2>One event, many consumers — zero new integrations</h2>
+        <div class="cons grow">
+          <div class="cons-prod">
+            <span class="ctl-label">Producers · click to inject a fault</span>
+            <div id="c-producers" class="prod-grid"></div>
+          </div>
+          <div class="cons-hub" id="c-hub">
+            <b>UNS</b>
+            <span>broker</span>
+            <strong id="c-rate">0</strong>
+            <span>msg / s</span>
+          </div>
+          <div class="cons-grid">
+            <div class="cons-panel card">
+              <div class="cons-head"><b>Andon board</b><span class="cons-n" id="c-n-andon">0</span></div>
+              <code class="cons-filter" id="c-f-andon"></code>
+              <div id="c-andon" class="cons-body"></div>
+            </div>
+            <div class="cons-panel card">
+              <div class="cons-head"><b>Availability service</b><span class="cons-n" id="c-n-avail">0</span></div>
+              <code class="cons-filter" id="c-f-avail"></code>
+              <div id="c-avail" class="cons-body"></div>
+              <small class="muted">Publishes back to <span class="mono">…/line/kpi/availability</span></small>
+            </div>
+            <div class="cons-panel card">
+              <div class="cons-head"><b>Maintenance agent</b><span class="cons-n" id="c-n-agent">0</span></div>
+              <code class="cons-filter" id="c-f-agent"></code>
+              <div id="c-agent" class="cons-body agent-list"></div>
+            </div>
+            <div class="cons-panel card plug-slot">
+              <button type="button" id="c-plug" class="plug-btn">＋ Plug in a new consumer</button>
+              <div id="c-energy" hidden>
+                <div class="cons-head"><b>Energy monitor</b><span class="cons-n" id="c-n-energy">0</span><button type="button" id="c-unplug" class="btn small" title="Remove consumer">×</button></div>
+                <code class="cons-filter" id="c-f-energy"></code>
+                <div class="energy-total" id="c-energy-total">—</div>
+                <svg id="c-spark" class="spark" viewBox="0 0 300 60" preserveAspectRatio="none"></svg>
+                <small class="muted" id="c-energy-note"></small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Inject a fault on a machine. The andon board, the availability service and the maintenance agent all react — none of them knows the machine exists, they only know topics.</p>
+          <p>The agent reads context (temperature, vibration) straight from the UNS and proposes an action, but a human approves it. Approve → the machine recovers and the alarm clears everywhere.</p>
+          <p>Finally, plug in the energy monitor: a brand-new consumer, live, without touching a single producer.</p>
+        </aside>
+      </section>
+
+      <!-- 10 · Data engineering -->
+      <section class="slide" id="s-data" data-title="UNS for data engineers">
+        <div class="kicker">Data engineering</div>
+        <h2>The UNS is the stream, not the store</h2>
+        <div class="grow center-v">
+        <div class="pipe">
+          <div class="pipe-box accent-box"><b>UNS</b><span>current state, events</span></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-box"><b>Ingest</b><span>MQTT connector / stream</span></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-box tall">
+            <b>Historian · lakehouse</b>
+            <span class="tier">Bronze — raw events</span>
+            <span class="tier">Silver — cleaned, typed</span>
+            <span class="tier">Gold — KPIs, features</span>
+          </div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-box"><b>Use</b><span>BI · ML · agents</span></div>
+        </div>
+        <div class="row" style="gap: 28px; margin-top: 36px; align-items: flex-start;">
+          <div class="card" style="flex: 1;">
+            <h3>Context travels with the data</h3>
+            <p>The topic path is free metadata: site, area, line and machine — no lookup joins.</p>
+          </div>
+          <div class="card" style="flex: 1;">
+            <h3>Replay from the lake</h3>
+            <p>Backfills and model training read history from storage, not from the broker.</p>
+          </div>
+          <div class="card" style="flex: 1.3;">
+            <h3>Payload = data contract</h3>
+            <pre class="code-block" style="font-size: 17px;">{contractExample}</pre>
+          </div>
+        </div>
+        </div>
+        <aside class="notes">
+          <p>Common mistake: treating the broker as a database. It holds the latest value per topic; time series belongs in a historian or lakehouse.</p>
+          <p>Because the topic encodes the hierarchy, parsing it gives you dimension columns for free in the silver layer.</p>
+        </aside>
+      </section>
+
+      <!-- 11 · AI agents -->
+      <section class="slide" id="s-agents" data-title="UNS and AI agents">
+        <div class="kicker">Agentic AI</div>
+        <h2>Agents need context in — and governed actions out</h2>
+        <div class="row grow" style="gap: 56px; align-items: center;">
+          <div class="aimm-stack" style="flex: 1;">
+            <div class="aimm-layer l-op"><b>Operator</b><span>Humans and agents: roles, competencies, accountability</span></div>
+            <div class="aimm-layer l-int"><b>Interaction</b><span>Manufacturing services, tools, authorisation</span></div>
+            <div class="aimm-layer l-dig"><b>Digitization</b><span>Reusable factory information — <em>the UNS lives here</em></span></div>
+            <div class="aimm-layer l-cp"><b>Cyber-Physical</b><span>Machines, PLCs, sensors</span></div>
+            <small class="muted">Layers of the AIMM Framework for Manufacturing Intelligence</small>
+          </div>
+          <div style="flex: 1;">
+            <ul class="clean">
+              <li>Agents <b>subscribe</b> for context — no bespoke integration per agent.</li>
+              <li>They act by <b>publishing to governed command topics</b>, never by reaching into machines.</li>
+              <li>Consequential actions need <b>human approval</b>, as in the demo.</li>
+              <li>Every action is itself an event — <b>auditable by design</b>.</li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">
+          <p>Link to the AIMM framework (Adan, Singh, Ó Seasnáin, 2026): four layers from cyber-physical to operator. The UNS provides the shared, reusable factory information that agents and people both rely on.</p>
+          <p>The maintenance agent in the demo followed exactly this pattern: read context, propose, wait for a human, act through the namespace.</p>
+        </aside>
+      </section>
+
+      <!-- 12 · Pitfalls -->
+      <section class="slide" id="s-pitfalls" data-title="Pitfalls">
+        <div class="kicker">Reality check</div>
+        <h2>What goes wrong on a real shopfloor</h2>
+        <div class="grid-3 grow" style="align-content: center;">
+          <div class="card"><h3>Naming is governance</h3><p>Agree the structure and who owns each branch before you scale.</p></div>
+          <div class="card"><h3>It isn't a database</h3><p>History belongs in a historian or lakehouse, not in the broker.</p></div>
+          <div class="card"><h3>Payload chaos</h3><p>Units, timestamps and quality flags need a contract from day one.</p></div>
+          <div class="card"><h3>Security per topic</h3><p>TLS, authentication and access rules for who may publish and subscribe where.</p></div>
+          <div class="card"><h3>Boiling the ocean</h3><p>Start with one line and one use case; let the namespace grow with value.</p></div>
+          <div class="card"><h3>People, not just tech</h3><p>Operators, IT and OT must own it together, or it becomes another silo.</p></div>
+        </div>
+        <aside class="notes">
+          <p>Pick two of these from your own experience and tell the story; the audience remembers stories, not lists.</p>
+        </aside>
+      </section>
+
+      <!-- 13 · Takeaways -->
+      <section class="slide" id="s-takeaways" data-title="Takeaways">
+        <div class="kicker">Takeaways</div>
+        <h2>Three things to remember</h2>
+        <div class="takeaways grow">
+          <div class="tk"><span>1</span><p><b>Integrate once, to the hub</b> — not to each other.</p></div>
+          <div class="tk"><span>2</span><p><b>Structure it like the business</b>, so people and machines can find data.</p></div>
+          <div class="tk"><span>3</span><p><b>Run it as a product</b>: contracts, governance and history alongside.</p></div>
+        </div>
+        <aside class="notes">
+          <p>Pause here. If time is short, this is the slide to land.</p>
+        </aside>
+      </section>
+
+      <!-- 14 · Thanks -->
+      <section class="slide" id="s-thanks" data-title="Thank you">
+        <div class="row grow" style="align-items: center; gap: 80px;">
+          <div style="flex: 1.3;">
+            <div class="kicker">Thank you</div>
+            <h1>Questions?</h1>
+            <p class="lead">Try the demo yourself, and get in touch:</p>
+            <ul class="contact">
+              <li><span>Web</span><b>nitishsingh.com</b></li>
+              <li><span>Deck</span><b>nitishsingh.com/slides/uns</b></li>
+              <li><span>LinkedIn</span><b>linkedin.com/in/nitish-singh</b></li>
+            </ul>
+          </div>
+          <div class="qr-box" set:html={qr} aria-label="QR code linking to nitishsingh.com" />
+        </div>
+        <aside class="notes">
+          <p>Leave this slide up during Q&amp;A so people can scan the QR code.</p>
+        </aside>
+      </section>
+    </div>
+
+    <div class="progress"><div class="bar"></div></div>
+
+    <div class="hud" role="toolbar" aria-label="Presentation controls">
+      <button id="hud-prev" title="Previous (←)" aria-label="Previous slide">←</button>
+      <span class="count" id="hud-count">1 / 14</span>
+      <button id="hud-next" title="Next (→)" aria-label="Next slide">→</button>
+      <button id="hud-overview" title="All slides (O)">Slides</button>
+      <button id="hud-notes" title="Speaker notes (N)">Notes</button>
+      <button id="hud-theme" title="Light / dark (T)">Theme</button>
+      <button id="hud-full" title="Fullscreen (F)">Fullscreen</button>
+      <button id="hud-help" title="Shortcuts (?)" aria-label="Keyboard shortcuts">?</button>
+    </div>
+
+    <div class="notes-panel" id="notes" hidden></div>
+
+    <div class="overlay" id="overview" hidden>
+      <h2>All slides</h2>
+      <div class="ov-grid"></div>
+    </div>
+
+    <div class="overlay" id="help" hidden>
+      <div class="help-box">
+        <h2>Keyboard shortcuts</h2>
+        <table>
+          <tr><td><kbd>→</kbd><kbd>Space</kbd><kbd>PgDn</kbd></td><td>Next slide (clickers work too)</td></tr>
+          <tr><td><kbd>←</kbd><kbd>PgUp</kbd></td><td>Previous slide</td></tr>
+          <tr><td><kbd>Home</kbd><kbd>End</kbd></td><td>First / last slide</td></tr>
+          <tr><td><kbd>F</kbd></td><td>Fullscreen</td></tr>
+          <tr><td><kbd>O</kbd></td><td>All slides</td></tr>
+          <tr><td><kbd>N</kbd></td><td>Speaker notes</td></tr>
+          <tr><td><kbd>T</kbd></td><td>Light / dark theme</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Leave a text field / close overlays</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      import '../../slides/uns/deck.js';
+      import '../../slides/uns/uns.js';
+    </script>
+  </body>
+</html>

@@ -6,11 +6,12 @@ import '../../slides/shared/deck.css';
 import '../../slides/uns/uns.css';
 import qrRaw from '../../slides/shared/qr-site.svg?raw';
 
-const title = 'Unified Namespace in Manufacturing — interactive deck';
+const title = 'The Unified Namespace: one live picture of your factory — Nitish Singh';
+const headline = 'The Unified Namespace: one live picture of your factory';
 const description =
-  'An interactive talk on the Unified Namespace (UNS) for manufacturing, with a live in-browser MQTT demo and a namespace generator.';
+  'Why point-to-point integration keeps factories data-poor, what a Unified Namespace changes, and a live in-browser demo you can play with. Article and presentable slide deck.';
 const canonical = new URL('/slides/uns/', Astro.site);
-const ogImage = new URL('/assets/images/me-prof-sq.jpeg', Astro.site);
+const ogImage = new URL('/assets/images/og/uns.png', Astro.site);
 const qr = qrRaw
   .replace(/<\?xml[^>]*\?>/, '')
   .replace(/width="[^"]*"\s+height="[^"]*"/, 'width="100%" height="100%"');
@@ -29,7 +30,7 @@ const contractExample = `temperature:
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="article">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -37,16 +38,53 @@ const contractExample = `temperature:
     <meta name="description" content={description} />
     <meta name="author" content="Nitish Singh" />
     <link rel="canonical" href={canonical} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="article" />
+    <meta property="article:author" content="Nitish Singh" />
+    <meta property="article:published_time" content="2026-11-14" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={headline} />
+    <meta name="twitter:description" content={description} />
     <link rel="shortcut icon" href="/assets/images/SiteLogo.png" />
     <meta name="theme-color" content="#0b1120" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline,
+      description,
+      datePublished: '2026-11-14',
+      author: { '@type': 'Person', name: 'Nitish Singh', url: 'https://nitishsingh.com' },
+      image: ogImage.toString(),
+      mainEntityOfPage: canonical.toString(),
+    })} />
   </head>
   <body>
+    <header class="site-bar">
+      <a class="brand" href="/"><b>NS</b><span>Nitish Singh</span></a>
+      <a href="/projects/">Projects</a>
+      <a href="/publications/">Publications</a>
+      <button type="button" data-deck="theme" aria-label="Toggle light or dark theme">◐</button>
+    </header>
+
+    <main class="article-wrap">
+      <div class="art-head">
+        <div class="art-kicker">Article + live slides</div>
+        <h1>{headline}</h1>
+        <p class="art-dek">
+          Why point-to-point integration keeps factories data-poor, what a Unified Namespace
+          changes, and a live demo you can play with in your browser.
+        </p>
+        <div class="byline"><b>Nitish Singh</b><span>November 2026</span><span>8 min read</span></div>
+      </div>
+
+      <div class="viewer">
+      <div class="deck-shell" id="deck-shell" tabindex="0" aria-label="Slides: Unified Namespace in Manufacturing">
     <div class="stage" id="stage" data-footer="Unified Namespace in Manufacturing">
       <!-- 1 · Title -->
       <section class="slide" id="s-title" data-title="Title">
@@ -562,12 +600,198 @@ const contractExample = `temperature:
           <tr><td><kbd>O</kbd></td><td>All slides</td></tr>
           <tr><td><kbd>N</kbd></td><td>Speaker notes</td></tr>
           <tr><td><kbd>T</kbd></td><td>Light / dark theme</td></tr>
-          <tr><td><kbd>Esc</kbd></td><td>Leave a text field / close overlays</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Leave a text field / close overlays / stop presenting</td></tr>
         </table>
       </div>
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="viewer-bar" aria-label="Slide controls">
+        <button type="button" data-deck="prev" aria-label="Previous slide">←</button>
+        <span class="count" data-deck="count">1 / 14</span>
+        <button type="button" data-deck="next" aria-label="Next slide">→</button>
+        <button type="button" data-deck="overview">All slides</button>
+        <button type="button" class="present" data-deck="present">⛶ Present</button>
+        <span class="hint">Click the slides, then use ← → · F for full screen</span>
+      </div>
+      </div>
+
+      <article class="prose">
+        <p class="lede">
+          Here's a question I like to ask manufacturing teams: how long does it take to get one
+          live machine value — a spindle temperature, a part count — onto a new dashboard? The
+          honest answer is rarely “an afternoon”. It's usually weeks, a new interface, and one
+          more thing to maintain.
+        </p>
+        <p>
+          I split my time between a precision-manufacturing shopfloor and a university research
+          group, and I see the same gap in both worlds. The algorithms are rarely the bottleneck.
+          Getting the right data, with its context, at the moment it matters — that is.
+        </p>
+        <p>
+          This article is the written companion to a talk I give on the <strong>Unified
+          Namespace</strong> (UNS). The slides above are live: a small MQTT-style broker, a
+          simulated factory and every demo run inside your browser. Click into them and use the
+          arrow keys, or press <strong>Present</strong> to go full screen.
+        </p>
+
+        <h2>The problem is the shape, not the tools</h2>
+        <p>
+          Most factories are organised along the ISA-95 automation pyramid: sensors and machines
+          at the bottom, then PLCs, SCADA, MES and ERP at the top. Each layer talks to its
+          neighbour through its own interface. Data climbs one layer at a time, and every new
+          question — a dashboard, a quality analysis, an AI use case — becomes a new integration
+          project.
+        </p>
+        <p>
+          The arithmetic is unforgiving. Connect systems point-to-point and <em>n</em> systems
+          need up to <em>n</em>(<em>n</em>−1)/2 interfaces: 28 for eight systems, 66 for twelve.
+          Worse, the next system you add costs <em>n</em> new interfaces. With a central hub,
+          every system needs exactly one connection.
+        </p>
+        <p class="try">Drag the slider from 3 to 12 systems and switch between the two views on <a href="#3" data-slide="3">slide 3</a>.</p>
+
+        <h2>What a Unified Namespace is</h2>
+        <p>
+          A Unified Namespace is a single, real-time hub where every system <strong>publishes
+          what it knows</strong> and <strong>subscribes to what it needs</strong>, organised the
+          way the business is organised. Four properties make it work:
+        </p>
+        <ul>
+          <li><strong>A single source of current truth</strong> — the latest value of everything, in one place.</li>
+          <li><strong>Event-driven</strong> — systems publish when something changes, not when someone polls.</li>
+          <li><strong>Structured like the business</strong> — a hierarchy that people and machines can both navigate.</li>
+          <li><strong>Open and lightweight</strong> — typically MQTT with simple payloads, so no single vendor owns your data flow.</li>
+        </ul>
+        <p>
+          A UNS is an architecture, not a product you buy. If one of these properties is missing
+          you may still have built something useful — a message bus, a data lake — but not a UNS.
+        </p>
+
+        <h2>A topic is an address in your business</h2>
+        <p>Every value in a UNS lives at a topic, and the topic reads like an address:</p>
+        <pre><code>aimm-precision/eindhoven/machining/line-1/cnc-01/temperature</code></pre>
+        <p>
+          Enterprise, site, area, line, cell, data point — the ISA-95 levels. The path <em>is</em>
+          the context: a value arriving on this topic already tells you which site, area, line and
+          machine it belongs to. Anyone can guess where to find a value, and a program can
+          subscribe to an entire line with one pattern. The message itself stays small:
+        </p>
+        <pre><code>{payloadExample}</code></pre>
+        <p>
+          In my experience, agreeing these levels and the naming convention is the most important
+          design decision of the whole effort. It's governance disguised as a naming exercise.
+        </p>
+        <p class="try">
+          Design your own namespace on <a href="#7" data-slide="7">slide 7</a>: type a company,
+          sites and areas, choose a naming convention, and watch the tree build itself and start
+          streaming values. You can download the structure as JSON as a starting point for your
+          own discussion.
+        </p>
+
+        <h2>How the data moves</h2>
+        <p>
+          Underneath sits publish/subscribe messaging, usually MQTT. Machines, MES and quality
+          applications publish to topics; dashboards, historians and agents subscribe. Publishers
+          and subscribers never know about each other — only about topics. That's the decoupling
+          that kills the spaghetti.
+        </p>
+        <p>Three details matter more than they first appear:</p>
+        <ul>
+          <li><strong>Retained messages.</strong> The broker keeps the last value per topic, so a dashboard that connects late immediately sees the current state.</li>
+          <li><strong>Report by exception.</strong> Devices publish only on meaningful change. The generator demo shows the traffic you save compared with polling, live.</li>
+          <li><strong>Payload format.</strong> Plain JSON is simple and flexible; Sparkplug B adds strict typing and birth/death certificates. My rule of thumb: start with JSON and a written contract, and move to Sparkplug B where you need its guarantees.</li>
+        </ul>
+
+        <h2>Seeing it work</h2>
+        <p>
+          Two demos make the argument better than any diagram. On
+          <a href="#8" data-slide="8">slide 8</a> you subscribe with wildcards: <code>+</code>
+          matches exactly one level, <code>#</code> matches everything below. One pattern gives you
+          every machine's state across all sites; another gives you a single area. Invalid
+          patterns are rejected exactly as a real broker would.
+        </p>
+        <p>
+          On <a href="#9" data-slide="9">slide 9</a>, inject a fault on a machine. An andon board,
+          an availability service and a maintenance agent all react — and none of them knows the
+          machine exists, only the topics. The agent reads context from the namespace and proposes
+          a work order, but a person approves it. Then plug in a brand-new energy monitor while
+          everything is running. No producer is touched. That is the whole case for a UNS in one
+          click.
+        </p>
+
+        <h2>For data engineers: it's the stream, not the store</h2>
+        <p>
+          The most common mistake I see is treating the broker as a database. A UNS holds the
+          <em>current</em> state. History belongs in a historian or lakehouse, fed by a connector
+          that subscribes like any other consumer. Backfills and model training read from storage,
+          not from the broker.
+        </p>
+        <p>
+          Two things make a UNS a gift to data engineering. The topic path gives you dimension
+          columns — site, area, line, machine — for free, without lookup joins. And if you treat
+          each payload as a <strong>data contract</strong> (units, timestamps, quality flags),
+          downstream pipelines stop breaking every time a gateway is updated. I go deeper into
+          this in my companion deck on a
+          <a href="/slides/data-platform/">data intelligence platform for manufacturing</a>.
+        </p>
+
+        <h2>Where AI agents fit</h2>
+        <p>
+          Agents need two things from a factory: <strong>context in</strong> and <strong>governed
+          actions out</strong>. A UNS provides both. Agents subscribe for context instead of
+          needing a bespoke integration each, and they act by publishing to governed command
+          topics rather than reaching into machines. Consequential actions wait for human
+          approval, and because every action is itself an event, the whole loop is auditable.
+        </p>
+        <p>
+          In the
+          <a href="https://doi.org/10.5281/zenodo.24160166" target="_blank" rel="noopener">AIMM
+          Framework for Manufacturing Intelligence</a> that I co-authored with Ivo Adan and Shane
+          Ó Seasnáin, capabilities for human and agentic work are organised into four layers:
+          cyber-physical, digitization, interaction and operator. The way I see it, the UNS is a
+          core part of the digitization layer — the reusable factory information that both
+          people and agents rely on.
+        </p>
+
+        <h2>What goes wrong</h2>
+        <ul>
+          <li><strong>Naming without governance.</strong> Agree the structure and who owns each branch before you scale.</li>
+          <li><strong>Using it as a database.</strong> Keep history in a historian or lakehouse.</li>
+          <li><strong>Payload chaos.</strong> Units, timestamps and quality flags need a contract from day one.</li>
+          <li><strong>Security as an afterthought.</strong> TLS, authentication and per-topic access rules for who may publish and subscribe where.</li>
+          <li><strong>Boiling the ocean.</strong> Start with one line and one use case; let the namespace grow with value.</li>
+          <li><strong>Treating it as an IT project.</strong> Operators, IT and OT have to own it together, or it becomes another silo.</li>
+        </ul>
+
+        <h2>Three things to remember</h2>
+        <ol>
+          <li><strong>Integrate once, to the hub</strong> — not to each other.</li>
+          <li><strong>Structure it like the business</strong>, so people and machines can find data.</li>
+          <li><strong>Run it as a product</strong>: contracts, governance and history alongside.</li>
+        </ol>
+        <p>
+          If you're working on this — research, a pilot, a vendor evaluation — I'd like to hear
+          what's working for you. You can find me on
+          <a href="https://www.linkedin.com/in/nitish-singh/" target="_blank" rel="noopener">LinkedIn</a>.
+        </p>
+
+        <p class="note">
+          About the demo: AIMM Precision is a fictional company, and every value in the slides is
+          simulated in your browser. Nothing is sent anywhere, and the deck keeps working offline
+          once the page has loaded.
+        </p>
+      </article>
+    </main>
+
+    <footer class="site-foot">
+      <a href="/">nitishsingh.com</a>
+      <a href="/projects/">More projects</a>
+      <a href="/slides/data-platform/">Companion deck: data intelligence platform</a>
+    </footer>
+
 
     <script>
       import '../../slides/shared/deck.js';

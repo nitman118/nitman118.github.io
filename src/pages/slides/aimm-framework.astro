@@ -1,0 +1,664 @@
+---
+// Article + presentable slides for the AIMM whitepaper (November 2026).
+// Colours follow the whitepaper; no CDN, so it works offline once loaded.
+import '../../slides/shared/deck.css';
+import '../../slides/aimm/aimm.css';
+import qrRaw from '../../slides/aimm/qr-doi.svg?raw';
+
+const headline = 'The AIMM Framework: what it takes for AI agents to do real manufacturing work';
+const title = `${headline} — Nitish Singh`;
+const description =
+  'A summary of the new AIMM whitepaper on organising factories for reliable human and agentic work — four layers, an OEE investigation, and interactive slides.';
+const canonical = new URL('/slides/aimm-framework/', Astro.site);
+const ogImage = new URL('/assets/images/og/aimm-framework.png', Astro.site);
+const DOI = 'https://doi.org/10.5281/zenodo.24160166';
+const qr = qrRaw
+  .replace(/<\?xml[^>]*\?>/, '')
+  .replace(/width="[^"]*"\s+height="[^"]*"/, 'width="100%" height="100%"');
+
+const authors = [
+  ['Ivo Adan', 'TU Eindhoven'],
+  ['Shane Ó Seasnáin', 'VITO'],
+  ['Nitish Singh', 'TU Eindhoven / KMWE'],
+];
+const contributors = [
+  ['John Blankendaal', 'Brainport Industries'],
+  ['Kenneth Braakman', 'NXP'],
+  ['Onno Buijs', 'NXP'],
+  ['Jan Driessen', 'ITEC'],
+  ['Timo Fruytier', 'Prodrive Technologies'],
+  ['Jacek Kustra', 'ASML'],
+  ['Fabrice Mommens', 'Barco'],
+  ['Mark van der Pas', 'TU Eindhoven'],
+  ['Marco Vijfvinkel', 'JBT Marel'],
+  ['Alexander Vos de Wael', 'JBT Marel'],
+  ['Georg Jung', 'VITO'],
+];
+---
+
+<!doctype html>
+<html lang="en" class="article">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Nitish Singh" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="article" />
+    <meta property="article:author" content="Nitish Singh" />
+    <meta property="article:published_time" content="2026-11-15" />
+    <meta property="og:title" content={headline} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={headline} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="shortcut icon" href="/assets/images/SiteLogo.png" />
+    <meta name="theme-color" content="#a31642" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline,
+      description,
+      datePublished: '2026-11-15',
+      author: { '@type': 'Person', name: 'Nitish Singh', url: 'https://nitishsingh.com' },
+      image: ogImage.toString(),
+      mainEntityOfPage: canonical.toString(),
+      citation: DOI,
+    })} />
+  </head>
+  <body>
+    <header class="site-bar">
+      <a class="brand" href="/"><b>NS</b><span>Nitish Singh</span></a>
+      <a href="/projects/">Projects</a>
+      <a href="/publications/">Publications</a>
+      <button type="button" data-deck="theme" aria-label="Toggle light or dark theme">◐</button>
+    </header>
+
+    <main class="article-wrap">
+      <div class="art-head">
+        <div class="art-kicker">New whitepaper · article + live slides</div>
+        <h1>{headline}</h1>
+        <p class="art-dek">
+          A summary of the AIMM whitepaper on organising factories for reliable human and agentic
+          work — with interactive slides you can explore or present.
+        </p>
+        <div class="byline"><b>Nitish Singh</b><span>November 2026</span><span>9 min read</span><a href={DOI} target="_blank" rel="noopener">Read the whitepaper →</a></div>
+      </div>
+
+      <div class="viewer">
+      <div class="deck-shell" id="deck-shell" tabindex="0" aria-label="Slides: The AIMM Framework for Manufacturing Intelligence">
+        <div class="stage" id="stage" data-footer="The AIMM Framework for Manufacturing Intelligence">
+
+          <!-- 1 · Cover -->
+          <section class="slide cover" id="a-title" data-title="Title">
+            <div class="cover-top">
+              <div class="cover-kicker">AIMM whitepaper · November 2026</div>
+              <div class="cover-brand"><b>aimm</b><span>AI-enabled Manufacturing<br />and Maintenance</span></div>
+              <h1>The AIMM Framework for Manufacturing Intelligence</h1>
+            </div>
+            <div class="cover-band">
+              <svg class="blobs" viewBox="0 0 1600 432" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <g fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="150" stroke-linecap="round">
+                  <path d="M80 520 C 80 300, 360 300, 360 120" />
+                  <path d="M720 -60 C 720 200, 1020 200, 1020 420" />
+                  <path d="M1250 520 C 1250 330, 1520 330, 1520 140" />
+                </g>
+                <g fill="rgba(255,255,255,0.07)">
+                  <circle cx="560" cy="60" r="95" />
+                  <circle cx="1180" cy="40" r="70" />
+                </g>
+              </svg>
+              <p class="sub">A Systems Engineering Approach to Human and Agentic Work in Complex Manufacturing Processes</p>
+              <div class="cover-authors">Ivo Adan · Shane Ó Seasnáin · Nitish Singh — with contributors across Brainport and Flanders</div>
+              <div class="cover-meta"><span>Presented by Nitish Singh</span><span>DOI 10.5281/zenodo.24160166</span></div>
+            </div>
+            <aside class="notes">
+              <p>Developed by TU Eindhoven and the VITO Sustainable Agentic Intelligence Lab (SAIL) with high-tech companies in Brainport and Flanders; published jointly by Brainport Industries and the European Supply Chain Forum.</p>
+            </aside>
+          </section>
+
+          <!-- 2 · The question -->
+          <section class="slide" id="a-why" data-title="The question">
+            <div class="kicker">Introduction</div>
+            <p class="big-q">What is required for agents to take a larger role in work that today depends on experienced people following complex processes, interpreting changing evidence, and deciding what to do next?</p>
+            <div class="row grow" style="gap: 28px; align-items: flex-start;">
+              <div class="card" style="flex: 1;">
+                <h3>Why manufacturers are interested</h3>
+                <div class="pill-row" style="margin-top: 14px;">
+                  <span class="pill">Productivity</span><span class="pill">Skills shortages</span><span class="pill">More production data</span><span class="pill">Circularity</span><span class="pill">Energy use</span>
+                </div>
+                <p style="margin-top: 16px;">Agents could help staff monitor more of the process and follow up on conditions that need attention — preventing scrap, resolving bottlenecks, recovering material.</p>
+              </div>
+              <div class="card" style="flex: 1;">
+                <h3>Why it is hard</h3>
+                <p>Errors in interpreting information or selecting actions accumulate through later steps. On sustained tasks agents show lost understanding of progress, unfinished work and inadequate verification. Their understanding must be grounded in the equipment, processes and conditions of this factory.</p>
+              </div>
+            </div>
+            <aside class="notes"><p>This is the question the paper is organised around. Note: the paper is about organising the factory, not about designing models.</p></aside>
+          </section>
+
+          <!-- 3 · Four layers -->
+          <section class="slide" id="a-layers" data-title="Four logical layers">
+            <div class="kicker">The AIMM Framework</div>
+            <h2>Four logical layers — click a layer</h2>
+            <div class="row grow" style="gap: 36px; align-items: center;">
+              <div id="ly-stack" class="layers" style="flex: 1.1;"></div>
+              <div id="ly-detail" class="card layer-detail" style="flex: 1; min-height: 420px;"></div>
+            </div>
+            <p class="mini-note">The capabilities of one layer constrain the next: limits on observation constrain information; information constrains services; services constrain what operators can determine and do.</p>
+            <aside class="notes"><p>Figure 1 of the paper. Walk bottom-up: physical observation, reusable information, services, then the people and agents doing the work.</p></aside>
+          </section>
+
+          <!-- 4 · Diagnostic -->
+          <section class="slide" id="a-diag" data-title="Where does the constraint lie?">
+            <div class="kicker">Using the framework</div>
+            <h2>Where does the constraint lie?</h2>
+            <div class="diag grow">
+              <div>
+                <div id="dg-q"></div>
+                <div id="dg-out" class="diag-result"></div>
+              </div>
+              <div id="dg-stack" class="layers"></div>
+            </div>
+            <aside class="notes"><p>Answer for one intended agent role, starting at the factory floor. The first “no” shows where targeted investment will have impact. Much of the capability may already exist: a sensor, a historian, an MES workflow, a qualification process.</p></aside>
+          </section>
+
+          <!-- 5 · Nine questions -->
+          <section class="slide" id="a-nine" data-title="Nine questions">
+            <div class="kicker">Organizing context and capabilities for agents</div>
+            <h2>Nine questions to specify an agent’s work</h2>
+            <div class="nine grow" style="align-content: center;">
+              <div class="card"><b>1</b><p>What manufacturing work and decisions will the agent support?</p></div>
+              <div class="card"><b>2</b><p>What can be observed in the factory, and which relevant conditions remain uncertain?</p></div>
+              <div class="card"><b>3</b><p>Which definitions and sources apply to those observations?</p></div>
+              <div class="card"><b>4</b><p>How are the records connected, and how are their origins and limitations represented?</p></div>
+              <div class="card"><b>5</b><p>How will records be arranged so the agent can find relevant evidence as information grows?</p></div>
+              <div class="card"><b>6</b><p>What responsibilities do humans and agents have, and what competence does each role require?</p></div>
+              <div class="card"><b>7</b><p>Which software functions are needed, who may use them, and what must be checked before an action proceeds?</p></div>
+              <div class="card"><b>8</b><p>What must remain available to check earlier conclusions when conditions change or another operator takes over?</p></div>
+              <div class="card"><b>9</b><p>How are errors, stale evidence and conflicting work detected — and when must the agent stop or seek help?</p></div>
+            </div>
+            <aside class="notes"><p>Section 2.3. These questions span all four layers; service designers answer them for the agent’s decisions, evidence, limits, permitted actions and open questions.</p></aside>
+          </section>
+
+          <!-- 6 · Packaging line -->
+          <section class="slide demo" id="a-line" data-title="Cyber-Physical: the packaging line">
+            <div class="kicker">Cyber-Physical Layer · try it</div>
+            <h2>Where a loss occurs decides what it costs</h2>
+            <div class="pl grow">
+              <div class="col" style="gap: 10px; min-width: 0;">
+                <svg id="pl-svg" class="pl-svg" viewBox="0 0 910 165" aria-label="Packaging line"></svg>
+                <svg id="pl-chart" class="pl-chart" viewBox="0 0 720 200" style="width: 100%;" aria-label="Buffer levels over time"></svg>
+                <p class="mini-note" style="margin: 0 !important;">Illustrative rates: infeed and inspection 66 units/min, fill-and-seal 60 units/min (the bottleneck). Based on Figure 2 of the paper.</p>
+              </div>
+              <div class="pl-ctl card">
+                <span class="ctl-label">Station that stops</span>
+                <div class="seg-control" id="pl-where">
+                  <button type="button" class="on" data-where="in">Infeed</button>
+                  <button type="button" data-where="fs">Fill-and-seal</button>
+                  <button type="button" data-where="insp">Inspection</button>
+                </div>
+                <span class="ctl-label">Stop duration</span>
+                <input id="pl-dur" class="range" type="range" min="0" max="40" value="19" />
+                <span class="pl-val" id="pl-dur-v"></span>
+                <span class="ctl-label">Buffer size</span>
+                <input id="pl-cap" class="range" type="range" min="0" max="1200" step="60" value="600" />
+                <span class="pl-val" id="pl-cap-v" style="font-size: 18px;"></span>
+                <div id="pl-res" class="pl-result"></div>
+                <button type="button" id="pl-play" class="btn primary" style="align-self: flex-start;">▶ Replay</button>
+              </div>
+            </div>
+            <aside class="notes">
+              <p>The paper’s example: a nineteen-minute infeed stop. A short interruption can be absorbed by a buffer; a longer one starves fill-and-seal and then inspection. A stop at the bottleneck is lost immediately.</p>
+              <p>So a service that ranks losses by their effect on output needs station-state and buffer records — not just stop durations.</p>
+            </aside>
+          </section>
+
+          <!-- 7 · Digitization -->
+          <section class="slide" id="a-dig" data-title="Digitization: context">
+            <div class="kicker">Digitization Layer</div>
+            <h2>Agents need two kinds of context</h2>
+            <div class="grow center-v">
+            <div class="ctx">
+              <div class="card">
+                <h3>Operational context — what happened</h3>
+                <p>Machine states, counts, operator logbooks, maintenance tickets and inspection reports, linked to equipment, orders, materials and time. Event time is kept apart from recorded time; gaps and conflicts stay visible.</p>
+                <div class="chips-row"><span class="src-chip c-uns">UNS · current state</span><span class="src-chip c-hist">Historian · durable records</span></div>
+              </div>
+              <div class="card sem">
+                <h3>Semantic context — what it means</h3>
+                <p>Readable definitions, ontologies, equipment properties and reviewed experience — with change history, so each run is judged against the definition that applied at the time.</p>
+                <div class="chips-row"><span class="src-chip c-aas">Asset Administration Shell</span><span class="src-chip c-kg">Knowledge graph</span><span class="src-chip c-dp">Owned data products</span></div>
+              </div>
+            </div>
+            <div style="margin-top: 26px;">
+              <span class="ctl-label">Shared identification: one machine, many system identifiers, one service reference</span>
+              <div class="idref">services/oee/plant-01/line-02/<i>machine-003</i>/availability</div>
+            </div>
+            </div>
+            <aside class="notes"><p>A UNS organises access to current data by site, line and machine; historians retain it. The AAS carries equipment identity, technical data such as the approved rate, and documentation. A knowledge graph links recurring faults, repairs and evidence. Data products give the preparation an owner.</p></aside>
+          </section>
+
+          <!-- 8 · Interaction -->
+          <section class="slide" id="a-int" data-title="Interaction: services">
+            <div class="kicker">Interaction Layer</div>
+            <h2>Services: where people and agents meet the factory</h2>
+            <div class="row grow" style="gap: 32px; align-items: flex-start;">
+              <div class="f5" style="flex: 1.15;">
+                <div class="f5-ops">
+                  <div class="f5-box" style="background: var(--aimm-rose);"><b>Human operators</b>Assigned roles and authority</div>
+                  <div class="f5-box" style="background: var(--aimm-peach);"><b>Agentic operators</b>Assigned roles and authority</div>
+                </div>
+                <div class="f5-svc">
+                  <b>Manufacturing services</b>
+                  <div class="f5-row"><span class="f5-tag">OEE</span><span class="f5-tag">Maintenance</span><span class="f5-tag">Scheduling</span><span class="f5-tag">Quality</span><span class="f5-tag">Energy</span></div>
+                  <div class="f5-row">
+                    <div class="f5-box" style="background: var(--aimm-sage);"><b>Operational</b>Investigate records, act within authority</div>
+                    <div class="f5-box" style="background: var(--aimm-peach);"><b>Simulation</b>Assess changes with stated assumptions</div>
+                    <div class="f5-box" style="background: var(--aimm-blue);"><b>Synthetic Data</b>Construct data to improve agents</div>
+                  </div>
+                  <div class="f5-box" style="background: var(--aimm-rose);"><b>Guardrails across all modes</b>Permissions · evidence checks · approvals · permitted execution interfaces</div>
+                </div>
+                <div class="f5-box" style="background: var(--aimm-sage);"><b>Shared factory context</b>Production records · semantic definitions · reviewed knowledge</div>
+              </div>
+              <div class="col" style="flex: 0.85; gap: 14px;">
+                <h3 style="margin: 0;">Authority, example: a reporting correction</h3>
+                <div class="flowline" style="flex-direction: column;">
+                  <div class="fs agent"><b>Agentic operator</b>proposes the correction</div>
+                  <div class="fs human"><b>Production engineer</b>verifies the discrepancy</div>
+                  <div class="fs human"><b>Reporting-system owner</b>authorizes the change</div>
+                  <div class="fs"><b>Reporting service</b>writes it</div>
+                </div>
+                <p style="font-size: 18px; margin: 0;">Permissions are enforced by the service and plant systems, independently of the model’s own protections. Safety functions stay outside the agent; requests pass checked control interfaces.</p>
+              </div>
+            </div>
+            <aside class="notes"><p>Figure 5. MCP is one way to expose service resources and tools; RAG can reach outside sources such as supplier documentation; A2A is an example of agent-to-agent task exchange. Standards referenced: ISO 13849-1, IEC 62061, IEC 62443-3-3.</p></aside>
+          </section>
+
+          <!-- 9 · Operator -->
+          <section class="slide" id="a-op" data-title="Operator: agents">
+            <div class="kicker">Operator Layer</div>
+            <h2>An agent is a model plus everything around it</h2>
+            <div class="row grow" style="gap: 36px; align-items: flex-start;">
+              <div class="f6" style="flex: 1;">
+                <div class="lm">Language model<br /><small style="font-weight: 500; font-size: 15px;">interprets instructions and evidence</small></div>
+                <div class="harness">
+                  <span>Harness — supplies context, runs permitted tool calls</span>
+                  <div class="h-item" style="background: var(--aimm-peach);"><b>Memory</b> — short- and long-term task information</div>
+                  <div class="h-item" style="background: var(--aimm-sage);"><b>Tools and protocols</b> — service functions and exchanges</div>
+                  <div class="h-item" style="background: var(--aimm-blue);"><b>Skills</b> — Markdown procedures with scripts</div>
+                  <div class="h-item" style="background: var(--aimm-rose);"><b>AGENTS.md</b> — role-wide instructions</div>
+                </div>
+              </div>
+              <div style="flex: 1;">
+                <ul class="clean">
+                  <li>Check a remembered rule’s <b>source and conditions</b> before applying it.</li>
+                  <li><b>Loop engineering</b>: continue, re-check, revise, or stop and ask.</li>
+                  <li>Evaluate with the real tools on <b>unseen cases</b>: resumed work, noisy or out-of-order records, changed definitions.</li>
+                  <li>Choose the <b>model per task</b> on quality, speed and cost.</li>
+                  <li>Guard against <b>automation bias</b>: reviewers need the evidence.</li>
+                </ul>
+              </div>
+            </div>
+            <aside class="notes"><p>Figure 6. The paper notes that instruction files are design options whose benefit must be tested.</p></aside>
+          </section>
+
+          <!-- 10 · OEE investigation -->
+          <section class="slide demo" id="a-oee" data-title="An agent-supported OEE investigation">
+            <div class="kicker">Chapter 8 · step through it</div>
+            <h2>An agent-supported OEE investigation</h2>
+            <div class="oee grow">
+              <div id="oe-steps" class="steps"></div>
+              <div class="card step-card">
+                <div id="oe-actors" class="actors"></div>
+                <h3 id="oe-title"></h3>
+                <p id="oe-text"></p>
+                <div id="oe-approval" class="approval" hidden></div>
+                <div class="step-nav">
+                  <button type="button" id="oe-prev" class="btn small">← Previous step</button>
+                  <button type="button" id="oe-next" class="btn small primary">Next step →</button>
+                </div>
+              </div>
+              <div class="oee-panel">
+                <div class="oee-big"><b id="oe-oee">—</b><span>OEE = A × P × Q</span></div>
+                <div class="comp c-av" id="oe-a"><div class="top"><span>Availability</span><b>—</b></div><div class="calc"></div></div>
+                <div class="comp c-pf" id="oe-p"><div class="top"><span>Performance</span><b>—</b></div><div class="calc"></div></div>
+                <div class="comp c-ql" id="oe-q"><div class="top"><span>Quality</span><b>—</b></div><div class="calc"></div></div>
+                <p class="oee-note">Fictitious packaging-line example from the paper. Values follow from its figures, using the Best Proven Rate implied by 24,900 units in 415 minutes (60/min).</p>
+              </div>
+            </div>
+            <aside class="notes">
+              <p>Use the step buttons — the arrow keys still move slides. Highlighted components changed in that step.</p>
+              <p>Two lessons: the headline number can hide misallocated losses, and approval is a precursor to execution, not proof that physical conditions still hold.</p>
+            </aside>
+          </section>
+
+          <!-- 11 · Roles -->
+          <section class="slide" id="a-roles" data-title="Human and agentic operators">
+            <div class="kicker">Human and agentic operators</div>
+            <h2>Work follows competence and authority</h2>
+            <div class="roles grow" style="align-content: center;">
+              <div class="card">
+                <h3>Agentic operator</h3>
+                <ul>
+                  <li>Investigates losses through the OEE service</li>
+                  <li>Assembles and compares records from many tools</li>
+                  <li>Proposes corrections and trials</li>
+                  <li>Keeps uncertainty visible; stops or refers when evidence or authority is missing</li>
+                </ul>
+              </div>
+              <div class="card eng">
+                <h3>Production engineer</h3>
+                <ul>
+                  <li>Reviews findings and verifies discrepancies</li>
+                  <li>Authorizes reporting corrections and trials</li>
+                  <li>Approves material use and downtime</li>
+                  <li>Decides on containment</li>
+                </ul>
+              </div>
+              <div class="card tech">
+                <h3>Technician</h3>
+                <ul>
+                  <li>Performs physical inspections and repairs</li>
+                  <li>Runs production trials under plant controls</li>
+                  <li>Reports changes not yet recorded</li>
+                </ul>
+              </div>
+            </div>
+            <p class="mini-note">“Human operator” and “agentic operator” say who carries out a role; either may assemble evidence or investigate losses when qualified and authorized.</p>
+            <aside class="notes"><p>Agents can also help make tribal and tacit knowledge explicit — asking operators for explanations, with operators checking the interpretation.</p></aside>
+          </section>
+
+          <!-- 12 · Conclusion -->
+          <section class="slide" id="a-concl" data-title="Conclusion and next steps">
+            <div class="kicker">Conclusion</div>
+            <h2>A structured basis — now it needs industrial trials</h2>
+            <div class="row grow" style="gap: 40px; align-items: center;">
+              <div class="takeaways" style="flex: 1.1;">
+                <div class="tk"><span>1</span><p style="font-size: 28px !important;"><b>Start from the work</b> the agent should support.</p></div>
+                <div class="tk"><span>2</span><p style="font-size: 28px !important;"><b>Find the constraining layer</b> before investing.</p></div>
+                <div class="tk"><span>3</span><p style="font-size: 28px !important;"><b>Keep people accountable</b>, with the evidence to check.</p></div>
+              </div>
+              <div class="card" style="flex: 1;">
+                <h3>Open questions for trials</h3>
+                <ul class="clean" style="margin-top: 12px;">
+                  <li style="font-size: 20px;">Do agents interpret factory evidence reliably and recognize when to revise?</li>
+                  <li style="font-size: 20px;">How much supervision and intervention does it take?</li>
+                  <li style="font-size: 20px;">Do people keep the understanding to check the agent’s reasoning?</li>
+                </ul>
+              </div>
+            </div>
+            <aside class="notes"><p>The same approach applies to maintenance, quality, scheduling, energy and material use, and supports the human-centric aims of Industry 5.0.</p></aside>
+          </section>
+
+          <!-- 13 · People -->
+          <section class="slide" id="a-people" data-title="Authors and contributors">
+            <div class="kicker">Authors &amp; contributors</div>
+            <h2>A joint effort across Brainport and Flanders</h2>
+            <div class="people grow">
+              <div>
+                <h3>Authors</h3>
+                <ul class="plist authors">{authors.map(([n, o]) => <li>{n}<span>{o}</span></li>)}</ul>
+                <div class="pub-note">Developed by TU Eindhoven and the VITO Sustainable Agentic Intelligence Lab (SAIL). Published jointly by Brainport Industries and the European Supply Chain Forum.</div>
+              </div>
+              <div>
+                <h3>Contributors</h3>
+                <ul class="plist two">{contributors.map(([n, o]) => <li>{n}<span>{o}</span></li>)}</ul>
+              </div>
+            </div>
+            <aside class="notes"><p>Thank the contributors by organisation. More information: info@brainportindustries.nl.</p></aside>
+          </section>
+
+          <!-- 14 · Thanks -->
+          <section class="slide" id="a-thanks" data-title="Thank you">
+            <div class="row grow" style="align-items: center; gap: 80px;">
+              <div style="flex: 1.3;">
+                <div class="kicker">Thank you</div>
+                <h1 style="color: var(--aimm-burgundy);">Read the whitepaper</h1>
+                <ul class="contact">
+                  <li><span>Whitepaper</span><b>doi.org/10.5281/zenodo.24160166</b></li>
+                  <li><span>This talk</span><b>nitishsingh.com/slides/aimm-framework</b></li>
+                  <li><span>Contact</span><b>info@brainportindustries.nl</b></li>
+                  <li><span>LinkedIn</span><b>linkedin.com/in/nitish-singh</b></li>
+                </ul>
+              </div>
+              <div class="qr-box" set:html={qr} aria-label="QR code linking to the whitepaper DOI" />
+            </div>
+            <aside class="notes"><p>The QR code opens the whitepaper on Zenodo.</p></aside>
+          </section>
+        </div>
+
+        <div class="progress"><div class="bar"></div></div>
+
+        <div class="hud" role="toolbar" aria-label="Presentation controls">
+          <button id="hud-prev" title="Previous (←)" aria-label="Previous slide">←</button>
+          <span class="count" id="hud-count">1 / 14</span>
+          <button id="hud-next" title="Next (→)" aria-label="Next slide">→</button>
+          <button id="hud-overview" title="All slides (O)">Slides</button>
+          <button id="hud-notes" title="Speaker notes (N)">Notes</button>
+          <button id="hud-theme" title="Light / dark (T)">Theme</button>
+          <button id="hud-full" title="Fullscreen (F)">Fullscreen</button>
+          <button id="hud-help" title="Shortcuts (?)" aria-label="Keyboard shortcuts">?</button>
+        </div>
+        <div class="notes-panel" id="notes" hidden></div>
+        <div class="overlay" id="overview" hidden><h2>All slides</h2><div class="ov-grid"></div></div>
+        <div class="overlay" id="help" hidden>
+          <div class="help-box">
+            <h2>Keyboard shortcuts</h2>
+            <table>
+              <tr><td><kbd>→</kbd><kbd>Space</kbd><kbd>PgDn</kbd></td><td>Next slide (clickers work too)</td></tr>
+              <tr><td><kbd>←</kbd><kbd>PgUp</kbd></td><td>Previous slide</td></tr>
+              <tr><td><kbd>F</kbd></td><td>Fullscreen</td></tr>
+              <tr><td><kbd>O</kbd></td><td>All slides</td></tr>
+              <tr><td><kbd>N</kbd></td><td>Speaker notes</td></tr>
+              <tr><td><kbd>T</kbd></td><td>Light / dark theme</td></tr>
+              <tr><td><kbd>Esc</kbd></td><td>Leave a text field / close overlays / stop presenting</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="viewer-bar" aria-label="Slide controls">
+        <button type="button" data-deck="prev" aria-label="Previous slide">←</button>
+        <span class="count" data-deck="count">1 / 14</span>
+        <button type="button" data-deck="next" aria-label="Next slide">→</button>
+        <button type="button" data-deck="overview">All slides</button>
+        <button type="button" class="present" data-deck="present">⛶ Present</button>
+        <span class="hint">Click the slides, then use ← → · F for full screen</span>
+      </div>
+      </div>
+
+      <article class="prose">
+        <p class="lede">
+          This month we published <a href={DOI} target="_blank" rel="noopener"><strong>The AIMM
+          Framework for Manufacturing Intelligence</strong></a>, a whitepaper I co-authored with
+          Ivo Adan (TU Eindhoven) and Shane Ó Seasnáin (VITO), with contributions from colleagues
+          at Brainport Industries, NXP, ITEC, Prodrive Technologies, ASML, Barco, TU Eindhoven,
+          JBT Marel and VITO.
+        </p>
+        <p>
+          The framework is being developed by TU Eindhoven and the VITO Sustainable Agentic
+          Intelligence Lab (SAIL) together with high-tech companies in Brainport and Flanders, and
+          the paper is published jointly by Brainport Industries and the European Supply Chain
+          Forum. This article is my summary of it, and the slides above are a talk version you can
+          click through or present full screen. The whitepaper itself remains the authoritative
+          source.
+        </p>
+
+        <h2>The question behind the paper</h2>
+        <blockquote>
+          What is required for agents to take a larger role in work that today depends on
+          experienced people following complex processes, interpreting changing evidence, and
+          deciding what to do next?
+        </blockquote>
+        <p>
+          Manufacturers are interested in generative AI agents for good reasons: pressure on
+          productivity, skills shortages, growing volumes of production data, and the push to
+          improve circularity and energy use. Agents can extend automation to work that needs
+          interpretation and judgement — monitoring more of the process and following up on the
+          conditions that need attention.
+        </p>
+        <p>
+          But agents are less reliable on sustained tasks. Reported failures include losing track
+          of progress, leaving work unfinished and not verifying results, and an error early in a
+          task can propagate through every later step. An agent's understanding has to be grounded
+          in the equipment, processes and conditions of <em>this</em> factory. The paper doesn't
+          prescribe agent designs or model training; it asks how the factory itself should be
+          organized so that agents can work reliably.
+        </p>
+
+        <h2>Four logical layers</h2>
+        <p>AIMM organizes the capabilities needed for human and agentic work into four layers:</p>
+        <ul>
+          <li><strong>Cyber-Physical</strong> — the equipment and processes where events occur, measurements originate and production changes take effect.</li>
+          <li><strong>Digitization</strong> — operational records together with the definitions and relationships needed to interpret them.</li>
+          <li><strong>Interaction</strong> — the manufacturing services through which operators perform defined tasks, connected to procedures and permissions.</li>
+          <li><strong>Operator</strong> — the human and agentic operators, each with a defined role, competence requirement and authority.</li>
+        </ul>
+        <p>
+          The layers constrain one another: what you can observe limits the information you can
+          gather, the information limits the services you can offer, and the services limit what
+          operators can determine and do.
+        </p>
+        <p class="try">Click through the layers on <a href="#3" data-slide="3">slide 3</a>.</p>
+
+        <h2>Find the constraining layer before you invest</h2>
+        <p>
+          For me this is the most practical idea in the paper. If the physical properties a task
+          needs can't be measured, the problem starts in the Cyber-Physical layer. If the records
+          exist but don't explain themselves, it's the Digitization layer. If the records are
+          available and explained but the service can't assemble them for the task, it's the
+          Interaction layer. And if all of that is in place but the evidence is still interpreted
+          poorly, look at the Operator layer: the agent's competence, its instructions, or how the
+          work is divided between people and agents.
+        </p>
+        <p>
+          Much of the capability often already exists — an installed sensor, a historian, an MES
+          workflow, a qualification process — so agents can be given more responsibility in
+          incremental steps, with investment following the requirements of the work. The paper
+          also lists nine questions for specifying an agent's work, from “what decisions will it
+          support?” to “when must it stop or seek help?”.
+        </p>
+        <p class="try">Try the four-question check on <a href="#4" data-slide="4">slide 4</a>, and see all nine questions on <a href="#5" data-slide="5">slide 5</a>.</p>
+
+        <h2>The factory is the baseline</h2>
+        <p>
+          Factories are built up over years, so machines differ in what they measure and report.
+          The paper uses a packaging line — infeed, fill-and-seal and inspection, separated by
+          small buffers — to show why physical context matters. A short stop can be absorbed by a
+          buffer; a longer one starves the next station. Where a loss occurs decides what it
+          costs, so a service that ranks losses by their effect on output needs station-state and
+          buffer records, not just stop durations.
+        </p>
+        <p class="try">Stop a station and resize the buffer on <a href="#6" data-slide="6">slide 6</a> (illustrative rates).</p>
+
+        <h2>Two kinds of context</h2>
+        <p>
+          The Digitization layer turns scattered records into reusable manufacturing information,
+          and AIMM distinguishes two forms of context. <strong>Operational context</strong>
+          describes what happened: machine states, counts, logbooks, tickets and inspection
+          reports, linked to equipment, orders, materials and time. <strong>Semantic
+          context</strong> explains what those records mean and when a comparison is valid.
+        </p>
+        <p>
+          The paper connects this to familiar building blocks: a Unified Namespace for current
+          data and events, historians for durable records, the Asset Administration Shell for
+          equipment identity and technical data, knowledge graphs for reviewed experience, and data
+          products with named owners so the preparation is done once and reused. Change history
+          matters too: a production run should be judged against the definition — say, the
+          approved rate — that applied at the time. (If you're interested in the UNS side, I wrote
+          about it in <a href="/slides/uns/">a separate article</a>.)
+        </p>
+
+        <h2>Services: where people and agents meet the factory</h2>
+        <p>
+          In the Interaction layer, a service — OEE, maintenance, scheduling, quality, energy —
+          organizes information and functions around a set of related tasks, so that neither a
+          dashboard nor an agent needs its own integration with every source. Services can run in
+          Operational, Simulation and Synthetic Data modes, with the same guardrails across all of
+          them: permissions, evidence checks, approvals and permitted execution interfaces.
+        </p>
+        <p>
+          Authority is explicit. For a reporting correction, an agent may propose it, a production
+          engineer verifies the discrepancy, the reporting-system owner authorizes the change, and
+          the reporting service writes it. Permissions are enforced by the service and plant
+          systems, independently of the language model's own protections, and safety functions
+          remain outside the agent.
+        </p>
+
+        <h2>Agents as operators</h2>
+        <p>
+          The Operator layer treats a generative AI agent as a language model plus its harness:
+          memory, tools and protocols, Skills (Markdown procedures with scripts) and shared
+          instruction files such as AGENTS.md. None of this guarantees correct execution, so the
+          paper puts weight on checking remembered rules against their source, on “loop
+          engineering” — when to continue, re-check or stop — and on evaluating agents with the
+          tools they will actually use, on cases they haven't seen: resumed work, noisy or
+          out-of-order records, and changed definitions.
+        </p>
+
+        <h2>An OEE investigation, step by step</h2>
+        <p>
+          The paper closes with a fictitious investigation on the packaging line. The initial
+          report shows OEE of 89.7%. The agent finds an eight-minute changeover wrongly excluded
+          from planned time; after the engineer authorizes the correction, OEE is 88.1%. It traces
+          a nineteen-minute infeed stop that starved downstream stations, and a technician
+          replaces a leaking seal. Days later, it spots an MES interface change that had hidden
+          five minutes of stops — Availability falls, Performance rises, and the headline number
+          doesn't move. Finally it proposes a suspect–reference–suspect material trial, which is
+          deferred when the technician reports an unrecorded sealing adjustment, and later
+          supports a material-related effect.
+        </p>
+        <p>
+          Two lessons stand out to me: the headline number can hide misallocated losses, and
+          approval is a precursor to execution — not proof that the physical conditions still hold.
+        </p>
+        <p class="try">Step through the investigation, with OEE recalculated at each step, on <a href="#10" data-slide="10">slide 10</a>.</p>
+
+        <h2>What we don't know yet</h2>
+        <p>
+          We are explicit that the framework's effectiveness still has to be established through
+          industrial trials: whether agents interpret factory evidence reliably, recognize when
+          their understanding needs revision and act within production constraints; how much
+          supervision that takes; and whether people retain the understanding needed to check the
+          agent's reasoning and stay accountable for consequential decisions.
+        </p>
+
+        <h2>Read it, and tell us what you think</h2>
+        <p>
+          The full whitepaper is available on Zenodo:
+          <a href={DOI} target="_blank" rel="noopener">doi.org/10.5281/zenodo.24160166</a>. My
+          thanks to my co-authors and to every contributor for the discussions that shaped it. If
+          you're working on agents in manufacturing, I'd like to hear where you see the
+          constraints — you can find me on
+          <a href="https://www.linkedin.com/in/nitish-singh/" target="_blank" rel="noopener">LinkedIn</a>.
+        </p>
+
+        <p class="note">
+          The slides and this article are my own summary of the whitepaper. The packaging-line
+          simulation on slide 6 uses illustrative rates; the investigation on slide 10 follows
+          the paper's fictitious example.
+        </p>
+      </article>
+    </main>
+
+    <footer class="site-foot">
+      <a href="/">nitishsingh.com</a>
+      <a href={DOI} target="_blank" rel="noopener">AIMM whitepaper (Zenodo)</a>
+      <a href="/slides/uns/">Article: the Unified Namespace</a>
+      <a href="/slides/data-platform/">Article: data intelligence platform</a>
+    </footer>
+
+    <script>
+      import '../../slides/shared/deck.js';
+      import '../../slides/aimm/aimm.js';
+    </script>
+  </body>
+</html>

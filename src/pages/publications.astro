@@ -9,6 +9,7 @@ interface Pub {
   abstract: string;
   url: string;
   award?: string;
+  article?: string;
 }
 
 const publications: Pub[] = [
@@ -21,6 +22,7 @@ const publications: Pub[] = [
     abstract:
       'The AI-enabled Manufacturing and Maintenance (AIMM) Framework provides a systems engineering approach to integrating human and generative AI agents into complex manufacturing processes. It organises the required capabilities into four layers — Cyber-Physical, Digitization, Interaction, and Operator — and is illustrated with an Overall Equipment Effectiveness (OEE) investigation that maintains human accountability and operational safeguards.',
     url: 'https://doi.org/10.5281/zenodo.24160166',
+    article: '/slides/aimm-framework/',
   },
   {
     title: 'A Digital Platform for Heterogeneous Fleet Management in Manufacturing Intralogistics',
@@ -114,6 +116,11 @@ const sorted = [...publications].sort((a, b) => b.year - a.year);
         <a href={pub.url} class="btn-pub" target="_blank" rel="noopener">
           <i class="fa-solid fa-arrow-up-right-from-square"></i> View publication
         </a>
+        {pub.article && (
+          <a href={pub.article} class="btn-pub" style="margin-left: 0.5rem;">
+            <i class="fa-solid fa-person-chalkboard"></i> Article &amp; slides
+          </a>
+        )}
       </article>
     ))}
   </main>

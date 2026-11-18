@@ -1,0 +1,722 @@
+---
+// "The ABCD of Data in Manufacturing" — a talk for first-year students.
+// Article + presentable slides, using the AIMM template colours.
+// Dotted-underlined terms show a plain-language definition on hover or tap.
+import '../../slides/shared/deck.css';
+import '../../slides/aimm/aimm.css';
+import '../../slides/abcd/abcd.css';
+import qrRaw from '../../slides/abcd/qr-abcd.svg?raw';
+
+const headline = 'The ABCD of Data in Manufacturing';
+const title = `${headline}: a beginner’s guide — Nitish Singh`;
+const description =
+  'A beginner-friendly guide for engineering students: how factories turn data into decisions with AI, Business Intelligence, Continuous improvement and Data infrastructure. Article and interactive slides.';
+const canonical = new URL('/slides/abcd-of-data/', Astro.site);
+const ogImage = new URL('/assets/images/og/abcd-of-data.png', Astro.site);
+const qr = qrRaw
+  .replace(/<\?xml[^>]*\?>/, '')
+  .replace(/width="[^"]*"\s+height="[^"]*"/, 'width="100%" height="100%"');
+const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityModel_WeillWoernerSebastian';
+---
+
+<!doctype html>
+<html lang="en" class="article">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Nitish Singh" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="article" />
+    <meta property="article:author" content="Nitish Singh" />
+    <meta property="article:published_time" content="2026-11-18" />
+    <meta property="og:title" content={headline} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={headline} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="shortcut icon" href="/assets/images/SiteLogo.png" />
+    <meta name="theme-color" content="#a31642" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline,
+      description,
+      datePublished: '2026-11-18',
+      author: { '@type': 'Person', name: 'Nitish Singh', url: 'https://nitishsingh.com' },
+      image: ogImage.toString(),
+      mainEntityOfPage: canonical.toString(),
+      audience: { '@type': 'EducationalAudience', educationalRole: 'student' },
+    })} />
+  </head>
+  <body>
+    <header class="site-bar">
+      <a class="brand" href="/"><b>NS</b><span>Nitish Singh</span></a>
+      <a href="/projects/">Projects</a>
+      <a href="/talks/">Talks</a>
+      <button type="button" data-deck="theme" aria-label="Toggle light or dark theme">◐</button>
+    </header>
+
+    <main class="article-wrap">
+      <div class="art-head">
+        <div class="art-kicker">Talk for students · article + live slides</div>
+        <h1>{headline}</h1>
+        <p class="art-dek">
+          How factories turn data into decisions — explained for first-year students, with
+          interactive slides. Words with a <span class="term" data-t="kpi">dotted underline</span>
+          explain themselves when you hover or tap them.
+        </p>
+        <div class="byline"><b>Nitish Singh</b><span>November 2026</span><span>10 min read</span></div>
+      </div>
+
+      <div class="viewer">
+      <div class="deck-shell" id="deck-shell" tabindex="0" aria-label="Slides: The ABCD of Data in Manufacturing">
+        <div class="stage" id="stage" data-footer="The ABCD of Data in Manufacturing">
+
+          <!-- 1 · Cover -->
+          <section class="slide cover" id="b-title" data-title="Title">
+            <div class="cover-top">
+              <div class="cover-kicker">Guest lecture · first-year students</div>
+              <div class="abcd-tiles"><span>A</span><span>B</span><span>C</span><span>D</span></div>
+              <h1>The ABCD of Data in Manufacturing</h1>
+            </div>
+            <div class="cover-band">
+              <svg class="blobs" viewBox="0 0 1600 432" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <g fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="150" stroke-linecap="round">
+                  <path d="M80 520 C 80 300, 360 300, 360 120" />
+                  <path d="M720 -60 C 720 200, 1020 200, 1020 420" />
+                  <path d="M1250 520 C 1250 330, 1520 330, 1520 140" />
+                </g>
+              </svg>
+              <p class="sub">Artificial intelligence · Business intelligence · Continuous improvement · Data infrastructure — how factories turn data into decisions</p>
+              <div class="cover-meta"><span>Nitish Singh, PhD</span><span>Data Scientist, KMWE · Assistant Professor, TU/e</span></div>
+            </div>
+            <aside class="notes"><p>Tip for students: any word with a dotted orange underline shows a short explanation when you hover or tap it.</p></aside>
+          </section>
+
+          <!-- 2 · About me -->
+          <section class="slide" id="b-me" data-title="About me">
+            <div class="kicker">Background</div>
+            <h2>From mechanical engineering to factory data</h2>
+            <div class="grow center-v"><div class="journey">
+              <div class="jn"><i>⚙️</i><b>B.Tech. Mechanical Engineering</b><span>VIT University, India</span><small>2010 – 2014</small></div>
+              <div class="jn"><i>🌍</i><b>Senior Project Consultant</b><span>Schneider Electric — India, Brazil, China</span><small>2014 – 2017</small></div>
+              <div class="jn"><i>🎓</i><b>MSc &amp; PhD</b><span>TU Eindhoven</span><small>2017 – 2025</small></div>
+              <div class="jn now"><i>🏭</i><b>Data Scientist</b><span>KMWE, Brainport Industries Campus</span><small>2024 – present</small></div>
+              <div class="jn now"><i>🧑‍🏫</i><b>Assistant Professor (part-time)</b><span>TU Eindhoven</span><small>2025 – present</small></div>
+            </div></div>
+            <aside class="notes"><p>Point out that you started where they are now: a mechanical-engineering degree, not a data degree.</p></aside>
+          </section>
+
+          <!-- 3 · Why it matters -->
+          <section class="slide" id="b-why" data-title="Why this matters">
+            <div class="kicker">Why this matters</div>
+            <h2>We need to do more with less</h2>
+            <div class="row grow" style="gap: 40px; align-items: center;">
+              <div class="col" style="flex: 1.15; gap: 18px;">
+                <div class="card num-card"><b>1</b><div><h3>Products keep getting more complex</h3><p>A bicycle has a few hundred parts; a modern aircraft has millions. Making them reliably means tracking far more information.</p></div></div>
+                <div class="card num-card"><b>2</b><div><h3>Automation keeps growing</h3><p>Robots and autonomous systems take on harder tasks, so planning and controlling them matters more than ever.</p></div></div>
+                <div class="card num-card"><b>3</b><div><h3>The digital shop floor</h3><p>Machines and processes get a digital representation, tied together by shared standards such as <span class="term" data-t="isa95">ISA-95</span> and <span class="term" data-t="rami">RAMI 4.0</span> — and <span class="term" data-t="agent">AI agents</span> are starting to change how work flows.</p></div></div>
+              </div>
+              <div class="card" style="flex: 0.85; text-align: center;">
+                <div class="stat-big">2.1M</div>
+                <p style="color: var(--text) !important; font-weight: 700;">manufacturing jobs in the US could go unfilled by 2030</p>
+                <p class="src">Deloitte &amp; The Manufacturing Institute, 2021</p>
+              </div>
+            </div>
+            <aside class="notes"><p>The jobs figure is from a widely cited 2021 US study by Deloitte and The Manufacturing Institute; the point is the trend — fewer people, harder products.</p></aside>
+          </section>
+
+          <!-- 4 · Firefighting -->
+          <section class="slide" id="b-fires" data-title="Factories today">
+            <div class="kicker">Manufacturing today</div>
+            <h2>Too often, factories are just fighting fires <span class="fire">🔥 firefighting</span></h2>
+            <div class="grid-2 grow" style="align-content: center;">
+              <div class="card num-card"><b>1</b><div><h3>Escalation-driven</h3><p>Every line and every shift brings new problems, with little time to solve them structurally.</p></div></div>
+              <div class="card num-card"><b>2</b><div><h3>Time drain</h3><p>People on the shop floor spend much of their time searching for information and doing admin, not solving problems.</p></div></div>
+              <div class="card num-card"><b>3</b><div><h3>Knowledge loss</h3><p><span class="term" data-t="tribal">Tribal knowledge</span> walks out of the door with every technician who retires.</p></div></div>
+              <div class="card num-card"><b>4</b><div><h3>Talent gap</h3><p>Shortages of skilled people are structural, and growing.</p></div></div>
+            </div>
+            <aside class="notes"><p>Ask the students: what does “firefighting” mean in a factory? Reacting to problems instead of preventing them.</p></aside>
+          </section>
+
+          <!-- 5 · The problem -->
+          <section class="slide" id="b-problem" data-title="The problem">
+            <div class="kicker">The problem</div>
+            <h2>Data is everywhere. Insight is scarce.</h2>
+            <div class="grow center-v">
+            <div class="row" style="gap: 40px; align-items: center;">
+              <div style="flex: 1.2;">
+                <p class="lead">Factories create huge amounts of data every day: <span class="term" data-t="cnc">CNC machines</span>, <span class="term" data-t="erp">ERP</span> systems, quality logs and <span class="term" data-t="sensor">sensors</span>. Yet only a small part of it is used to make decisions.</p>
+                <div class="grid-3" style="margin-top: 28px;">
+                  <div class="card"><h3>Siloed systems</h3><p><span class="term" data-t="erp">ERP</span>, <span class="term" data-t="mes">MES</span> and <span class="term" data-t="plm">PLM</span> don’t talk to each other — <span class="term" data-t="silo">data silos</span>.</p></div>
+                  <div class="card"><h3>Manual reporting</h3><p>Hours spent copying data into Excel instead of acting on it.</p></div>
+                  <div class="card"><h3>No feedback loop</h3><p>Insights never make it back to the shop floor.</p></div>
+                </div>
+              </div>
+              <div class="card" style="flex: 0.55; text-align: center;">
+                <div class="stat-big">~20%</div>
+                <p style="color: var(--text) !important; font-weight: 700;">of industrial data is used for decisions</p>
+                <p class="src">An often-quoted industry estimate; the exact number varies by study.</p>
+              </div>
+            </div>
+            </div>
+            <aside class="notes"><p>Be careful with the 20% figure — it is a rough, widely repeated estimate, not a precise measurement. The message is that most data is never used.</p></aside>
+          </section>
+
+          <!-- 6 · Data to action -->
+          <section class="slide demo" id="b-pipe" data-title="From data to action">
+            <div class="kicker">The goal · click each step</div>
+            <h2>The right data, at the right time, to the right person</h2>
+            <div class="grow center-v">
+            <div id="pp-row" class="pp-row"></div>
+            <div id="pp-detail" class="card pp-detail"></div>
+            <div class="ladder">
+              <div><b>Descriptive</b>What happened?</div>
+              <div><b>Diagnostic</b>Why did it happen?</div>
+              <div><b>Predictive</b>What will happen?</div>
+              <div><b>Prescriptive</b>What should we do?</div>
+            </div>
+            <p class="tap-hint" style="margin: 10px 0 0;">The aim is to climb this <span class="term" data-t="descriptive">analytics ladder</span>, from describing the past to recommending actions.</p>
+            </div>
+            <aside class="notes"><p>Data → information → action. Walk through the steps with the machine example. Then the ladder: most factories are on the first rung.</p></aside>
+          </section>
+
+          <!-- 7 · ABCD overview -->
+          <section class="slide" id="b-flywheel" data-title="The ABCD flywheel">
+            <div class="kicker">The ABCD</div>
+            <h2>Four letters that work together</h2>
+            <div class="row grow" style="gap: 60px; align-items: center;">
+              <div class="fw">
+                <svg viewBox="0 0 560 560" aria-hidden="true"><circle cx="280" cy="280" r="200" fill="none" stroke="var(--border)" stroke-width="6" stroke-dasharray="14 12" /></svg>
+                <div class="fw-node fw-a"><div><b>A</b><span>AI</span></div></div>
+                <div class="fw-node fw-b"><div><b>B</b><span>BI</span></div></div>
+                <div class="fw-node fw-c"><div><b>C</b><span>CI</span></div></div>
+                <div class="fw-node fw-d"><div><b>D</b><span>DI</span></div></div>
+                <div class="fw-mid">ABCD<br />flywheel</div>
+              </div>
+              <div class="letters" style="flex: 1;">
+                <div class="letter-row"><b class="bg-A">A</b><div><h3><span class="term" data-t="ai">Artificial intelligence</span></h3><p>finds patterns in the data</p></div></div>
+                <div class="letter-row"><b class="bg-B">B</b><div><h3><span class="term" data-t="bi">Business intelligence</span></h3><p>makes them visible to people</p></div></div>
+                <div class="letter-row"><b class="bg-C">C</b><div><h3><span class="term" data-t="ci">Continuous improvement</span> culture</h3><p>acts on the insights, every day</p></div></div>
+                <div class="letter-row"><b class="bg-D">D</b><div><h3>Data infrastructure</h3><p>makes all of it possible</p></div></div>
+              </div>
+            </div>
+            <aside class="notes"><p>A flywheel: each turn makes the next one easier. We’ll go through A, B, C, D — but in practice you build D first.</p></aside>
+          </section>
+
+          <!-- 8 · Divider A -->
+          <section class="slide divider" id="b-div-a" data-title="A — Artificial intelligence">
+            <div class="dv-letter">A</div>
+            <div class="dv-k">Part A</div>
+            <h2>Artificial intelligence</h2>
+            <p>Practical AI for the shop floor — not the hype</p>
+          </section>
+
+          <!-- 9 · What AI means -->
+          <section class="slide" id="b-ai" data-title="What AI means in manufacturing">
+            <div class="kicker">A · Artificial intelligence</div>
+            <h2>AI has a lot of promise — but work comes first</h2>
+            <div class="grow center-v">
+            <div class="row" style="gap: 36px; align-items: flex-start;">
+              <div style="flex: 1;">
+                <p style="color: var(--text) !important;">AI in manufacturing is not about replacing people. It adds pattern recognition at scale to people’s expertise: <span class="term" data-t="ml">machine-learning</span> models trained on <b>your</b> process data, guided by <b>your</b> engineering knowledge, solving <b>your</b> problems.</p>
+                <h3 style="margin-top: 18px;">Before any “intelligence”, three roles do the groundwork</h3>
+                <div class="roles3">
+                  <div><b>Data engineer</b>gets the data flowing and clean</div>
+                  <div><b>Data analyst</b>turns it into answers</div>
+                  <div><b>Business user</b>knows the real problem</div>
+                </div>
+              </div>
+              <div class="nt" style="flex: 1;">
+                <div class="hd">Not this</div><div class="hd">This</div>
+                <div class="no">Generic chatbot</div><div class="yes">Process-specific <span class="term" data-t="anomaly">anomaly detection</span></div>
+                <div class="no">Black-box predictions</div><div class="yes">Explainable settings optimisation</div>
+                <div class="no">Needs big data teams</div><div class="yes">Starts with one use case</div>
+                <div class="no">Replaces operators</div><div class="yes">Gives operators better insight</div>
+              </div>
+            </div>
+            </div>
+            <aside class="notes"><p>Ground expectations: most of the work in an AI project is getting the data right.</p></aside>
+          </section>
+
+          <!-- 10 · AI maturity + use cases -->
+          <section class="slide" id="b-ai2" data-title="AI maturity and use cases">
+            <div class="kicker">A · Artificial intelligence</div>
+            <h2>Most companies are still early on the AI journey</h2>
+            <div class="grow center-v">
+            <div class="mat">
+              <div><b>28%</b><h4>1 · Experiment &amp; prepare</h4><p>Educating people, setting AI policies, making data accessible.</p></div>
+              <div><b>34%</b><h4>2 · Build pilots</h4><p>Simplifying processes, creating use cases, sharing data through interfaces.</p></div>
+              <div><b>31%</b><h4>3 · Develop AI ways of working</h4><p>Scaling up, building for reuse, exploring autonomous <span class="term" data-t="agent">agents</span>.</p></div>
+              <div><b>7%</b><h4>4 · AI future-ready</h4><p>AI built into decisions and processes; new AI-enabled services.</p></div>
+            </div>
+            <p class="src" style="margin: 8px 0 18px;">Share of enterprises per stage — MIT CISR Enterprise AI Maturity Model (Weill, Woerner &amp; Sebastian, 2024)</p>
+            <h3>Examples of classical and modern AI in a factory</h3>
+            <div class="uc">
+              <div><b><span class="term" data-t="anomaly">Anomaly detection</span></b>Flag a machine whose sensor data drifts from its normal behaviour.</div>
+              <div><b><span class="term" data-t="twin">Digital twin</span></b>Simulate the shop floor with live data to test “what if?” plans.</div>
+              <div><b>AI assistant</b>A chatbot that helps <span class="term" data-t="cam">CAM</span> engineers, using the factory’s own data.</div>
+              <div><b>Agents + tools</b><span class="term" data-t="agent">Agents</span> that reach data through <span class="term" data-t="mcp">MCP</span> and <span class="term" data-t="kg">knowledge graphs</span>.</div>
+            </div>
+            </div>
+            <aside class="notes"><p>The MIT CISR model is based on a survey of enterprises; only 7% were at stage 4.</p></aside>
+          </section>
+
+          <!-- 11 · Divider B -->
+          <section class="slide divider d-B" id="b-div-b" data-title="B — Business intelligence">
+            <div class="dv-letter">B</div>
+            <div class="dv-k">Part B</div>
+            <h2>Business intelligence</h2>
+            <p>The nervous system — translating operations into decisions</p>
+          </section>
+
+          <!-- 12 · BI + OEE -->
+          <section class="slide demo" id="b-oee" data-title="KPIs and OEE">
+            <div class="kicker">B · Business intelligence · try it</div>
+            <h2>One source of truth, and the most famous factory KPI</h2>
+            <div class="grow center-v">
+            <p style="margin: 0 0 16px; color: var(--text) !important;">No more downloading data into Excel and spending hours on reports: everyone looks at the same <span class="term" data-t="kpi">KPIs</span> on a <span class="term" data-t="dashboard">dashboard</span>. The best-known one is <span class="term" data-t="oee">OEE</span>. Move the sliders for one 8-hour shift:</p>
+            <div class="oc">
+              <div class="card oc-ctl">
+                <label for="oc-down">Machine stopped (breakdowns, waiting) <span id="oc-down-v"></span></label>
+                <input id="oc-down" class="range" type="range" min="0" max="240" step="5" value="60" />
+                <label for="oc-speed">Running slower than ideal <span id="oc-speed-v"></span></label>
+                <input id="oc-speed" class="range" type="range" min="0" max="40" value="10" />
+                <label for="oc-scrap">Parts that fail quality checks <span id="oc-scrap-v"></span></label>
+                <input id="oc-scrap" class="range" type="range" min="0" max="20" value="3" />
+                <p class="oc-note">Assumes 480 planned minutes and an ideal speed of one part per minute.</p>
+              </div>
+              <div class="card oc-out">
+                <div class="oc-big"><b id="oc-oee">—</b><span>OEE = Availability × Performance × Quality</span></div>
+                <div class="oc-bar"><span>Availability</span><div class="tr"><div class="fl fl-a" id="oc-a"></div></div><b id="oc-a-n"></b></div>
+                <div class="oc-bar"><span>Performance</span><div class="tr"><div class="fl fl-p" id="oc-p"></div></div><b id="oc-p-n"></b></div>
+                <div class="oc-bar"><span>Quality</span><div class="tr"><div class="fl fl-q" id="oc-q"></div></div><b id="oc-q-n"></b></div>
+                <div class="oc-note" id="oc-parts"></div>
+                <div class="oc-hint" id="oc-hint"></div>
+              </div>
+            </div>
+            </div>
+            <aside class="notes"><p>Ask the room to guess a typical OEE before moving the sliders. The 85% “world-class” figure is often quoted, but many plants are well below it.</p></aside>
+          </section>
+
+          <!-- 13 · Drill-down -->
+          <section class="slide demo" id="b-drill" data-title="From top floor to shop floor">
+            <div class="kicker">B · Business intelligence · try it</div>
+            <h2>Same data, different views</h2>
+            <div class="row" style="gap: 12px; align-items: center; margin-bottom: 12px;">
+              <span class="ctl-label" style="margin: 0;">I am the…</span>
+              <div class="seg-control" id="dr-role">
+                <button type="button" data-role="ceo">CEO</button>
+                <button type="button" data-role="planner">Planner</button>
+                <button type="button" data-role="operator">Operator</button>
+              </div>
+              <span class="tap-hint" style="margin-left: auto;">Fictional example</span>
+            </div>
+            <div class="dr grow" id="dr">
+              <div class="dr-lv" id="dr-l1">
+                <div class="dr-tag">Level 1 · Top floor</div>
+                <div class="dr-kpi"><b><span class="term" data-t="otd">OTD</span> 91.3%</b><span>On-time delivery · target 95% · 3 <span class="term" data-t="wo">work orders</span> at risk this week</span><button type="button" class="btn small primary" id="dr-why">Why? Drill down ↓</button></div>
+              </div>
+              <div class="dr-lv" id="dr-l2">
+                <div class="dr-tag">Level 2 · Work orders at risk — click one</div>
+                <div class="dr-wos" id="dr-wos"></div>
+              </div>
+              <div class="dr-lv" id="dr-l3">
+                <div class="dr-tag">Level 3 · Shop floor — daily stand-up board</div>
+                <table class="dr-board" id="dr-board"></table>
+              </div>
+            </div>
+            <aside class="notes"><p>BI closes the loop: the CEO sees OTD %, the planner sees the work orders at risk, the operator sees today’s priority list — all from the same data.</p></aside>
+          </section>
+
+          <!-- 14 · KPI frameworks -->
+          <section class="slide" id="b-kpis" data-title="KPI frameworks">
+            <div class="kicker">B · Business intelligence</div>
+            <h2>Don’t reinvent the wheel — use proven KPI frameworks</h2>
+            <div class="fwk grow" style="align-content: center;">
+              <div class="card">
+                <h3><span class="term" data-t="iso22400">ISO 22400</span></h3>
+                <p style="font-weight: 700; color: var(--text) !important;">KPIs for manufacturing operations management</p>
+                <ul>
+                  <li>Standard definitions for KPIs such as OEE, throughput, quality rate and setup ratio</li>
+                  <li>The same calculation across plants and shifts</li>
+                  <li>Easy to compare with other companies</li>
+                </ul>
+              </div>
+              <div class="card">
+                <h3><span class="term" data-t="scor">SCOR</span> by ASCM</h3>
+                <p style="font-weight: 700; color: var(--text) !important;">Supply Chain Operations Reference model</p>
+                <ul>
+                  <li>KPIs for the whole supply chain: reliability, responsiveness, agility, cost, assets</li>
+                  <li>Links shop-floor numbers to what the customer experiences</li>
+                </ul>
+                <div class="scor"><span>Plan</span><span>Source</span><span>Make</span><span>Deliver</span><span>Return</span></div>
+              </div>
+            </div>
+            <aside class="notes"><p>Standards save endless arguments about how to calculate a number.</p></aside>
+          </section>
+
+          <!-- 15 · Divider C -->
+          <section class="slide divider d-C" id="b-div-c" data-title="C — Continuous improvement culture">
+            <div class="dv-letter">C</div>
+            <div class="dv-k">Part C</div>
+            <h2>Continuous improvement culture</h2>
+            <p>Culture beats strategy every time</p>
+          </section>
+
+          <!-- 16 · Culture -->
+          <section class="slide" id="b-culture" data-title="Data culture">
+            <div class="kicker">C · Continuous improvement culture</div>
+            <h2>Technology is only part of the equation</h2>
+            <div class="kill-enable grow">
+              <div class="card kill">
+                <h3>What kills a data culture</h3>
+                <ul>
+                  <li>“We’ve always done it this way”</li>
+                  <li>Departments keeping data to themselves</li>
+                  <li>Fear of transparency and accountability</li>
+                  <li>Orders from the top without shop-floor buy-in</li>
+                  <li>Blaming people instead of fixing processes</li>
+                </ul>
+              </div>
+              <div class="card enable">
+                <h3>What enables it</h3>
+                <ul>
+                  <li>Operators own their own data and dashboards</li>
+                  <li>Celebrate small wins publicly</li>
+                  <li>Show data on the shop floor, not only in offices</li>
+                  <li>Train <span class="term" data-t="literacy">data literacy</span>, not just tools</li>
+                  <li>Leaders use data in daily stand-ups</li>
+                </ul>
+              </div>
+            </div>
+            <div class="callout" style="margin-top: 16px;"><b>Key insight:</b> many digital transformations fail, and people and culture are the reason more often than technology. Start with people, not platforms.</div>
+            <aside class="notes"><p>You may have heard “70% of digital transformations fail” — it is a popular estimate. The exact number matters less than the cause: resistance to change, lack of vision, weak foundations.</p></aside>
+          </section>
+
+          <!-- 17 · Divider D -->
+          <section class="slide divider d-D" id="b-div-d" data-title="D — Data infrastructure">
+            <div class="dv-letter">D</div>
+            <div class="dv-k">Part D</div>
+            <h2>Data infrastructure</h2>
+            <p>The foundation everything else rests on</p>
+          </section>
+
+          <!-- 18 · Pyramid -->
+          <section class="slide" id="b-pyramid" data-title="The automation pyramid">
+            <div class="kicker">D · Data infrastructure · click a level</div>
+            <h2>The automation pyramid</h2>
+            <div class="pyr-wrap grow">
+              <div>
+                <div class="py" id="py"></div>
+                <div class="py-arrows"><span>⬇ Plans and decisions flow down</span><span>⬆ Operational data flows up</span></div>
+              </div>
+              <div class="card py-detail" id="py-detail"></div>
+            </div>
+            <aside class="notes"><p>Based on <span class="term" data-t="isa95">ISA-95</span>. Time horizons shrink from months at the top to milliseconds at the bottom.</p></aside>
+          </section>
+
+          <!-- 19 · IT/OT + maturity -->
+          <section class="slide" id="b-itot" data-title="IT, OT and the maturity path">
+            <div class="kicker">D · Data infrastructure</div>
+            <h2>Two worlds, one translator — and a path to grow</h2>
+            <div class="itot">
+              <div class="card"><h3>OT data</h3><p>Operations, maintenance, process control. Data from machines and <span class="term" data-t="sensor">sensors</span>, named as <span class="term" data-t="tag">tags</span>.</p></div>
+              <div class="rosetta"><b><span class="term" data-t="semantic">Semantic layer</span></b><span>the “Rosetta Stone” that translates OT-speak into IT-speak</span></div>
+              <div class="card"><h3>IT data</h3><p>Reporting, planning, compliance, AI. Data from <span class="term" data-t="erp">ERP</span> and other business systems.</p></div>
+            </div>
+            <p class="tap-hint" style="margin: 10px 0 0;">See <span class="term" data-t="itot">IT and OT</span>. Click the stages of the data infrastructure maturity path:</p>
+            <div class="mt-row" id="mt-row"></div>
+            <div class="mt-detail" id="mt-detail"></div>
+            <p class="tap-hint" style="margin: 10px 0 0;">You don’t need to jump to stage 5 — start where you are. Key ideas: <span class="term" data-t="etl">ETL</span>, <span class="term" data-t="medallion">medallion architecture</span>, <span class="term" data-t="uns">Unified Namespace</span>, <span class="term" data-t="aas">AAS</span>.</p>
+            <aside class="notes"><p>Most manufacturers are at stage 1–2. The Unified Namespace and the Asset Administration Shell are ways to get contextualised data out of machines.</p></aside>
+          </section>
+
+          <!-- 20 · Real factory pilots -->
+          <section class="slide" id="b-pilots" data-title="Pilots in a real factory">
+            <div class="kicker">In practice</div>
+            <h2>Pilot projects in a precision-machining factory</h2>
+            <div class="pilots grow" style="align-content: center;">
+              <div class="pilot"><div class="ls"><span class="bg-D">D</span><span class="bg-B">B</span></div><h3>Machine availability</h3><p>Stop guessing: capture when machines run and stop, using <span class="term" data-t="nodered">Node-RED</span> pipelines, and alert the technical service for critical assets.</p></div>
+              <div class="pilot"><div class="ls"><span class="bg-D">D</span><span class="bg-B">B</span></div><h3>Work-order tracking</h3><p>Follow every <span class="term" data-t="wo">work order</span> through the shop floor and warn people when one is at risk of being late.</p></div>
+              <div class="pilot"><div class="ls"><span class="bg-A">A</span><span class="bg-D">D</span></div><h3>Shop-floor simulation</h3><p>A <span class="term" data-t="twin">digital twin</span> fed with live sensor data to run “what if?” scenarios for planning.</p></div>
+              <div class="pilot"><div class="ls"><span class="bg-B">B</span><span class="bg-C">C</span></div><h3>Downtime steering</h3><p>Turn machine signals into reasons for stops, and steer on the top reasons to improve uptime step by step.</p></div>
+              <div class="pilot"><div class="ls"><span class="bg-A">A</span></div><h3>Predictive maintenance</h3><p>Raise a flag when equipment drifts from its long-term average — <span class="term" data-t="pdm">predictive maintenance</span>.</p></div>
+              <div class="pilot"><div class="ls"><span class="bg-A">A</span></div><h3>CAM assistant</h3><p>A conversational AI that helps <span class="term" data-t="cam">CAM</span> engineers with complex engineering questions.</p></div>
+            </div>
+            <aside class="notes"><p>Each pilot started small with one clear goal. Notice how D (data) comes first in almost every one.</p></aside>
+          </section>
+
+          <!-- 21 · Where to start -->
+          <section class="slide" id="b-start" data-title="Where to start">
+            <div class="kicker">Where to start</div>
+            <h2>Build it D → B → A, with C all the way</h2>
+            <div class="start grow" style="align-content: center;">
+              <div class="card"><b class="bg-D">D</b><small>Step 1</small><h3>Fix the foundation first</h3><p>Pick one <span class="term" data-t="silo">data silo</span>. Connect it to a central database. Prove the pattern works before scaling.</p></div>
+              <div class="card"><b class="bg-B">B</b><small>Step 2</small><h3>Build one dashboard</h3><p>Win people over with real, live data they recognise.</p></div>
+              <div class="card"><b class="bg-A">A</b><small>Step 3</small><h3>Pilot one AI use case</h3><p>Start simple. Keep the scope small and the impact measurable.</p></div>
+            </div>
+            <div class="always"><b>C</b>Continuous improvement culture — from the very first day</div>
+            <aside class="notes"><p>The flywheel: DI makes it possible, BI makes it visible, AI reveals patterns, CI acts on them — and each turn gets faster.</p></aside>
+          </section>
+
+          <!-- 22 · Quiz -->
+          <section class="slide demo" id="b-quiz" data-title="Quiz: which letter?">
+            <div class="kicker">Quick check · which letter?</div>
+            <h2>Is it A, B, C or D?</h2>
+            <div class="qz grow" id="qz">
+              <div class="qz-prog" id="qz-prog"></div>
+              <p class="qz-q" id="qz-q"></p>
+              <div class="qz-opts" id="qz-opts">
+                <button type="button" class="qz-opt l-A" data-a="A"><b>A</b><span>AI</span></button>
+                <button type="button" class="qz-opt l-B" data-a="B"><b>B</b><span>BI</span></button>
+                <button type="button" class="qz-opt l-C" data-a="C"><b>C</b><span>CI culture</span></button>
+                <button type="button" class="qz-opt l-D" data-a="D"><b>D</b><span>Data infra</span></button>
+              </div>
+              <div class="qz-fb" id="qz-fb"></div>
+              <button type="button" class="btn primary" id="qz-next" style="align-self: flex-start;" hidden>Next question →</button>
+            </div>
+            <aside class="notes"><p>Let the room shout the answer before clicking. Some questions have more than one reasonable answer — discuss!</p></aside>
+          </section>
+
+          <!-- 23 · Key terms -->
+          <section class="slide" id="b-terms" data-title="Key terms">
+            <div class="kicker">Words to remember</div>
+            <h2>Key terms from today</h2>
+            <div class="gl-grid" id="gl-grid" data-keys="ai,ml,agent,llm,bi,kpi,oee,otd,ci,silo,erp,mes,plc,scada,sensor,itot,semantic,dwh,etl,medallion,uns,twin,pdm,literacy"></div>
+            <aside class="notes"><p>The article below the slides has the full glossary.</p></aside>
+          </section>
+
+          <!-- 24 · Thanks -->
+          <section class="slide" id="b-thanks" data-title="Thank you">
+            <div class="row grow" style="align-items: center; gap: 80px;">
+              <div style="flex: 1.3;">
+                <div class="kicker">Thank you</div>
+                <h1 style="color: var(--aimm-burgundy);">Questions?</h1>
+                <ul class="contact">
+                  <li><span>This talk</span><b>nitishsingh.com/slides/abcd-of-data</b></li>
+                  <li><span>Go deeper</span><b>nitishsingh.com/slides/uns</b></li>
+                  <li><span>LinkedIn</span><b>linkedin.com/in/nitish-singh</b></li>
+                </ul>
+              </div>
+              <div class="qr-box" set:html={qr} aria-label="QR code linking to this talk" />
+            </div>
+            <aside class="notes"><p>The QR code opens this page: the slides, the article and the glossary.</p></aside>
+          </section>
+        </div>
+
+        <div class="progress"><div class="bar"></div></div>
+        <div class="hud" role="toolbar" aria-label="Presentation controls">
+          <button id="hud-prev" title="Previous (←)" aria-label="Previous slide">←</button>
+          <span class="count" id="hud-count">1 / 24</span>
+          <button id="hud-next" title="Next (→)" aria-label="Next slide">→</button>
+          <button id="hud-overview" title="All slides (O)">Slides</button>
+          <button id="hud-notes" title="Speaker notes (N)">Notes</button>
+          <button id="hud-theme" title="Light / dark (T)">Theme</button>
+          <button id="hud-full" title="Fullscreen (F)">Fullscreen</button>
+          <button id="hud-help" title="Shortcuts (?)" aria-label="Keyboard shortcuts">?</button>
+        </div>
+        <div class="notes-panel" id="notes" hidden></div>
+        <div class="overlay" id="overview" hidden><h2>All slides</h2><div class="ov-grid"></div></div>
+        <div class="overlay" id="help" hidden>
+          <div class="help-box">
+            <h2>Keyboard shortcuts</h2>
+            <table>
+              <tr><td><kbd>→</kbd><kbd>Space</kbd><kbd>PgDn</kbd></td><td>Next slide (clickers work too)</td></tr>
+              <tr><td><kbd>←</kbd><kbd>PgUp</kbd></td><td>Previous slide</td></tr>
+              <tr><td><kbd>F</kbd></td><td>Fullscreen</td></tr>
+              <tr><td><kbd>O</kbd></td><td>All slides</td></tr>
+              <tr><td><kbd>N</kbd></td><td>Speaker notes</td></tr>
+              <tr><td><kbd>T</kbd></td><td>Light / dark theme</td></tr>
+              <tr><td><kbd>Esc</kbd></td><td>Close an explanation / overlays / stop presenting</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="viewer-bar" aria-label="Slide controls">
+        <button type="button" data-deck="prev" aria-label="Previous slide">←</button>
+        <span class="count" data-deck="count">1 / 24</span>
+        <button type="button" data-deck="next" aria-label="Next slide">→</button>
+        <button type="button" data-deck="overview">All slides</button>
+        <button type="button" class="present" data-deck="present">⛶ Present</button>
+        <span class="hint">Click the slides, then use ← → · tap underlined words</span>
+      </div>
+      </div>
+
+      <article class="prose">
+        <p class="lede">
+          When I give this talk to first-year students, I start with a confession: I studied
+          mechanical engineering, not data science. Today I work with factory data every day, as a
+          data scientist in a precision-manufacturing company and as an assistant professor at TU
+          Eindhoven. This article is the written version of that talk.
+        </p>
+        <p>
+          You don't need any background in data to follow it. Words with a
+          <span class="term" data-t="kpi">dotted underline</span> show a short explanation when you
+          hover over them or tap them, and there's a full glossary at the end.
+        </p>
+
+        <h2>Why factories need data now</h2>
+        <p>
+          Products have become far more complex — a bicycle has a few hundred parts, a modern
+          aircraft has millions. At the same time there are fewer skilled people to make them: one
+          widely cited US study (Deloitte and The Manufacturing Institute, 2021) estimated that 2.1
+          million manufacturing jobs could go unfilled by 2030. Factories have to do more with less.
+        </p>
+        <p>
+          In practice, many factories spend their days firefighting: every shift brings new
+          problems, people spend a lot of time searching for information, and
+          <span class="term" data-t="tribal">tribal knowledge</span> disappears when experienced
+          colleagues retire. Meanwhile, machines, <span class="term" data-t="erp">ERP</span>
+          systems, quality logs and <span class="term" data-t="sensor">sensors</span> produce huge
+          amounts of data. Only a small part of it — an often-quoted estimate is about 20% — is used
+          to make decisions, because systems are <span class="term" data-t="silo">silos</span>,
+          reports are made by hand, and insights never reach the shop floor.
+        </p>
+
+        <h2>The goal: from data to action</h2>
+        <p>
+          The goal of a data strategy fits in one sentence: get the right data to the right person at
+          the right time, so they can make better decisions. That happens in six steps: connect the
+          sources, collect and translate the data, store it in one place, analyze it, act on it, and
+          improve. Along the way you climb the
+          <span class="term" data-t="descriptive">analytics ladder</span>, from “what happened?” to
+          “what should we do?”.
+        </p>
+        <p class="try">Click through the six steps, with a machine example, on <a href="#6" data-slide="6">slide 6</a>.</p>
+        <p>
+          I organise everything around four letters that reinforce each other like a flywheel:
+          <strong>A</strong>rtificial intelligence finds patterns, <strong>B</strong>usiness
+          intelligence makes them visible, a <strong>C</strong>ontinuous improvement culture acts on
+          them, and <strong>D</strong>ata infrastructure makes it all possible.
+        </p>
+
+        <h2><span class="letter-h bg-A">A</span>Artificial intelligence</h2>
+        <p>
+          <span class="term" data-t="ai">AI</span> in a factory is not about replacing people. It
+          adds pattern recognition at scale to people's expertise:
+          <span class="term" data-t="ml">machine-learning</span> models trained on your own process
+          data and guided by your own engineering knowledge. Think
+          <span class="term" data-t="anomaly">anomaly detection</span> on a specific machine rather
+          than a generic chatbot, and explainable recommendations rather than black boxes.
+        </p>
+        <p>
+          The catch is that a lot of work comes first. A data engineer has to get the data flowing,
+          an analyst has to turn it into answers, and a business user has to know which problem is
+          worth solving. That's why most companies are still early on: in MIT CISR's
+          <a href={MIT} target="_blank" rel="noopener">Enterprise AI Maturity Model</a>, only 7% of
+          the enterprises surveyed had reached the most advanced stage. Newer ideas such as
+          <span class="term" data-t="agent">AI agents</span> that use
+          <span class="term" data-t="mcp">MCP</span> and
+          <span class="term" data-t="kg">knowledge graphs</span> make this foundation even more
+          important, not less.
+        </p>
+
+        <h2><span class="letter-h bg-B">B</span>Business intelligence</h2>
+        <p>
+          <span class="term" data-t="bi">Business intelligence</span> turns data into reports and
+          <span class="term" data-t="dashboard">dashboards</span>, so that everyone looks at the same
+          numbers instead of their own spreadsheet. Those numbers are
+          <span class="term" data-t="kpi">KPIs</span>. The most famous one in manufacturing is
+          <span class="term" data-t="oee">OEE</span>: availability (was the machine running?) times
+          performance (at full speed?) times quality (making good parts?).
+        </p>
+        <p class="try">Play with an OEE calculator on <a href="#12" data-slide="12">slide 12</a> — you'll see how quickly small losses multiply.</p>
+        <p>
+          Good BI also links the top floor to the shop floor. The CEO sees on-time delivery
+          (<span class="term" data-t="otd">OTD</span>); the planner drills down to the
+          <span class="term" data-t="wo">work orders</span> at risk; the operator sees today's
+          priority list. Same data, different views. And you don't have to invent your own KPIs:
+          standards such as <span class="term" data-t="iso22400">ISO 22400</span> and the
+          <span class="term" data-t="scor">SCOR</span> model already define them.
+        </p>
+        <p class="try">Try the drill-down as CEO, planner and operator on <a href="#13" data-slide="13">slide 13</a>.</p>
+
+        <h2><span class="letter-h bg-C">C</span>Continuous improvement culture</h2>
+        <p>
+          Culture beats strategy. Many digital transformations fail, and the reason is more often
+          people than technology. A data culture dies when departments keep data to themselves,
+          when people fear transparency, or when changes are pushed from the top without shop-floor
+          buy-in. It grows when operators own their own dashboards, small wins are celebrated,
+          data is visible on the shop floor, people learn
+          <span class="term" data-t="literacy">data literacy</span>, and leaders use data in their
+          daily stand-ups. That's what <span class="term" data-t="ci">continuous improvement</span>
+          looks like with data.
+        </p>
+
+        <h2><span class="letter-h bg-D">D</span>Data infrastructure</h2>
+        <p>
+          Infrastructure isn't glamorous, but everything rests on it. Factories are organised in
+          levels — the automation pyramid from <span class="term" data-t="isa95">ISA-95</span>:
+          <span class="term" data-t="sensor">sensors</span> and actuators at the bottom, then
+          <span class="term" data-t="plc">PLCs</span>, <span class="term" data-t="scada">SCADA</span>,
+          <span class="term" data-t="mes">MES</span> and <span class="term" data-t="erp">ERP</span> at
+          the top. Decisions at the top take months; at the bottom, milliseconds.
+        </p>
+        <p class="try">Click through the pyramid on <a href="#18" data-slide="18">slide 18</a>.</p>
+        <p>
+          The shop floor (<span class="term" data-t="itot">OT</span>) and the office
+          (<span class="term" data-t="itot">IT</span>) speak different languages, so you need a
+          <span class="term" data-t="semantic">semantic layer</span> to translate between them. Most
+          companies grow step by step from spreadsheets to a
+          <span class="term" data-t="db">database</span>, a
+          <span class="term" data-t="dwh">data warehouse</span>, a
+          <span class="term" data-t="lakehouse">lakehouse</span> and finally
+          <span class="term" data-t="streaming">streaming</span> data. You don't have to jump to the
+          end: start where you are. If you want to go deeper, I've written about the
+          <a href="/slides/uns/">Unified Namespace</a> and about
+          <a href="/slides/data-platform/">data platforms</a>.
+        </p>
+
+        <h2>What this looks like in a real factory</h2>
+        <p>
+          In a precision-machining factory, these ideas turn into small pilot projects with one
+          clear goal each: measuring when machines actually run, tracking work orders, simulating the
+          shop floor with a <span class="term" data-t="twin">digital twin</span>, steering on the top
+          reasons for downtime, <span class="term" data-t="pdm">predictive maintenance</span>, and an
+          AI assistant for <span class="term" data-t="cam">CAM</span> engineers. Notice that almost
+          every one starts with D: getting the data first.
+        </p>
+
+        <h2>Where to start</h2>
+        <ol>
+          <li><strong>D — fix the foundation first.</strong> Pick one data silo, connect it to a central database, and prove it works.</li>
+          <li><strong>B — build one dashboard</strong> that people recognise and use.</li>
+          <li><strong>A — pilot one AI use case</strong>, small and measurable.</li>
+        </ol>
+        <p>
+          And <strong>C</strong>, continuous improvement, from the very first day. Test yourself
+          with the quiz on <a href="#22" data-slide="22">slide 22</a>: is it A, B, C or D?
+        </p>
+
+        <h2>Glossary</h2>
+        <dl class="glossary" id="gl-article"></dl>
+
+        <p class="note">
+          The examples in the slides are simplified or fictional. Statistics marked as estimates are
+          widely quoted figures, not precise measurements.
+        </p>
+      </article>
+    </main>
+
+    <footer class="site-foot">
+      <a href="/">nitishsingh.com</a>
+      <a href="/slides/uns/">Article: the Unified Namespace</a>
+      <a href="/slides/data-platform/">Article: data intelligence platform</a>
+    </footer>
+
+    <script>
+      import '../../slides/shared/deck.js';
+      import '../../slides/abcd/abcd.js';
+    </script>
+  </body>
+</html>

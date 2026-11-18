@@ -218,8 +218,9 @@ document.addEventListener('keydown', (e) => {
   }
   if (isTyping(t)) return;
   if (!deckHasKeys()) return;
-  // Let Space/Enter activate a focused button instead of changing slides.
-  if ((e.key === ' ' || e.key === 'Enter') && t.closest && t.closest('button, a, label')) return;
+  // Let Space/Enter activate a focused button or card instead of changing slides,
+  // and let a focused video handle Space itself (play/pause).
+  if ((e.key === ' ' || e.key === 'Enter') && t.closest && t.closest('button, a, label, [role="button"], video')) return;
 
   switch (e.key) {
     case 'ArrowRight': case 'ArrowDown': case 'PageDown': case ' ':

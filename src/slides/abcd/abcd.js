@@ -3,6 +3,7 @@
 // definition, on the slides and in the article.
 
 import { currentSlideId } from '../shared/deck.js';
+import { initCards } from '../shared/widgets.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 function h(tag, cls, text) {
@@ -154,10 +155,13 @@ function initGlossaryLists() {
     for (const k of grid.dataset.keys.split(',')) {
       const g = GLOSSARY[k.trim()];
       if (!g) continue;
-      const c = h('div', 'gl-card');
-      c.append(h('b', null, g[0]), h('span', null, g[1]));
+      const c = h('div', 'flip gl');
+      const fr = h('div', 'fr');
+      fr.appendChild(h('b', null, g[0]));
+      c.append(fr, h('div', 'bk', g[1]));
       grid.appendChild(c);
     }
+    initCards(grid);
   }
   const dl = $('#gl-article');
   if (dl) {
@@ -447,6 +451,21 @@ function initQuiz() {
 function initFlywheel() {
   const nodes = [...document.querySelectorAll('.fw-node')];
   if (!nodes.length) return;
+  // Reveal what each letter stands for, one click at a time.
+  const rows = [...document.querySelectorAll('#fw-letters .letter-row')];
+  rows.forEach((r) => r.classList.add('hid'));
+  const reveal = (l) => {
+    const r = rows.find((x) => x.dataset.l === l);
+    const n = nodes.find((x) => x.dataset.l === l);
+    if (!r || !n) return;
+    r.classList.remove('hid');
+    n.classList.add('shown');
+    n.querySelector('span').textContent = r.dataset.short;
+    if (rows.every((x) => !x.classList.contains('hid'))) $('#fw-hint').hidden = true;
+  };
+  nodes.forEach((n) => n.addEventListener('click', () => reveal(n.dataset.l)));
+  rows.forEach((r) => r.addEventListener('click', (e) => { if (!e.target.closest('.term')) reveal(r.dataset.l); }));
+  $('#fw-all').addEventListener('click', () => rows.forEach((r) => reveal(r.dataset.l)));
   let k = 0;
   setInterval(() => {
     if (!['b-flywheel', 'b-start'].includes(currentSlideId())) return;

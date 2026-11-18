@@ -83,7 +83,6 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
           <section class="slide cover" id="b-title" data-title="Title">
             <div class="cover-top">
               <div class="cover-kicker">Guest lecture · first-year students</div>
-              <div class="abcd-tiles"><span>A</span><span>B</span><span>C</span><span>D</span></div>
               <h1>The ABCD of Data in Manufacturing</h1>
             </div>
             <div class="cover-band">
@@ -94,10 +93,10 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
                   <path d="M1250 520 C 1250 330, 1520 330, 1520 140" />
                 </g>
               </svg>
-              <p class="sub">Artificial intelligence · Business intelligence · Continuous improvement · Data infrastructure — how factories turn data into decisions</p>
+              <p class="sub">How factories turn data into decisions — in four letters</p>
               <div class="cover-meta"><span>Nitish Singh, PhD</span><span>Data Scientist, KMWE · Assistant Professor, TU/e</span></div>
             </div>
-            <aside class="notes"><p>Tip for students: any word with a dotted orange underline shows a short explanation when you hover or tap it.</p></aside>
+            <aside class="notes"><p>Don’t reveal the letters yet — ask the students to guess what A, B, C and D could stand for. The answer comes on the flywheel slide.</p><p>Tip for students: any word with a dotted orange underline shows a short explanation when you hover or tap it.</p></aside>
           </section>
 
           <!-- 2 · About me -->
@@ -118,32 +117,38 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
           <section class="slide" id="b-why" data-title="Why this matters">
             <div class="kicker">Why this matters</div>
             <h2>We need to do more with less</h2>
-            <div class="row grow" style="gap: 40px; align-items: center;">
-              <div class="col" style="flex: 1.15; gap: 18px;">
-                <div class="card num-card"><b>1</b><div><h3>Products keep getting more complex</h3><p>A bicycle has a few hundred parts; a modern aircraft has millions. Making them reliably means tracking far more information.</p></div></div>
-                <div class="card num-card"><b>2</b><div><h3>Automation keeps growing</h3><p>Robots and autonomous systems take on harder tasks, so planning and controlling them matters more than ever.</p></div></div>
-                <div class="card num-card"><b>3</b><div><h3>The digital shop floor</h3><p>Machines and processes get a digital representation, tied together by shared standards such as <span class="term" data-t="isa95">ISA-95</span> and <span class="term" data-t="rami">RAMI 4.0</span> — and <span class="term" data-t="agent">AI agents</span> are starting to change how work flows.</p></div></div>
+            <div class="grow center-v">
+              <div class="row" style="gap: 28px; align-items: stretch;">
+                <div class="col" style="flex: 1.25; gap: 14px;">
+                  <div class="rv"><span class="rv-h">⚙️ Products keep getting more complex</span><span class="rv-body">A bicycle has a few hundred parts; a modern aircraft has millions. Making them reliably means tracking far more information.</span></div>
+                  <div class="rv"><span class="rv-h">🤖 Automation keeps growing</span><span class="rv-body">Robots and autonomous systems take on harder tasks, so planning and controlling them matters more than ever.</span></div>
+                  <div class="rv"><span class="rv-h">🖥️ The digital shop floor</span><span class="rv-body">Machines get a digital representation, tied together by standards such as <span class="term" data-t="isa95">ISA-95</span> and <span class="term" data-t="rami">RAMI 4.0</span> — and <span class="term" data-t="agent">AI agents</span> are starting to change how work flows.</span></div>
+                </div>
+                <div class="card" style="flex: 0.75; text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                  <div class="stat-big">2.1M</div>
+                  <p style="color: var(--text) !important; font-weight: 700;">manufacturing jobs in the US could go unfilled by 2030</p>
+                  <p class="src">Deloitte &amp; The Manufacturing Institute, 2021</p>
+                </div>
               </div>
-              <div class="card" style="flex: 0.85; text-align: center;">
-                <div class="stat-big">2.1M</div>
-                <p style="color: var(--text) !important; font-weight: 700;">manufacturing jobs in the US could go unfilled by 2030</p>
-                <p class="src">Deloitte &amp; The Manufacturing Institute, 2021</p>
-              </div>
+              <div class="click-hint">👆 Click a card to open it <button type="button" data-open-all>Open all</button></div>
             </div>
-            <aside class="notes"><p>The jobs figure is from a widely cited 2021 US study by Deloitte and The Manufacturing Institute; the point is the trend — fewer people, harder products.</p></aside>
+            <aside class="notes"><p>Open each card as you talk about it. The jobs figure is from a widely cited 2021 US study by Deloitte and The Manufacturing Institute; the point is the trend — fewer people, harder products.</p></aside>
           </section>
 
           <!-- 4 · Firefighting -->
           <section class="slide" id="b-fires" data-title="Factories today">
             <div class="kicker">Manufacturing today</div>
             <h2>Too often, factories are just fighting fires <span class="fire">🔥 firefighting</span></h2>
-            <div class="grid-2 grow" style="align-content: center;">
-              <div class="card num-card"><b>1</b><div><h3>Escalation-driven</h3><p>Every line and every shift brings new problems, with little time to solve them structurally.</p></div></div>
-              <div class="card num-card"><b>2</b><div><h3>Time drain</h3><p>People on the shop floor spend much of their time searching for information and doing admin, not solving problems.</p></div></div>
-              <div class="card num-card"><b>3</b><div><h3>Knowledge loss</h3><p><span class="term" data-t="tribal">Tribal knowledge</span> walks out of the door with every technician who retires.</p></div></div>
-              <div class="card num-card"><b>4</b><div><h3>Talent gap</h3><p>Shortages of skilled people are structural, and growing.</p></div></div>
+            <div class="grow center-v">
+              <div class="grid-2">
+                <div class="rv"><span class="rv-h">🚨 Escalation-driven</span><span class="rv-body">Every line and every shift brings new problems, with little time to solve them structurally.</span></div>
+                <div class="rv"><span class="rv-h">⏳ Time drain</span><span class="rv-body">People on the shop floor spend much of their time searching for information and doing admin, not solving problems.</span></div>
+                <div class="rv"><span class="rv-h">🧠 Knowledge loss</span><span class="rv-body"><span class="term" data-t="tribal">Tribal knowledge</span> walks out of the door with every technician who retires.</span></div>
+                <div class="rv"><span class="rv-h">👷 Talent gap</span><span class="rv-body">Shortages of skilled people are structural, and growing.</span></div>
+              </div>
+              <div class="click-hint">👆 Click a card to open it <button type="button" data-open-all>Open all</button></div>
             </div>
-            <aside class="notes"><p>Ask the students: what does “firefighting” mean in a factory? Reacting to problems instead of preventing them.</p></aside>
+            <aside class="notes"><p>Ask the students: what does “firefighting” mean in a factory? Reacting to problems instead of preventing them. Let them guess each card before opening it.</p></aside>
           </section>
 
           <!-- 5 · The problem -->
@@ -151,23 +156,21 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
             <div class="kicker">The problem</div>
             <h2>Data is everywhere. Insight is scarce.</h2>
             <div class="grow center-v">
-            <div class="row" style="gap: 40px; align-items: center;">
-              <div style="flex: 1.2;">
-                <p class="lead">Factories create huge amounts of data every day: <span class="term" data-t="cnc">CNC machines</span>, <span class="term" data-t="erp">ERP</span> systems, quality logs and <span class="term" data-t="sensor">sensors</span>. Yet only a small part of it is used to make decisions.</p>
-                <div class="grid-3" style="margin-top: 28px;">
-                  <div class="card"><h3>Siloed systems</h3><p><span class="term" data-t="erp">ERP</span>, <span class="term" data-t="mes">MES</span> and <span class="term" data-t="plm">PLM</span> don’t talk to each other — <span class="term" data-t="silo">data silos</span>.</p></div>
-                  <div class="card"><h3>Manual reporting</h3><p>Hours spent copying data into Excel instead of acting on it.</p></div>
-                  <div class="card"><h3>No feedback loop</h3><p>Insights never make it back to the shop floor.</p></div>
+              <div class="row" style="gap: 28px; align-items: stretch;">
+                <div class="col" style="flex: 1.25; gap: 14px;">
+                  <div class="rv"><span class="rv-h">🧱 Siloed systems</span><span class="rv-body"><span class="term" data-t="erp">ERP</span>, <span class="term" data-t="mes">MES</span> and <span class="term" data-t="plm">PLM</span> don’t talk to each other — <span class="term" data-t="silo">data silos</span>.</span></div>
+                  <div class="rv"><span class="rv-h">📋 Manual reporting</span><span class="rv-body">Hours spent copying data into Excel instead of acting on it.</span></div>
+                  <div class="rv"><span class="rv-h">🔇 No feedback loop</span><span class="rv-body">Insights never make it back to the shop floor.</span></div>
+                </div>
+                <div class="card" style="flex: 0.75; text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                  <div class="stat-big">~20%</div>
+                  <p style="color: var(--text) !important; font-weight: 700;">of industrial data is used for decisions</p>
+                  <p class="src">An often-quoted industry estimate; the exact number varies by study.</p>
                 </div>
               </div>
-              <div class="card" style="flex: 0.55; text-align: center;">
-                <div class="stat-big">~20%</div>
-                <p style="color: var(--text) !important; font-weight: 700;">of industrial data is used for decisions</p>
-                <p class="src">An often-quoted industry estimate; the exact number varies by study.</p>
-              </div>
+              <div class="click-hint">👆 Click a card to open it <button type="button" data-open-all>Open all</button></div>
             </div>
-            </div>
-            <aside class="notes"><p>Be careful with the 20% figure — it is a rough, widely repeated estimate, not a precise measurement. The message is that most data is never used.</p></aside>
+            <aside class="notes"><p>Factories create huge amounts of data every day — <span class="term" data-t="cnc">CNC machines</span>, ERP, quality logs, sensors — yet only a small part is used to decide. Treat the 20% as a rough, widely repeated estimate.</p></aside>
           </section>
 
           <!-- 6 · Data to action -->
@@ -195,20 +198,21 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
             <div class="row grow" style="gap: 60px; align-items: center;">
               <div class="fw">
                 <svg viewBox="0 0 560 560" aria-hidden="true"><circle cx="280" cy="280" r="200" fill="none" stroke="var(--border)" stroke-width="6" stroke-dasharray="14 12" /></svg>
-                <div class="fw-node fw-a"><div><b>A</b><span>AI</span></div></div>
-                <div class="fw-node fw-b"><div><b>B</b><span>BI</span></div></div>
-                <div class="fw-node fw-c"><div><b>C</b><span>CI</span></div></div>
-                <div class="fw-node fw-d"><div><b>D</b><span>DI</span></div></div>
+                <button type="button" class="fw-node fw-a" data-l="A"><div><b>A</b><span>?</span></div></button>
+                <button type="button" class="fw-node fw-b" data-l="B"><div><b>B</b><span>?</span></div></button>
+                <button type="button" class="fw-node fw-c" data-l="C"><div><b>C</b><span>?</span></div></button>
+                <button type="button" class="fw-node fw-d" data-l="D"><div><b>D</b><span>?</span></div></button>
                 <div class="fw-mid">ABCD<br />flywheel</div>
               </div>
-              <div class="letters" style="flex: 1;">
-                <div class="letter-row"><b class="bg-A">A</b><div><h3><span class="term" data-t="ai">Artificial intelligence</span></h3><p>finds patterns in the data</p></div></div>
-                <div class="letter-row"><b class="bg-B">B</b><div><h3><span class="term" data-t="bi">Business intelligence</span></h3><p>makes them visible to people</p></div></div>
-                <div class="letter-row"><b class="bg-C">C</b><div><h3><span class="term" data-t="ci">Continuous improvement</span> culture</h3><p>acts on the insights, every day</p></div></div>
-                <div class="letter-row"><b class="bg-D">D</b><div><h3>Data infrastructure</h3><p>makes all of it possible</p></div></div>
+              <div class="letters" style="flex: 1;" id="fw-letters">
+                <div class="letter-row" data-l="A" data-short="AI"><b class="bg-A">A</b><div><h3><span class="term" data-t="ai">Artificial intelligence</span></h3><p>finds patterns in the data</p></div></div>
+                <div class="letter-row" data-l="B" data-short="BI"><b class="bg-B">B</b><div><h3><span class="term" data-t="bi">Business intelligence</span></h3><p>makes them visible to people</p></div></div>
+                <div class="letter-row" data-l="C" data-short="CI"><b class="bg-C">C</b><div><h3><span class="term" data-t="ci">Continuous improvement</span> culture</h3><p>acts on the insights, every day</p></div></div>
+                <div class="letter-row" data-l="D" data-short="DI"><b class="bg-D">D</b><div><h3>Data infrastructure</h3><p>makes all of it possible</p></div></div>
+                <div class="click-hint" id="fw-hint">👆 Click a letter to reveal it <button type="button" id="fw-all">Reveal all</button></div>
               </div>
             </div>
-            <aside class="notes"><p>A flywheel: each turn makes the next one easier. We’ll go through A, B, C, D — but in practice you build D first.</p></aside>
+            <aside class="notes"><p>First ask the room to guess. Then click each letter: A — artificial intelligence, B — business intelligence, C — continuous improvement culture, D — data infrastructure. A flywheel: each turn makes the next easier. We go A→D, but in practice you build D first.</p></aside>
           </section>
 
           <!-- 8 · Divider A -->
@@ -224,26 +228,29 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
             <div class="kicker">A · Artificial intelligence</div>
             <h2>AI has a lot of promise — but work comes first</h2>
             <div class="grow center-v">
-            <div class="row" style="gap: 36px; align-items: flex-start;">
-              <div style="flex: 1;">
-                <p style="color: var(--text) !important;">AI in manufacturing is not about replacing people. It adds pattern recognition at scale to people’s expertise: <span class="term" data-t="ml">machine-learning</span> models trained on <b>your</b> process data, guided by <b>your</b> engineering knowledge, solving <b>your</b> problems.</p>
-                <h3 style="margin-top: 18px;">Before any “intelligence”, three roles do the groundwork</h3>
-                <div class="roles3">
-                  <div><b>Data engineer</b>gets the data flowing and clean</div>
-                  <div><b>Data analyst</b>turns it into answers</div>
-                  <div><b>Business user</b>knows the real problem</div>
+              <p class="lead" style="margin: 0 0 22px; color: var(--text) !important;"><span class="term" data-t="ml">Machine learning</span> on <b>your</b> data, for <b>your</b> problems — helping people, not replacing them.</p>
+              <div class="row" style="gap: 36px; align-items: flex-start;">
+                <div style="flex: 0.8;">
+                  <h3>Before any “intelligence”…</h3>
+                  <div class="roles3" style="grid-template-columns: 1fr;">
+                    <div><b>🛠️ Data engineer</b>gets the data flowing and clean</div>
+                    <div><b>🔎 Data analyst</b>turns it into answers</div>
+                    <div><b>🏭 Business user</b>knows the real problem</div>
+                  </div>
+                </div>
+                <div style="flex: 1.2;">
+                  <h3>Not this → this</h3>
+                  <div class="flip-grid">
+                    <div class="flip"><div class="fr">✗ Generic chatbot</div><div class="bk">✓ Process-specific <span class="term" data-t="anomaly">anomaly detection</span></div></div>
+                    <div class="flip"><div class="fr">✗ Black-box predictions</div><div class="bk">✓ Explainable settings optimisation</div></div>
+                    <div class="flip"><div class="fr">✗ Needs big data teams</div><div class="bk">✓ Starts with one use case</div></div>
+                    <div class="flip"><div class="fr">✗ Replaces operators</div><div class="bk">✓ Gives operators better insight</div></div>
+                  </div>
                 </div>
               </div>
-              <div class="nt" style="flex: 1;">
-                <div class="hd">Not this</div><div class="hd">This</div>
-                <div class="no">Generic chatbot</div><div class="yes">Process-specific <span class="term" data-t="anomaly">anomaly detection</span></div>
-                <div class="no">Black-box predictions</div><div class="yes">Explainable settings optimisation</div>
-                <div class="no">Needs big data teams</div><div class="yes">Starts with one use case</div>
-                <div class="no">Replaces operators</div><div class="yes">Gives operators better insight</div>
-              </div>
+              <div class="click-hint">👆 Click a card to flip it <button type="button" data-open-all data-open-label="Flip all" data-close-label="Flip back">Flip all</button></div>
             </div>
-            </div>
-            <aside class="notes"><p>Ground expectations: most of the work in an AI project is getting the data right.</p></aside>
+            <aside class="notes"><p>AI in manufacturing adds pattern recognition at scale to people’s expertise: models trained on your process data, guided by your engineering knowledge. Most of the work in an AI project is getting the data right. Flip each card: myth → reality.</p></aside>
           </section>
 
           <!-- 10 · AI maturity + use cases -->
@@ -251,22 +258,23 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
             <div class="kicker">A · Artificial intelligence</div>
             <h2>Most companies are still early on the AI journey</h2>
             <div class="grow center-v">
-            <div class="mat">
-              <div><b>28%</b><h4>1 · Experiment &amp; prepare</h4><p>Educating people, setting AI policies, making data accessible.</p></div>
-              <div><b>34%</b><h4>2 · Build pilots</h4><p>Simplifying processes, creating use cases, sharing data through interfaces.</p></div>
-              <div><b>31%</b><h4>3 · Develop AI ways of working</h4><p>Scaling up, building for reuse, exploring autonomous <span class="term" data-t="agent">agents</span>.</p></div>
-              <div><b>7%</b><h4>4 · AI future-ready</h4><p>AI built into decisions and processes; new AI-enabled services.</p></div>
+              <div class="mat2">
+                <div class="rv"><span class="rv-n">28%</span><span class="rv-h">1 · Experiment &amp; prepare</span><span class="rv-body">Educating people, setting AI policies, making data accessible.</span></div>
+                <div class="rv"><span class="rv-n">34%</span><span class="rv-h">2 · Build pilots</span><span class="rv-body">Simplifying processes, creating use cases, sharing data through interfaces.</span></div>
+                <div class="rv"><span class="rv-n">31%</span><span class="rv-h">3 · AI ways of working</span><span class="rv-body">Scaling up, building for reuse, exploring autonomous <span class="term" data-t="agent">agents</span>.</span></div>
+                <div class="rv"><span class="rv-n">7%</span><span class="rv-h">4 · AI future-ready</span><span class="rv-body">AI built into decisions and processes; new AI-enabled services.</span></div>
+              </div>
+              <p class="src" style="margin: 8px 0 18px;">Share of enterprises per stage — MIT CISR Enterprise AI Maturity Model (Weill, Woerner &amp; Sebastian, 2024)</p>
+              <h3>AI in a factory — classical and modern</h3>
+              <div class="uc2">
+                <div class="rv"><span class="rv-h">📈 Anomaly detection</span><span class="rv-body">Flag a machine whose sensor data drifts from its normal behaviour — <span class="term" data-t="anomaly">anomaly detection</span>.</span></div>
+                <div class="rv"><span class="rv-h">🏭 Digital twin</span><span class="rv-body">Simulate the shop floor with live data to test “what if?” plans — a <span class="term" data-t="twin">digital twin</span>.</span></div>
+                <div class="rv"><span class="rv-h">💬 AI assistant</span><span class="rv-body">A chatbot that helps <span class="term" data-t="cam">CAM</span> engineers, using the factory’s own data.</span></div>
+                <div class="rv"><span class="rv-h">🤖 Agents + tools</span><span class="rv-body"><span class="term" data-t="agent">Agents</span> that reach data through <span class="term" data-t="mcp">MCP</span> and <span class="term" data-t="kg">knowledge graphs</span>.</span></div>
+              </div>
+              <div class="click-hint">👆 Click a card to open it <button type="button" data-open-all>Open all</button></div>
             </div>
-            <p class="src" style="margin: 8px 0 18px;">Share of enterprises per stage — MIT CISR Enterprise AI Maturity Model (Weill, Woerner &amp; Sebastian, 2024)</p>
-            <h3>Examples of classical and modern AI in a factory</h3>
-            <div class="uc">
-              <div><b><span class="term" data-t="anomaly">Anomaly detection</span></b>Flag a machine whose sensor data drifts from its normal behaviour.</div>
-              <div><b><span class="term" data-t="twin">Digital twin</span></b>Simulate the shop floor with live data to test “what if?” plans.</div>
-              <div><b>AI assistant</b>A chatbot that helps <span class="term" data-t="cam">CAM</span> engineers, using the factory’s own data.</div>
-              <div><b>Agents + tools</b><span class="term" data-t="agent">Agents</span> that reach data through <span class="term" data-t="mcp">MCP</span> and <span class="term" data-t="kg">knowledge graphs</span>.</div>
-            </div>
-            </div>
-            <aside class="notes"><p>The MIT CISR model is based on a survey of enterprises; only 7% were at stage 4.</p></aside>
+            <aside class="notes"><p>The MIT CISR model is based on a survey of enterprises; only 7% were at stage 4. Ask: which stage do you think a typical factory is in?</p></aside>
           </section>
 
           <!-- 11 · Divider B -->
@@ -282,7 +290,7 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
             <div class="kicker">B · Business intelligence · try it</div>
             <h2>One source of truth, and the most famous factory KPI</h2>
             <div class="grow center-v">
-            <p style="margin: 0 0 16px; color: var(--text) !important;">No more downloading data into Excel and spending hours on reports: everyone looks at the same <span class="term" data-t="kpi">KPIs</span> on a <span class="term" data-t="dashboard">dashboard</span>. The best-known one is <span class="term" data-t="oee">OEE</span>. Move the sliders for one 8-hour shift:</p>
+            <p style="margin: 0 0 16px; color: var(--text) !important;">Everyone sees the same <span class="term" data-t="kpi">KPIs</span> on one <span class="term" data-t="dashboard">dashboard</span>. The most famous: <span class="term" data-t="oee">OEE</span>. Try one 8-hour shift:</p>
             <div class="oc">
               <div class="card oc-ctl">
                 <label for="oc-down">Machine stopped (breakdowns, waiting) <span id="oc-down-v"></span></label>
@@ -340,27 +348,14 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
           <section class="slide" id="b-kpis" data-title="KPI frameworks">
             <div class="kicker">B · Business intelligence</div>
             <h2>Don’t reinvent the wheel — use proven KPI frameworks</h2>
-            <div class="fwk grow" style="align-content: center;">
-              <div class="card">
-                <h3><span class="term" data-t="iso22400">ISO 22400</span></h3>
-                <p style="font-weight: 700; color: var(--text) !important;">KPIs for manufacturing operations management</p>
-                <ul>
-                  <li>Standard definitions for KPIs such as OEE, throughput, quality rate and setup ratio</li>
-                  <li>The same calculation across plants and shifts</li>
-                  <li>Easy to compare with other companies</li>
-                </ul>
+            <div class="grow center-v">
+              <div class="grid-2">
+                <div class="rv"><span class="rv-ic">📏</span><span class="rv-h"><span class="term" data-t="iso22400">ISO 22400</span> — KPIs for factory operations</span><span class="rv-body">Standard definitions for KPIs such as OEE, throughput, quality rate and setup ratio. The same calculation in every plant and shift, so you can compare with others.</span></div>
+                <div class="rv"><span class="rv-ic">🔗</span><span class="rv-h"><span class="term" data-t="scor">SCOR</span> — KPIs for the whole supply chain</span><span class="rv-body">Reliability, responsiveness, agility, cost and assets — linking shop-floor numbers to what the customer experiences.<span class="scor"><span>Plan</span><span>Source</span><span>Make</span><span>Deliver</span><span>Return</span></span></span></div>
               </div>
-              <div class="card">
-                <h3><span class="term" data-t="scor">SCOR</span> by ASCM</h3>
-                <p style="font-weight: 700; color: var(--text) !important;">Supply Chain Operations Reference model</p>
-                <ul>
-                  <li>KPIs for the whole supply chain: reliability, responsiveness, agility, cost, assets</li>
-                  <li>Links shop-floor numbers to what the customer experiences</li>
-                </ul>
-                <div class="scor"><span>Plan</span><span>Source</span><span>Make</span><span>Deliver</span><span>Return</span></div>
-              </div>
+              <div class="click-hint">👆 Click a card to open it <button type="button" data-open-all>Open all</button></div>
             </div>
-            <aside class="notes"><p>Standards save endless arguments about how to calculate a number.</p></aside>
+            <aside class="notes"><p>Standards save endless arguments about how to calculate a number. ISO 22400 covers manufacturing operations management; SCOR by ASCM covers the supply chain.</p></aside>
           </section>
 
           <!-- 15 · Divider C -->
@@ -374,31 +369,19 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
           <!-- 16 · Culture -->
           <section class="slide" id="b-culture" data-title="Data culture">
             <div class="kicker">C · Continuous improvement culture</div>
-            <h2>Technology is only part of the equation</h2>
-            <div class="kill-enable grow">
-              <div class="card kill">
-                <h3>What kills a data culture</h3>
-                <ul>
-                  <li>“We’ve always done it this way”</li>
-                  <li>Departments keeping data to themselves</li>
-                  <li>Fear of transparency and accountability</li>
-                  <li>Orders from the top without shop-floor buy-in</li>
-                  <li>Blaming people instead of fixing processes</li>
-                </ul>
+            <h2>Flip each culture killer into its cure</h2>
+            <div class="grow center-v">
+              <div class="flip-grid cult">
+                <div class="flip"><div class="fr">✗ “We’ve always done it this way”</div><div class="bk">✓ Celebrate small wins publicly</div></div>
+                <div class="flip"><div class="fr">✗ Departments keep data to themselves</div><div class="bk">✓ Operators own their data and dashboards</div></div>
+                <div class="flip"><div class="fr">✗ Fear of transparency</div><div class="bk">✓ Show data on the shop floor, not only in offices</div></div>
+                <div class="flip"><div class="fr">✗ Orders from the top, no buy-in</div><div class="bk">✓ Leaders use data in daily stand-ups</div></div>
+                <div class="flip"><div class="fr">✗ Blaming people</div><div class="bk">✓ Fix processes, and train <span class="term" data-t="literacy">data literacy</span></div></div>
+                <div class="flip key"><div class="fr">💡 Key insight</div><div class="bk">Start with people, not platforms.</div></div>
               </div>
-              <div class="card enable">
-                <h3>What enables it</h3>
-                <ul>
-                  <li>Operators own their own data and dashboards</li>
-                  <li>Celebrate small wins publicly</li>
-                  <li>Show data on the shop floor, not only in offices</li>
-                  <li>Train <span class="term" data-t="literacy">data literacy</span>, not just tools</li>
-                  <li>Leaders use data in daily stand-ups</li>
-                </ul>
-              </div>
+              <div class="click-hint">👆 Click a card to flip it <button type="button" data-open-all data-open-label="Flip all" data-close-label="Flip back">Flip all</button></div>
             </div>
-            <div class="callout" style="margin-top: 16px;"><b>Key insight:</b> many digital transformations fail, and people and culture are the reason more often than technology. Start with people, not platforms.</div>
-            <aside class="notes"><p>You may have heard “70% of digital transformations fail” — it is a popular estimate. The exact number matters less than the cause: resistance to change, lack of vision, weak foundations.</p></aside>
+            <aside class="notes"><p>Many digital transformations fail, and people and culture are the reason more often than technology. You may have heard “70% fail” — a popular estimate; the cause matters more than the number. Ask the room for the cure before flipping each card.</p></aside>
           </section>
 
           <!-- 17 · Divider D -->
@@ -443,15 +426,18 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
           <section class="slide" id="b-pilots" data-title="Pilots in a real factory">
             <div class="kicker">In practice</div>
             <h2>Pilot projects in a precision-machining factory</h2>
-            <div class="pilots grow" style="align-content: center;">
-              <div class="pilot"><div class="ls"><span class="bg-D">D</span><span class="bg-B">B</span></div><h3>Machine availability</h3><p>Stop guessing: capture when machines run and stop, using <span class="term" data-t="nodered">Node-RED</span> pipelines, and alert the technical service for critical assets.</p></div>
-              <div class="pilot"><div class="ls"><span class="bg-D">D</span><span class="bg-B">B</span></div><h3>Work-order tracking</h3><p>Follow every <span class="term" data-t="wo">work order</span> through the shop floor and warn people when one is at risk of being late.</p></div>
-              <div class="pilot"><div class="ls"><span class="bg-A">A</span><span class="bg-D">D</span></div><h3>Shop-floor simulation</h3><p>A <span class="term" data-t="twin">digital twin</span> fed with live sensor data to run “what if?” scenarios for planning.</p></div>
-              <div class="pilot"><div class="ls"><span class="bg-B">B</span><span class="bg-C">C</span></div><h3>Downtime steering</h3><p>Turn machine signals into reasons for stops, and steer on the top reasons to improve uptime step by step.</p></div>
-              <div class="pilot"><div class="ls"><span class="bg-A">A</span></div><h3>Predictive maintenance</h3><p>Raise a flag when equipment drifts from its long-term average — <span class="term" data-t="pdm">predictive maintenance</span>.</p></div>
-              <div class="pilot"><div class="ls"><span class="bg-A">A</span></div><h3>CAM assistant</h3><p>A conversational AI that helps <span class="term" data-t="cam">CAM</span> engineers with complex engineering questions.</p></div>
+            <div class="grow center-v">
+              <div class="pilots">
+                <div class="rv pilot"><div class="ls"><span class="bg-D">D</span><span class="bg-B">B</span></div><span class="rv-h">⏱️ Machine availability</span><span class="rv-body">Stop guessing: capture when machines run and stop, using <span class="term" data-t="nodered">Node-RED</span> pipelines, and alert the technical service for critical assets.</span></div>
+                <div class="rv pilot"><div class="ls"><span class="bg-D">D</span><span class="bg-B">B</span></div><span class="rv-h">📦 Work-order tracking</span><span class="rv-body">Follow every <span class="term" data-t="wo">work order</span> through the shop floor and warn people when one is at risk of being late.</span></div>
+                <div class="rv pilot"><div class="ls"><span class="bg-A">A</span><span class="bg-D">D</span></div><span class="rv-h">🏭 Shop-floor simulation</span><span class="rv-body">A <span class="term" data-t="twin">digital twin</span> fed with live sensor data to run “what if?” scenarios for planning.</span></div>
+                <div class="rv pilot"><div class="ls"><span class="bg-B">B</span><span class="bg-C">C</span></div><span class="rv-h">🛑 Downtime steering</span><span class="rv-body">Turn machine signals into reasons for stops, and steer on the top reasons to improve uptime step by step.</span></div>
+                <div class="rv pilot"><div class="ls"><span class="bg-A">A</span></div><span class="rv-h">🔧 Predictive maintenance</span><span class="rv-body">Raise a flag when equipment drifts from its long-term average — <span class="term" data-t="pdm">predictive maintenance</span>.</span></div>
+                <div class="rv pilot"><div class="ls"><span class="bg-A">A</span></div><span class="rv-h">💬 CAM assistant</span><span class="rv-body">A conversational AI that helps <span class="term" data-t="cam">CAM</span> engineers with complex engineering questions.</span></div>
+              </div>
+              <div class="click-hint">👆 Click a card to open it <button type="button" data-open-all>Open all</button></div>
             </div>
-            <aside class="notes"><p>Each pilot started small with one clear goal. Notice how D (data) comes first in almost every one.</p></aside>
+            <aside class="notes"><p>Each pilot started small with one clear goal. Ask the students to guess from the letters what each pilot does, then open it. Notice how D (data) comes first in almost every one.</p></aside>
           </section>
 
           <!-- 21 · Where to start -->
@@ -489,9 +475,10 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
           <!-- 23 · Key terms -->
           <section class="slide" id="b-terms" data-title="Key terms">
             <div class="kicker">Words to remember</div>
-            <h2>Key terms from today</h2>
+            <h2>Key terms from today — can you explain them?</h2>
             <div class="gl-grid" id="gl-grid" data-keys="ai,ml,agent,llm,bi,kpi,oee,otd,ci,silo,erp,mes,plc,scada,sensor,itot,semantic,dwh,etl,medallion,uns,twin,pdm,literacy"></div>
-            <aside class="notes"><p>The article below the slides has the full glossary.</p></aside>
+            <div class="click-hint" style="margin-top: 12px;">👆 Try to explain a term, then click to check <button type="button" data-open-all data-open-label="Flip all" data-close-label="Flip back">Flip all</button></div>
+            <aside class="notes"><p>Quick self-test: point at a term, ask someone to explain it, then flip. The article below the slides has the full glossary.</p></aside>
           </section>
 
           <!-- 24 · Thanks -->
@@ -716,6 +703,7 @@ const MIT = 'https://cisr.mit.edu/publication/2024_1201_EnterpriseAIMaturityMode
 
     <script>
       import '../../slides/shared/deck.js';
+      import '../../slides/shared/widgets.js';
       import '../../slides/abcd/abcd.js';
     </script>
   </body>

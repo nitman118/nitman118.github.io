@@ -713,3 +713,80 @@ body.presenting { overflow: hidden; }
   .site-bar .brand span { display: none; }
   .hud [id='hud-notes'], .hud [id='hud-theme'], .hud [id='hud-help'] { display: none; }
 }
+
+/* ==========================================================================
+   Shared widgets: reveal cards, flip cards, video (see widgets.js)
+   ========================================================================== */
+
+.rv {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 22px;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  transition: border-color 0.2s, background 0.2s;
+  outline: none;
+}
+.rv:hover, .rv:focus-visible { border-color: var(--accent); }
+.rv .rv-ic { font-size: 40px; line-height: 1; }
+.rv .rv-h { font-size: 25px; font-weight: 800; line-height: 1.2; padding-right: 34px; }
+.rv .rv-body { display: none; font-size: 21px; line-height: 1.45; color: var(--text-2); }
+.rv.open .rv-body { display: block; animation: rowin 0.35s ease; }
+.rv.open { background: var(--accent-bg); border-color: var(--accent-border); }
+.rv::after {
+  content: '+';
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 20px;
+  background: var(--surface-2);
+  color: var(--accent);
+}
+.rv.open::after { content: '–'; }
+
+.flip { position: relative; cursor: pointer; perspective: 900px; min-height: 96px; outline: none; }
+.flip .fr, .flip .bk {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  backface-visibility: hidden;
+  transition: transform 0.45s ease;
+  box-shadow: var(--shadow);
+}
+.flip .fr { background: var(--surface); border: 2px solid var(--border); color: var(--text); }
+.flip .bk { background: var(--accent-bg); border: 2px solid var(--accent-border); color: var(--text); transform: rotateY(180deg); }
+.flip.open .fr { transform: rotateY(-180deg); }
+.flip.open .bk { transform: rotateY(0); }
+.flip:hover .fr, .flip:focus-visible .fr { border-color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .flip .fr, .flip .bk { transition: none; } }
+
+.click-hint { font-size: 17px; font-weight: 700; color: var(--muted); display: flex; align-items: center; gap: 12px; }
+.click-hint button { font: inherit; font-size: 15px; font-weight: 700; color: var(--accent); background: none; border: 1px solid var(--border); border-radius: 8px; padding: 4px 10px; cursor: pointer; }
+
+.video-embed { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #0b0b0d; }
+.video-facade {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  background: #1a1a1f center / cover no-repeat; color: #fff; font: 700 22px var(--font);
+}
+.video-facade::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.55)); }
+.video-play { position: relative; width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); font-size: 38px; padding-left: 6px; box-shadow: 0 8px 30px rgba(0,0,0,0.35); }
+.video-title { position: relative; max-width: 80%; text-align: center; }
+.video-note { position: absolute; left: 12px; bottom: 10px; font: 600 13px var(--font); color: rgba(255,255,255,0.75); }
+.video-player { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }

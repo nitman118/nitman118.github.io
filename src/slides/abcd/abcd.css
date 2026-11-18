@@ -292,3 +292,42 @@
 .gl-card { padding: 8px 11px; }
 .gl-card b { font-size: 14.5px; }
 .gl-card span { font-size: 12.5px; line-height: 1.33; }
+
+/* ---------- Reveal / flip layouts ---------- */
+.click-hint { margin-top: 16px; }
+.flip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.flip-grid .flip { min-height: 92px; }
+.flip-grid .fr, .flip-grid .bk { font-size: 22px; font-weight: 700; }
+.flip-grid .fr { color: var(--muted); }
+.flip-grid .bk { background: var(--A-bg); border-color: var(--aimm-orange); }
+.flip-grid.cult { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.flip-grid.cult .flip { min-height: 150px; }
+.flip-grid.cult .fr, .flip-grid.cult .bk { font-size: 25px; padding: 18px 22px; }
+.flip-grid.cult .bk { background: var(--C-bg); border-color: var(--C); }
+.flip-grid.cult .flip.key .fr { background: var(--aimm-burgundy); color: #fff; border-color: var(--aimm-burgundy); font-size: 28px; }
+.flip-grid.cult .flip.key .bk { background: var(--aimm-peach); border-color: var(--aimm-orange); font-size: 28px; }
+.mat2, .uc2 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.mat2 .rv { border-top: 6px solid var(--A); padding: 14px 18px; }
+.rv .rv-n { font-size: 46px; font-weight: 800; color: var(--A); line-height: 1; }
+.mat2 .rv-h, .uc2 .rv-h { font-size: 21px; }
+.mat2 .rv-body, .uc2 .rv-body { font-size: 18px; }
+.uc2 .rv { padding: 16px 18px; background: var(--surface); }
+.uc2 .rv.open { background: var(--A-bg); }
+.rv .scor { margin-top: 12px; }
+.pilots .rv.pilot { padding: 16px 18px; gap: 8px; }
+.pilots .rv.pilot .rv-h { font-size: 22px; }
+.pilots .rv.pilot .rv-body { font-size: 18px; }
+.grid-2 .rv .rv-h { font-size: 28px; }
+.gl-grid .flip.gl { min-height: 118px; }
+.gl-grid .flip.gl .fr { align-items: center; text-align: center; }
+.gl-grid .flip.gl .fr b { font-size: 17px; color: var(--aimm-burgundy); }
+.gl-grid .flip.gl .bk { font-size: 13px; line-height: 1.35; padding: 10px 12px; }
+/* Flywheel reveal */
+button.fw-node { border: 0; cursor: pointer; font: inherit; padding: 0; }
+.fw-node span { font-size: 22px; }
+.letter-row { cursor: pointer; transition: opacity 0.3s; }
+.letter-row.hid > div { visibility: hidden; }
+.letter-row.hid::after { content: 'Click to reveal'; grid-column: 2; grid-row: 1; align-self: center; font-size: 20px; font-weight: 700; color: var(--muted); border: 2px dashed var(--border); border-radius: 12px; padding: 14px 18px; }
+.letter-row.hid { grid-template-areas: 'b x'; }
+.letter-row > div { grid-column: 2; grid-row: 1; }
+.letter-row > b { grid-column: 1; grid-row: 1; }

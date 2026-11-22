@@ -15,6 +15,21 @@ interface Talk {
 
 const talks: Talk[] = [
   {
+    title: 'The ABCD of Data in Manufacturing',
+    venue: 'BIC Experience Centre — for Rotterdam University of Applied Sciences',
+    year: 2026,
+    date: '2026-11-19',
+    type: 'invited',
+    slidesUrl: '/slides/abcd-of-data/',
+  },
+  {
+    title: 'AI Technologies in Manufacturing',
+    venue: 'Demo for an NFIA consortium at KMWE',
+    year: 2026,
+    date: '2026-11-18',
+    type: 'invited',
+  },
+  {
     title: 'Difference between industry and academia — a field report',
     venue: 'Kapellerput',
     year: 2026,
@@ -56,7 +71,13 @@ const talks: Talk[] = [
   },
 ];
 
-const sorted = [...talks].sort((a, b) => b.year - a.year);
+// Newest first: by exact date where known, otherwise by year.
+const key = (t: Talk) => t.date ?? `${t.year}-00-00`;
+const sorted = [...talks].sort((a, b) => key(b).localeCompare(key(a)));
+const when = (t: Talk) =>
+  t.date
+    ? new Date(t.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    : String(t.year);
 
 const typeLabel: Record<Talk['type'], string> = {
   conference: 'Conference',
@@ -85,7 +106,7 @@ const typeLabel: Record<Talk['type'], string> = {
       {sorted.map((talk) => (
         <li>
           <div class="post-meta">
-            <time>{talk.year}</time>
+            <time datetime={talk.date}>{when(talk)}</time>
             <span>· {typeLabel[talk.type]}</span>
           </div>
           <h3 class="post-title" style="font-size: 1.15rem;">{talk.title}</h3>
